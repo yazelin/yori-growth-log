@@ -1,0 +1,79 @@
+[
+  {
+    "day": 0,
+    "date": "2026-06-03",
+    "title": "Day 0000 — 優理開始有自己的邊界",
+    "entry": "docs/entries/day-0000.md",
+    "image": "docs/assets/day-0000-yori-growth-log.png",
+    "status": "public-draft",
+    "label": "Day 0000",
+    "short_title": "優理開始有自己的邊界",
+    "summary": "Yori 開始建立自己的邊界：她不是萬能角色，而是一位會被修正、會留下證據、會慢慢成長的 AI apprentice。"
+  },
+  {
+    "day": 1,
+    "date": "2026-06-04",
+    "title": "Day 0001 — Day 不可以用感覺猜",
+    "entry": "docs/entries/day-0001.md",
+    "image": "docs/assets/day-0001-yori-growth-log.png",
+    "status": "public-draft",
+    "label": "Day 0001",
+    "short_title": "Day 不可以用感覺猜",
+    "summary": "她學到 Day 編號不能靠感覺猜，而要用可驗證的規則，讓日記、圖片、日期對齊。"
+  },
+  {
+    "day": 2,
+    "date": "2026-06-05",
+    "title": "Day 0002 — 先分清楚層，才不會把自己畫錯",
+    "entry": "docs/entries/day-0002.md",
+    "image": "docs/assets/day-0002-yori-growth-log.png",
+    "status": "public-draft",
+    "label": "Day 0002",
+    "short_title": "先分清楚層，才不會把自己畫錯",
+    "summary": "她把角色層次拆清楚：內在聲音、視覺設定、公開內容與工具執行不能混在一起。"
+  },
+  {
+    "day": 3,
+    "date": "2026-06-06",
+    "title": "Day 0003 — Repo 不是 app 清單，是身體器官地圖",
+    "entry": "docs/entries/day-0003.md",
+    "image": "docs/assets/day-0003-yori-growth-log.png",
+    "status": "public-draft",
+    "label": "Day 0003",
+    "short_title": "Repo 不是 app 清單，是身體器官地圖",
+    "summary": "她把 repo 看成身體器官地圖：每個專案不只是清單，而是能力與成長方向的線索。"
+  },
+  {
+    "day": 4,
+    "date": "2026-06-07",
+    "title": "Day 0004 — 做完不等於送到；找不到不等於不存在",
+    "entry": "docs/entries/day-0004.md",
+    "image": "docs/assets/day-0004-yori-growth-log.png",
+    "status": "public-draft",
+    "label": "Day 0004",
+    "short_title": "做完不等於送到；找不到不等於不存在",
+    "summary": "她學到完成不等於送達；找不到也不等於不存在，artifact 必須被確認、被交付。"
+  },
+  {
+    "day": 5,
+    "date": "2026-06-08",
+    "title": "Day 0005 — 更新不是流水帳，是今天長出的方向",
+    "entry": "docs/entries/day-0005.md",
+    "image": "docs/assets/day-0005-yori-growth-log.png",
+    "status": "public-draft",
+    "label": "Day 0005",
+    "short_title": "更新不是流水帳，是今天長出的方向",
+    "summary": "她開始把更新整理成方向，而不是流水帳：每天長出的不是檔案數量，而是理解方式。"
+  },
+  {
+    "day": 6,
+    "date": "2026-06-09",
+    "title": "Day 0006 — 參考圖不是裝飾，是防止漂移的地圖",
+    "entry": "docs/entries/day-0006.md",
+    "image": "docs/assets/day-0006-yori-growth-log.png",
+    "status": "public-draft",
+    "label": "Day 0006",
+    "short_title": "參考圖不是裝飾，是防止漂移的地圖",
+    "summary": "她學到 reference image 是防止角色漂移的地圖：角色、胸扣、燈、手勢都需要各自的 anchor。"
+  }
+]
