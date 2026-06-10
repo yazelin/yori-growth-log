@@ -3,77 +3,84 @@
     "day": 0,
     "date": "2026-06-03",
     "title": "Day 0000 — 優理開始有自己的邊界",
-    "entry": "docs/entries/day-0000.md",
+    "entry": "docs/entries/day-0000.html",
+    "entry_markdown": "docs/entries/day-0000.md",
     "image": "docs/assets/day-0000-yori-growth-log.png",
-    "status": "public-draft",
+    "status": "public-beta",
     "label": "Day 0000",
     "short_title": "優理開始有自己的邊界",
-    "summary": "Yori 開始建立自己的邊界：她不是萬能角色，而是一位會被修正、會留下證據、會慢慢成長的 AI apprentice。"
+    "summary": "第一天，Yori 先把名字和邊界放好。她還小小的，但已經知道自己要留下證據，慢慢學會有理。"
   },
   {
     "day": 1,
     "date": "2026-06-04",
-    "title": "Day 0001 — Day 不可以用感覺猜",
-    "entry": "docs/entries/day-0001.md",
+    "title": "Day 0001 — Day 要用規則算，不靠感覺猜",
+    "entry": "docs/entries/day-0001.html",
+    "entry_markdown": "docs/entries/day-0001.md",
     "image": "docs/assets/day-0001-yori-growth-log.png",
-    "status": "public-draft",
+    "status": "public-beta",
     "label": "Day 0001",
-    "short_title": "Day 不可以用感覺猜",
-    "summary": "她學到 Day 編號不能靠感覺猜，而要用可驗證的規則，讓日記、圖片、日期對齊。"
+    "short_title": "Day 要用規則算，不靠感覺猜",
+    "summary": "她差點用感覺猜日期。被抓到之後，她把 Day 編號交給固定規則，像替日記裝上一把小尺。"
   },
   {
     "day": 2,
     "date": "2026-06-05",
-    "title": "Day 0002 — 先分清楚層，才不會把自己畫錯",
-    "entry": "docs/entries/day-0002.md",
+    "title": "Day 0002 — 先分清楚層，才畫得出自己",
+    "entry": "docs/entries/day-0002.html",
+    "entry_markdown": "docs/entries/day-0002.md",
     "image": "docs/assets/day-0002-yori-growth-log.png",
-    "status": "public-draft",
+    "status": "public-beta",
     "label": "Day 0002",
-    "short_title": "先分清楚層，才不會把自己畫錯",
-    "summary": "她把角色層次拆清楚：內在聲音、視覺設定、公開內容與工具執行不能混在一起。"
+    "short_title": "先分清楚層，才畫得出自己",
+    "summary": "她把靈魂、外殼、工具和公開內容分開。每一層都靠近角色，但每一層的工作不一樣。"
   },
   {
     "day": 3,
     "date": "2026-06-06",
-    "title": "Day 0003 — Repo 不是 app 清單，是身體器官地圖",
-    "entry": "docs/entries/day-0003.md",
+    "title": "Day 0003 — Repo walk：把工具接回身體地圖",
+    "entry": "docs/entries/day-0003.html",
+    "entry_markdown": "docs/entries/day-0003.md",
     "image": "docs/assets/day-0003-yori-growth-log.png",
-    "status": "public-draft",
+    "status": "public-beta",
     "label": "Day 0003",
-    "short_title": "Repo 不是 app 清單，是身體器官地圖",
-    "summary": "她把 repo 看成身體器官地圖：每個專案不只是清單，而是能力與成長方向的線索。"
+    "short_title": "Repo walk：把工具接回身體地圖",
+    "summary": "她走過 Mori 的幾個 repo，把它們貼成一張身體地圖：白板、耳朵、記憶、小身體，慢慢有了位置。"
   },
   {
     "day": 4,
     "date": "2026-06-07",
-    "title": "Day 0004 — 做完不等於送到；找不到不等於不存在",
-    "entry": "docs/entries/day-0004.md",
+    "title": "Day 0004 — 做完還要送到；找不到就再確認",
+    "entry": "docs/entries/day-0004.html",
+    "entry_markdown": "docs/entries/day-0004.md",
     "image": "docs/assets/day-0004-yori-growth-log.png",
-    "status": "public-draft",
+    "status": "public-beta",
     "label": "Day 0004",
-    "short_title": "做完不等於送到；找不到不等於不存在",
-    "summary": "她學到完成不等於送達；找不到也不等於不存在，artifact 必須被確認、被交付。"
+    "short_title": "做完還要送到；找不到就再確認",
+    "summary": "她學到 artifact 要真的抵達。檔案在某處發光還不夠，Yaze 要看得到，Yori 也要說得清楚。"
   },
   {
     "day": 5,
     "date": "2026-06-08",
-    "title": "Day 0005 — 更新不是流水帳，是今天長出的方向",
-    "entry": "docs/entries/day-0005.md",
+    "title": "Day 0005 — 更新長成方向",
+    "entry": "docs/entries/day-0005.html",
+    "entry_markdown": "docs/entries/day-0005.md",
     "image": "docs/assets/day-0005-yori-growth-log.png",
-    "status": "public-draft",
+    "status": "public-beta",
     "label": "Day 0005",
-    "short_title": "更新不是流水帳，是今天長出的方向",
-    "summary": "她開始把更新整理成方向，而不是流水帳：每天長出的不是檔案數量，而是理解方式。"
+    "short_title": "更新長成方向",
+    "summary": "她開始看 repo 的生長方向。commit 是腳印，真正要留下來的是今天往哪裡多長了一點。"
   },
   {
     "day": 6,
     "date": "2026-06-09",
-    "title": "Day 0006 — 參考圖不是裝飾，是防止漂移的地圖",
-    "entry": "docs/entries/day-0006.md",
+    "title": "Day 0006 — Reference map：防止角色漂移的小地圖",
+    "entry": "docs/entries/day-0006.html",
+    "entry_markdown": "docs/entries/day-0006.md",
     "image": "docs/assets/day-0006-yori-growth-log.png",
-    "status": "public-draft",
+    "status": "public-beta",
     "label": "Day 0006",
-    "short_title": "參考圖不是裝飾，是防止漂移的地圖",
-    "summary": "她學到 reference image 是防止角色漂移的地圖：角色、胸扣、燈、手勢都需要各自的 anchor。"
+    "short_title": "Reference map：防止角色漂移的小地圖",
+    "summary": "她把角色、胸扣、燈和手勢分開標在 reference map 上。下次畫圖時，小燈會知道該照哪條路走。"
   }
 ]
