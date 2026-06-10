@@ -1,0 +1,23 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Local tooling / caches
+node_modules/
+.venv/
+.env
+.env.*
+__pycache__/
+*.pyc
+
+# Local preview artifacts
+*.log
+.cache/
+.tmp/
+
+# Keep generated public assets tracked intentionally:
+# docs/assets/day-*.png
