@@ -70,8 +70,21 @@ Yori Field Notes Book
 
 但第一個公開 repo 建議保留 `growth-log`，比較清楚、可持續，也符合每日圖文日記的定位。
 
+## License
+
+Unless otherwise noted, public text and images are licensed under:
+
+```text
+Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+```
+
+This means non-commercial sharing/adaptation is allowed with attribution. Commercial use, paid products, merchandise, training datasets, or character/product licensing require permission from Yaze Lin.
+
+See [LICENSE.md](LICENSE.md) and [COPYRIGHT.md](COPYRIGHT.md) for details.
+
 ## Publication notes
 
+- License: [LICENSE.md](LICENSE.md)
 - Co-creation disclosure: [NOTICE.md](NOTICE.md)
 - Copyright / usage boundary: [COPYRIGHT.md](COPYRIGHT.md)
 - Publishing guide: [PUBLISHING.md](PUBLISHING.md)
