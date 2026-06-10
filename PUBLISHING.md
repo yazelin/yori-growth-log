@@ -43,12 +43,29 @@ Or via API/gh if available in the environment.
 
 ## Daily reviewed publish flow
 
+Future entries should follow the current public-site shape, not the old Markdown-link prototype.
+
 1. Generate private entry + prompt.
 2. Generate image.
 3. Run delivery validator.
 4. Export public-safe entry and image.
-5. Review the public diff.
-6. Commit and push after approval.
+5. Convert the entry into an HTML page under `docs/entries/day-NNNN.html`.
+6. Keep the Markdown source under `docs/entries/day-NNNN.md` for versioned source text.
+7. Update `manifest.json` and `docs/entries.json`.
+8. Update `docs/index.html` with latest-first ordering.
+9. Point `Latest` to the newest HTML page, not the Markdown file.
+10. Run the Yori voice check in `YORI_VOICE_GUIDE.md`.
+11. Review the public diff.
+12. Commit and push after approval.
+
+Required site behavior:
+
+```text
+Latest → docs/entries/day-NNNN.html
+Homepage cards → newest first
+Read links → HTML pages, not .md files
+Markdown files → source/archive only
+```
 
 Recommended commit message format:
 

@@ -87,6 +87,7 @@ See [LICENSE.md](LICENSE.md) and [COPYRIGHT.md](COPYRIGHT.md) for details.
 - License: [LICENSE.md](LICENSE.md)
 - Co-creation disclosure: [NOTICE.md](NOTICE.md)
 - Copyright / usage boundary: [COPYRIGHT.md](COPYRIGHT.md)
+- Yori voice guide: [YORI_VOICE_GUIDE.md](YORI_VOICE_GUIDE.md)
 - Publishing guide: [PUBLISHING.md](PUBLISHING.md)
 - Public-readiness checklist: [PUBLICATION_CHECKLIST.md](PUBLICATION_CHECKLIST.md)
 - Repo description suggestions: [REPOSITORY_DESCRIPTION.md](REPOSITORY_DESCRIPTION.md)
