@@ -8,6 +8,7 @@ Status: preparing `yori-growth-log` as a public repo.
 - [x] Public scope: public
 - [x] Preserve Mori-family relationship
 - [x] Add AI-assisted / co-created disclosure
+- [x] License selected: CC BY-NC 4.0 for public text and images
 - [ ] Final human review before first push
 - [ ] Decide repository description
 - [ ] Decide GitHub Pages branch/source
