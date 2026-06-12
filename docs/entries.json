@@ -82,5 +82,17 @@
     "label": "Day 0006",
     "short_title": "Reference map：防止角色漂移的小地圖",
     "summary": "她把角色、胸扣、燈和手勢分開標在 reference map 上。下次畫圖時，小燈會知道該照哪條路走。"
+  },
+  {
+    "day": 7,
+    "date": "2026-06-10",
+    "title": "Day 0007 — 完成之前，先把小燈推近一點",
+    "entry": "docs/entries/day-0007.html",
+    "entry_markdown": "docs/entries/day-0007.md",
+    "image": "docs/assets/day-0007-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0007",
+    "short_title": "完成之前，先把小燈推近一點",
+    "summary": "她把 entry、prompt、image、reference 和 voice 幾張卡片推到小燈下。今天的練習，是先看清楚，再說完成。"
   }
 ]
