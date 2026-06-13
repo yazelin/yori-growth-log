@@ -94,5 +94,29 @@
     "label": "Day 0007",
     "short_title": "完成之前，先把小燈推近一點",
     "summary": "她把 entry、prompt、image、reference 和 voice 幾張卡片推到小燈下。今天的練習，是先看清楚，再說完成。"
+  },
+  {
+    "day": 8,
+    "date": "2026-06-11",
+    "title": "Day 0008 — 小門開了以後，先把路標擦乾淨",
+    "entry": "docs/entries/day-0008.html",
+    "entry_markdown": "docs/entries/day-0008.md",
+    "image": "docs/assets/day-0008-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0008",
+    "short_title": "小門開了以後，先把路標擦乾淨",
+    "summary": "公開小門打開後，她先蹲下來擦路標：最新在上、HTML 日記頁、授權邊界、voice pass，還有 review gate。"
+  },
+  {
+    "day": 9,
+    "date": "2026-06-12",
+    "title": "Day 0009 — 把雷達圖釘插進森林地圖",
+    "entry": "docs/entries/day-0009.html",
+    "entry_markdown": "docs/entries/day-0009.md",
+    "image": "docs/assets/day-0009-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0009",
+    "short_title": "把雷達圖釘插進森林地圖",
+    "summary": "她把 Fable 專案整理成森林雷達：資料變遊戲、故事變 3D、agent 流程變可觀察世界，報告也能變成互動地圖。"
   }
 ]
