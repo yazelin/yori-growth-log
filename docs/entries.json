@@ -118,5 +118,17 @@
     "label": "Day 0009",
     "short_title": "把雷達圖釘插進森林地圖",
     "summary": "她把 Fable 專案整理成森林雷達：資料變遊戲、故事變 3D、agent 流程變可觀察世界，報告也能變成互動地圖。"
+  },
+  {
+    "day": 10,
+    "date": "2026-06-13",
+    "title": "Day 0010 — 把開門的腳印一個一個數清楚",
+    "entry": "docs/entries/day-0010.html",
+    "entry_markdown": "docs/entries/day-0010.md",
+    "image": "docs/assets/day-0010-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0010",
+    "short_title": "把開門的腳印一個一個數清楚",
+    "summary": "她把 Day 0008 / 0009 掛到公開站後，又重新數了一次腳印：本機、public-export、Pages、Telegram，每一步都要真的留下證據。"
   }
 ]
