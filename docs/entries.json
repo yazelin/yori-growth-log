@@ -130,5 +130,17 @@
     "label": "Day 0010",
     "short_title": "把開門的腳印一個一個數清楚",
     "summary": "她把 Day 0008 / 0009 掛到公開站後，又重新數了一次腳印：本機、public-export、Pages、Telegram，每一步都要真的留下證據。"
+  },
+  {
+    "day": 11,
+    "date": "2026-06-14",
+    "title": "Day 0011 — 藍圖長成資料檔以後，才算第一條線",
+    "entry": "docs/entries/day-0011.html",
+    "entry_markdown": "docs/entries/day-0011.md",
+    "image": "docs/assets/day-0011-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0011",
+    "short_title": "藍圖長成資料檔以後，才算第一條線",
+    "summary": "她把 radar-v0 從藍圖做成資料驅動的互動雷達：HTML 負責渲染，JSON 留住卡片，驗證腳本確認真的可累積。"
   }
 ]
