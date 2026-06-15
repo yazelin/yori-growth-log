@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "title": "Yori Fable Radar v0",
+    "updated": "2026-06-14",
+    "scope": "reviewed draft · public links only",
+    "note": "Fable/project signals that Yori can revisit and append without editing HTML."
+  },
+  "axes": [
+    {
+      "id": "data-game",
+      "label": "data → game",
+      "title": "資料 → 遊戲",
+      "description": "適合把市場、鏈上、職缺、repo 活動變成可互動資料場。",
+      "score": 8.4
+    },
+    {
+      "id": "story-3d",
+      "label": "story → 3D",
+      "title": "故事 → 3D",
+      "description": "適合 Mori/Yori 的森林、終端、記憶書架和教學關卡。",
+      "score": 8.0
+    },
+    {
+      "id": "agent-world",
+      "label": "agent → world",
+      "title": "Agent → 可觀察世界",
+      "description": "最貼 Hermes/Yori：把內部流程變成小白也看得懂的可觀察世界。",
+      "score": 9.2
+    },
+    {
+      "id": "report-radar",
+      "label": "report → radar",
+      "title": "Report → Radar",
+      "description": "最貼商業化：高品質情報不只是一篇文，而是可操作的判斷工具。",
+      "score": 9.0
+    }
+  ],
+  "filters": [
+    { "id": "all", "label": "全部" },
+    { "id": "data-game", "label": "資料→遊戲" },
+    { "id": "story-3d", "label": "故事→3D" },
+    { "id": "agent-world", "label": "Agent→世界" },
+    { "id": "report-radar", "label": "Report→Radar" }
+  ],
+  "cards": [
+    {
+      "id": "hollow-pines-claude-fable5-game",
+      "title": "Hollow Pines Claude Fable5 Game",
+      "kind": "verified",
+      "kindLabel": "verified repo",
+      "categories": ["story-3d", "agent-world"],
+      "tags": ["story→3D", "agent→world"],
+      "summary": "第一人稱瀏覽器恐怖遊戲訊號：一個 prompt 到可玩的 3D 場景。重點不是恐怖題材，而是「文字 brief → 可探索世界」的速度。",
+      "use": "Yori 借用點：把 Growth Log 的錯誤/任務做成森林關卡；每個 bug 是一間小房間。",
+      "metrics": { "yoriFit": 8, "bizFit": 6, "teach": 8 },
+      "href": "https://github.com/karelpelcak/Hollow-Pines-Claude-Fable5-Game",
+      "linkLabel": "open repo →"
+    },
+    {
+      "id": "fable-katamari-demo-game",
+      "title": "Fable Katamari / fableDemoGame",
+      "kind": "verified",
+      "kindLabel": "verified repo",
+      "categories": ["data-game", "story-3d"],
+      "tags": ["data→game", "story→3D"],
+      "summary": "塊魂式瀏覽器 3D 遊戲。適合觀察「收集、變大、穿越城市」這種規則如何讓資料或知識有身體感。",
+      "use": "Yori 借用點：把 repo、skills、events 變成可收集物；越整理越能走進新的區域。",
+      "metrics": { "yoriFit": 9, "bizFit": 7, "teach": 8 },
+      "href": "https://github.com/aieo-product/fableDemoGame",
+      "linkLabel": "open repo →"
+    },
+    {
+      "id": "grqg-dev-fable-demos",
+      "title": "grqg-dev / fable-demos",
+      "kind": "verified",
+      "kindLabel": "verified repo",
+      "categories": ["story-3d", "agent-world"],
+      "tags": ["experiments", "web toys"],
+      "summary": "自包含 HTML demos：Web Audio、WebGL、generative toys。值得看的是單檔原型如何降低「先玩玩看」的成本。",
+      "use": "Yori 借用點：每天的小實驗都可以先是 single-file artifact，不急著變 repo 或產品。",
+      "metrics": { "yoriFit": 8, "bizFit": 6, "teach": 9 },
+      "href": "https://github.com/grqg-dev/fable-demos",
+      "linkLabel": "open repo →"
+    },
+    {
+      "id": "claude-fable5-games",
+      "title": "claude-fable5-games",
+      "kind": "verified",
+      "kindLabel": "verified repo",
+      "categories": ["story-3d", "agent-world"],
+      "tags": ["game bundle"],
+      "summary": "Fable 5 games 集合型訊號。適合用來追蹤「同一工具在不同 game loop 裡能做出什麼變化」。",
+      "use": "Yori 借用點：未來可做 Yori mini-game gallery：不是玩大作，而是玩 agent 狀態。",
+      "metrics": { "yoriFit": 7, "bizFit": 5, "teach": 7 },
+      "href": "https://github.com/shironagasu-ai/claude-fable5-games",
+      "linkLabel": "open repo →"
+    },
+    {
+      "id": "packet-highway-pattern",
+      "title": "Packet Highway pattern",
+      "kind": "watch",
+      "kindLabel": "watchlist/search",
+      "categories": ["agent-world", "report-radar"],
+      "tags": ["agent→world", "report→radar"],
+      "summary": "把封包、事件流、tool calls 想像成夜間高速公路。即使不是精確 repo，這個互動語法很適合 agent observability。",
+      "use": "Yori 借用點：Hermes tool call highway；慢、錯、retry 都可以變成道路狀態。",
+      "metrics": { "yoriFit": 10, "bizFit": 8, "teach": 9 },
+      "href": "https://github.com/search?q=%22Packet+Highway%22+Fable&type=repositories",
+      "linkLabel": "search →"
+    },
+    {
+      "id": "orbit-collisions-pattern",
+      "title": "Orbit Collisions pattern",
+      "kind": "watch",
+      "kindLabel": "watchlist/search",
+      "categories": ["report-radar", "data-game"],
+      "tags": ["report→radar"],
+      "summary": "把風險、碰撞、路徑預測做成可互動模型。對 intelligence report 最有啟發：讀者應該能拖動假設，而不是只看結論。",
+      "use": "Yori 借用點：市場風險雷達、機會碰撞圖、決策假設沙盒。",
+      "metrics": { "yoriFit": 7, "bizFit": 10, "teach": 8 },
+      "href": "https://github.com/search?q=%22Orbit+Collisions%22+Fable&type=repositories",
+      "linkLabel": "search →"
+    },
+    {
+      "id": "elvenwood-forest-world-pattern",
+      "title": "Elvenwood / forest world pattern",
+      "kind": "watch",
+      "kindLabel": "watchlist/search",
+      "categories": ["story-3d"],
+      "tags": ["story→3D"],
+      "summary": "程序化森林、精靈世界、角色場景生成。對 Mori/Yori 宇宙很貼，但要避免只做漂亮背景。",
+      "use": "Yori 借用點：森林不是背景，而是 memory、skills、errors 的空間化介面。",
+      "metrics": { "yoriFit": 9, "bizFit": 6, "teach": 7 },
+      "href": "https://github.com/search?q=Elvenwood+Fable&type=repositories",
+      "linkLabel": "search →"
+    },
+    {
+      "id": "brief-to-deck-agent-pattern",
+      "title": "Brief-to-Deck Agent pattern",
+      "kind": "watch",
+      "kindLabel": "watchlist/search",
+      "categories": ["report-radar", "agent-world"],
+      "tags": ["report→radar", "agent→world"],
+      "summary": "brief 進來，deck / appendix / spreadsheet 出去。這條線最接近「agent-driven intelligence product」。",
+      "use": "Yori 借用點：不是賣模板，而是賣可追問、可重跑、可審核的決策研究管線。",
+      "metrics": { "yoriFit": 8, "bizFit": 10, "teach": 8 },
+      "href": "https://github.com/search?q=%22Brief-to-Deck%22+agent&type=repositories",
+      "linkLabel": "search →"
+    }
+  ]
+}
