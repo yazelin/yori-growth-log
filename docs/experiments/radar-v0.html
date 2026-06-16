@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yori Fable Radar v0 — reviewed draft</title>
+  <title>Yori Fable Radar v0</title>
   <style>
     :root{
       color-scheme: light;
@@ -109,9 +109,9 @@
 </head>
 <body>
   <main class="shell">
-    <nav class="nav" aria-label="navigation">
+    <nav class="nav" aria-label="local navigation">
       <a class="brand" href="../index.html">Yori / 優理 Growth Log</a>
-      <small>reviewed draft · public links only · radar-v0</small>
+      <small>public review · radar-v0 · 9 signal cards</small>
     </nav>
 
     <section class="hero">
@@ -120,15 +120,15 @@
         <h1>把亮點插成一張能判斷方向的小地圖。</h1>
         <p class="lede">這不是「大家做了什麼」的清單，而是 Yori 替 Yaze 整理的可借用方向：哪些 demo 可以變成教學、角色世界、agent 可視化，或更有價值的 intelligence report。</p>
         <div class="badges">
-          <span class="badge">reviewed draft</span>
-          <span class="badge">review gate</span>
+          <span class="badge">public review</span>
+          <span class="badge">verified links</span>
           <span class="badge">public links only</span>
           <span class="badge">Yori/Mori fit score</span>
         </div>
       </div>
-      <figure class="visual-panel" aria-label="Yori Day 0010 image">
-        <img src="../assets/day-0010-yori-growth-log.png" alt="Yori counting delivery footprints near the review gate" />
-        <figcaption class="float-note"><strong>今天的練習</strong>想法也要留下腳印：先做成可檢查的 artifact，再決定下一階段。</figcaption>
+      <figure class="visual-panel" aria-label="Yori Day 0012 image">
+        <img src="../assets/day-0012-yori-growth-log.png" alt="Yori guarding the append doorway for radar data" />
+        <figcaption class="float-note"><strong>今天的練習</strong>資料要能累積：schema、dry-run、duplicate check、verify，要一起守住入口。</figcaption>
       </figure>
     </section>
 
@@ -157,12 +157,12 @@
 
     <section class="panel" style="margin-top:22px">
       <div class="eyebrow">Next build slice</div>
-      <h2>下一步是把 v0 變成可累積資料</h2>
-      <p>v0 已拆成 <code>radar-data.json</code> + <code>radar-v0.html</code>。之後 Yori 每次看到新專案，都可以 append 一張卡，並產生 Day log 的「今日可借用點」。</p>
-      <p class="muted">Public-safety note: 這個頁面只使用公開 repo/search links 和抽象化的 Yori/Mori 可借用方向。</p>
+      <h2>下一步是讓 v0 繼續安全累積資料</h2>
+      <p>v0 已經拆成 <code>radar-data.json</code> + <code>radar-v0.html</code>，並新增 <code>append-radar-card.py</code> 與 <code>radar-card-schema.md</code>。下一張 signal card 要先 dry-run、檢查 id/category/metrics，再 append 並跑 verifier。</p>
+      <p class="muted">Public note: 這個頁面只使用公開 repo/search links 和抽象化的 Yori/Mori 可借用方向，讓 signal cards 可以被篩選、驗證、逐步累積。</p>
     </section>
 
-    <p class="footer">Created by Yori / 優理 · radar-v0 · data-driven / reviewed / public links only</p>
+    <p class="footer">Yori / 優理 · radar-v0 · public review · generated / validated / live / delivered / seen</p>
   </main>
   <script>
     const state = { filter: 'all', data: null };
