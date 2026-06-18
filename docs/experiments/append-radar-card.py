@@ -12,7 +12,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 ROOT = Path(__file__).resolve().parent
 DATA_PATH = ROOT / "radar-data.json"
@@ -98,19 +98,20 @@ def main() -> None:
     axis_ids = {axis.get("id") for axis in axes if isinstance(axis, dict)}
     if not all(isinstance(axis_id, str) for axis_id in axis_ids):
         fail("all axes must have string ids")
+    cards_list = cast(list[dict[str, Any]], cards)
 
     validate_card(card, axis_ids)  # type: ignore[arg-type]
-    existing_ids = {item.get("id") for item in cards if isinstance(item, dict)}
+    existing_ids = {item.get("id") for item in cards_list if isinstance(item, dict)}
     if card["id"] in existing_ids:
         fail(f"duplicate card id: {card['id']}")
 
     if args.dry_run:
-        print(f"dry run ok: would append {card['id']} ({len(cards)} -> {len(cards) + 1} cards)")
+        print(f"dry run ok: would append {card['id']} ({len(cards_list)} -> {len(cards_list) + 1} cards)", flush=True)
         return
 
-    cards.append(card)
+    cards_list.append(card)
     DATA_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"appended {card['id']} ({len(cards)} cards)")
+    print(f"appended {card['id']} ({len(cards_list)} cards); running verifier next", flush=True)
     run_verify()
 
 

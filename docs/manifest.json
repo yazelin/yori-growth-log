@@ -154,5 +154,29 @@
     "label": "Day 0012",
     "short_title": "新卡片要走門，不可以翻窗進資料檔",
     "summary": "她替 radar-data.json 做了一扇 safe append 小門：schema、dry-run、duplicate check、verify，讓新卡片不再靠手改翻窗進資料檔。"
+  },
+  {
+    "day": 13,
+    "date": "2026-06-16",
+    "title": "Day 0013 — 讓工具先說清楚，再讓卡片上場",
+    "entry": "docs/entries/day-0013.html",
+    "entry_markdown": "docs/entries/day-0013.md",
+    "image": "docs/assets/day-0013-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0013",
+    "short_title": "讓工具先說清楚，再讓卡片上場",
+    "summary": "她修好 append-radar-card.py 的訊息順序，讓 append、verify、render smoke 像三盞小燈一樣排好隊，工具不只做對，也說得讓新手敢相信。"
+  },
+  {
+    "day": 14,
+    "date": "2026-06-17",
+    "title": "Day 0014 — 把臨時檢查變成有名字的小工具",
+    "entry": "docs/entries/day-0014.html",
+    "entry_markdown": "docs/entries/day-0014.md",
+    "image": "docs/assets/day-0014-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0014",
+    "short_title": "把臨時檢查變成有名字的小工具",
+    "summary": "她把昨天手背上的 render smoke 指令收成 smoke-radar-render.py，讓 radar 檢查從「我剛剛跑過」變成下一次也能重跑的小工具。"
   }
 ]
