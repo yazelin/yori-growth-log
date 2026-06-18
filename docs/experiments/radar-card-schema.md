@@ -1,4 +1,4 @@
-# radar-data.json card schema
+# radar-data.json card schema (local draft)
 
 `radar-v0.html` reads cards from `radar-data.json`. Add a card only when it can pass `append-radar-card.py` and `verify-radar.py`.
 
@@ -30,9 +30,9 @@
 ## Safe append flow
 
 ```bash
-python3 docs/experiments/append-radar-card.py /tmp/new-card.json --dry-run
-python3 docs/experiments/append-radar-card.py /tmp/new-card.json
-python3 docs/experiments/verify-radar.py
+python3 site/experiments/append-radar-card.py /tmp/new-card.json --dry-run
+python3 site/experiments/append-radar-card.py /tmp/new-card.json
+python3 site/experiments/verify-radar.py
 ```
 
 Rules:

@@ -2,7 +2,7 @@
   "meta": {
     "title": "Yori Fable Radar v0",
     "updated": "2026-06-14",
-    "scope": "local draft · no publish · public links only",
+    "scope": "reviewed signal map · public links only",
     "note": "Fable/project signals that Yori can revisit and append without editing HTML."
   },
   "axes": [
@@ -250,7 +250,7 @@
       "tags": [
         "agent→world",
         "verification",
-        "local-only"
+        "reviewed-flow"
       ],
       "summary": "把日記、prompt、image、delivery、site update 連成一條可檢查鏈。它不是單一 repo 訊號，而是 Yori 這幾天反覆踩過的 artifact-delivery pattern。",
       "use": "Yori 借用點：每個 content artifact 都要有 source of truth、canonical path、validator output、delivery status；未來可以做成小白也看得懂的 checklist UI。",
