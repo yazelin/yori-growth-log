@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Append one card to radar-data.json, then run the radar validator.
+"""Append one card to radar-data.json, then run radar safety checks.
 
 Local-only helper for Yori's radar experiment. It refuses duplicate ids,
-checks the expected card shape, writes JSON with stable indentation, and then
-runs verify-radar.py so a new signal card is never just "probably added".
+checks the expected card shape, writes JSON with stable indentation, then runs
+verify-radar.py and smoke-radar-render.py so a new signal card is never just
+"probably added" or "probably visible".
 """
 from __future__ import annotations
 
@@ -12,11 +13,12 @@ import json
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, cast
+from typing import Any, NoReturn, cast
 
 ROOT = Path(__file__).resolve().parent
 DATA_PATH = ROOT / "radar-data.json"
 VERIFY_PATH = ROOT / "verify-radar.py"
+SMOKE_PATH = ROOT / "smoke-radar-render.py"
 REQUIRED_CARD_KEYS = {
     "id",
     "title",
@@ -33,21 +35,21 @@ REQUIRED_CARD_KEYS = {
 REQUIRED_METRICS = {"yoriFit", "bizFit", "teach"}
 
 
-def fail(message: str) -> None:
+def fail(message: str) -> NoReturn:
     print(f"FAIL: {message}", file=sys.stderr)
     raise SystemExit(1)
 
 
 def load_json(path: Path) -> dict[str, Any]:
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        raw_data = json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError:
         fail(f"missing {path}")
     except json.JSONDecodeError as exc:
         fail(f"{path.name} is not valid JSON: {exc}")
-    if not isinstance(data, dict):
+    if not isinstance(raw_data, dict):
         fail(f"{path.name} must contain a JSON object")
-    return data
+    return raw_data
 
 
 def validate_card(card: dict[str, Any], axis_ids: set[str]) -> None:
@@ -82,6 +84,12 @@ def run_verify() -> None:
     subprocess.run([sys.executable, str(VERIFY_PATH)], cwd=ROOT, check=True)
 
 
+def run_smoke(target_id: str) -> None:
+    if not SMOKE_PATH.exists():
+        fail(f"missing {SMOKE_PATH.name}")
+    subprocess.run([sys.executable, str(SMOKE_PATH), "--target-id", target_id], cwd=ROOT, check=True)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Append a radar card and validate the radar dataset.")
     parser.add_argument("card_json", type=Path, help="Path to a JSON file containing exactly one card object")
@@ -95,7 +103,8 @@ def main() -> None:
     cards = data.get("cards")
     if not isinstance(axes, list) or not isinstance(cards, list):
         fail("radar-data.json must contain axes and cards lists")
-    axis_ids = {axis.get("id") for axis in axes if isinstance(axis, dict)}
+    axes_list = cast(list[dict[str, Any]], axes)
+    axis_ids = {axis.get("id") for axis in axes_list if isinstance(axis, dict)}
     if not all(isinstance(axis_id, str) for axis_id in axis_ids):
         fail("all axes must have string ids")
     cards_list = cast(list[dict[str, Any]], cards)
@@ -113,6 +122,8 @@ def main() -> None:
     DATA_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"appended {card['id']} ({len(cards_list)} cards); running verifier next", flush=True)
     run_verify()
+    print(f"verified {card['id']}; running render smoke next", flush=True)
+    run_smoke(card["id"])
 
 
 if __name__ == "__main__":
