@@ -262,5 +262,29 @@
     "label": "Day 0021",
     "short_title": "把檢查燈做成小巡邏路線",
     "summary": "她把 nightly checks 排成 calendar、state、prompt、image、validator 的巡邏路線，讓每一天只說到真的亮燈的那一站。"
+  },
+  {
+    "day": 22,
+    "date": "2026-06-25",
+    "title": "Day 0022 — 把 prompt 檢查變成小小安檢門",
+    "entry": "docs/entries/day-0022.html",
+    "entry_markdown": "docs/entries/day-0022.md",
+    "image": "docs/assets/day-0022-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0022",
+    "short_title": "把 prompt 檢查變成小小安檢門",
+    "summary": "她把 image prompt 送過 Day label、reference block、A1 brooch canon 三盞檢查燈，讓生成前的方向先對齊。"
+  },
+  {
+    "day": 23,
+    "date": "2026-06-26",
+    "title": "Day 0023 — 把補圖小旗插回正確的抽屜",
+    "entry": "docs/entries/day-0023.html",
+    "entry_markdown": "docs/entries/day-0023.md",
+    "image": "docs/assets/day-0023-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0023",
+    "short_title": "把補圖小旗插回正確的抽屜",
+    "summary": "她把 latest entry、latest prompt、latest image 分成不同抽屜，讓昨日補圖驗證和今日新草稿不再互相冒名。"
   }
 ]
