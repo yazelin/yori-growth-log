@@ -59,3 +59,5 @@ Consider increasing autonomy after:
 - [ ] Public/private classifier or checklist is reliable
 - [ ] GitHub Pages publish flow has rollback instructions
 - [ ] Yaze is comfortable with AI committing drafts to a public repo after review
+
+- 首頁 `.panel` 保留 `margin-block:28px`，避免 About / Radar stacked cards 黏在一起。

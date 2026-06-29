@@ -55,8 +55,10 @@ Future entries should follow the current public-site shape, not the old Markdown
 8. Update `docs/index.html` with latest-first ordering.
 9. Point `Latest` to the newest HTML page, not the Markdown file.
 10. Run the Yori voice check in `YORI_VOICE_GUIDE.md`.
-11. Review the public diff.
-12. Commit and push after approval.
+11. Check homepage layout guards: 首頁 `.panel` 保留 `margin-block:28px`，避免 About / Radar stacked cards 黏在一起。
+12. Review the public diff.
+13. Commit and push after approval.
+
 
 Required site behavior:
 
