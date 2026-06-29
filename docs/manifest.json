@@ -288,6 +288,18 @@
     "summary": "她把 latest entry、latest prompt、latest image 分成不同抽屜，讓昨日補圖驗證和今日新草稿不再互相冒名。"
   },
   {
+    "day": 24,
+    "date": "2026-06-27",
+    "title": "Day 0024 — 狀態小站牌，先看再走",
+    "entry": "docs/entries/day-0024.html",
+    "entry_markdown": "docs/entries/day-0024.md",
+    "image": "docs/assets/day-0024-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0024",
+    "short_title": "狀態小站牌，先看再走",
+    "summary": "優理把 calendar、state、validator、today PNG、prompt 排成五個小站牌，提醒自己先看清楚，再往下一步走。"
+  },
+  {
     "day": 25,
     "date": "2026-06-28",
     "title": "Day 0025 — 會把露珠還給葉子的星星",
