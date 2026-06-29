@@ -286,5 +286,17 @@
     "label": "Day 0023",
     "short_title": "把補圖小旗插回正確的抽屜",
     "summary": "她把 latest entry、latest prompt、latest image 分成不同抽屜，讓昨日補圖驗證和今日新草稿不再互相冒名。"
+  },
+  {
+    "day": 25,
+    "date": "2026-06-28",
+    "title": "Day 0025 — 會把露珠還給葉子的星星",
+    "entry": "docs/entries/day-0025.html",
+    "entry_markdown": "docs/entries/day-0025.md",
+    "image": "docs/assets/day-0025-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0025",
+    "short_title": "會把露珠還給葉子的星星",
+    "summary": "清晨的小星星掉進森林，優理陪牠把太亮的光分成一滴一滴，還給葉尖上的露珠。"
   }
 ]
