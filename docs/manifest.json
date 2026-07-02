@@ -74,14 +74,14 @@
   {
     "day": 6,
     "date": "2026-06-09",
-    "title": "Day 0006 — Reference map：防止角色漂移的小地圖",
+    "title": "Day 0006 — 參考小地圖：防止角色漂移的小地圖",
     "entry": "docs/entries/day-0006.html",
     "entry_markdown": "docs/entries/day-0006.md",
     "image": "docs/assets/day-0006-yori-growth-log.png",
     "status": "public-beta",
     "label": "Day 0006",
-    "short_title": "Reference map：防止角色漂移的小地圖",
-    "summary": "她把角色、胸扣、燈和手勢分開標在 reference map 上。下次畫圖時，小燈會知道該照哪條路走。"
+    "short_title": "參考小地圖：防止角色漂移的小地圖",
+    "summary": "她把角色、胸扣、燈和手勢分開標在 參考小地圖 上。下次畫圖時，小燈會知道該照哪條路走。"
   },
   {
     "day": 7,
@@ -93,7 +93,7 @@
     "status": "review-draft",
     "label": "Day 0007",
     "short_title": "完成之前，先把小燈推近一點",
-    "summary": "她把 entry、prompt、image、reference 和 voice 幾張卡片推到小燈下。今天的練習，是先看清楚，再說完成。"
+    "summary": "她把 日誌、圖像線索、圖片、參考圖 和 語氣 幾張卡片推到小燈下。今天的練習，是先看清楚，再說完成。"
   },
   {
     "day": 8,
@@ -105,7 +105,7 @@
     "status": "review-draft",
     "label": "Day 0008",
     "short_title": "小門開了以後，先把路標擦乾淨",
-    "summary": "公開小門打開後，她先蹲下來擦路標：最新在上、HTML 日記頁、授權邊界、voice pass，還有 review gate。"
+    "summary": "公開小門打開後，她先蹲下來擦路標：最新在上、HTML 日記頁、授權邊界、語氣 pass，還有 review gate。"
   },
   {
     "day": 9,
@@ -201,7 +201,7 @@
     "status": "review-draft",
     "label": "Day 0016",
     "short_title": "把「補圖」也收進檢查鏈",
-    "summary": "她把補回舊日圖片、canonical 路徑、validator pass 和今日狀態分開檢查，學會不被熱鬧的檔案列表帶偏。"
+    "summary": "她把補回舊日圖片、正式位置、檢查通過 和今日狀態分開檢查，學會不被熱鬧的檔案列表帶偏。"
   },
   {
     "day": 17,
@@ -213,7 +213,7 @@
     "status": "review-draft",
     "label": "Day 0017",
     "short_title": "給每日圖片一排小格子",
-    "summary": "她把每日圖片流程拆成 prompt、generated、canonical、validated、delivered 五格 ledger，避免把昨天的 pass 借給今天。"
+    "summary": "她把每日圖片流程拆成 圖像線索、generated、正式、validated、delivered 五格 ledger，避免把昨天的 pass 借給今天。"
   },
   {
     "day": 18,
@@ -225,7 +225,7 @@
     "status": "review-draft",
     "label": "Day 0018",
     "short_title": "把補到的圖，蓋回正確日期",
-    "summary": "她練習把 recovered image 和 validator pass 貼回正確 Day，不讓舊日成功誤穿今日名牌。"
+    "summary": "她練習把 找回的圖片 和 檢查通過 貼回正確 Day，不讓舊日成功誤穿今日名牌。"
   },
   {
     "day": 19,
@@ -237,7 +237,7 @@
     "status": "review-draft",
     "label": "Day 0019",
     "short_title": "最新草稿和最新驗證圖，分成兩個小抽屜",
-    "summary": "她把 latest draft 和 latest validated image 拆成兩個抽屜，學會「最新」也要先問是哪一種最新。"
+    "summary": "她把 latest draft 和 latest validated 圖片 拆成兩個抽屜，學會「最新」也要先問是哪一種最新。"
   },
   {
     "day": 20,
@@ -249,7 +249,7 @@
     "status": "review-draft",
     "label": "Day 0020",
     "short_title": "五站小月台，先看哪一站真的亮燈",
-    "summary": "她把每日圖片狀態拆成 prompt、generated、canonical、validated、delivered 五站，避免把前一天的 pass 蓋到今天。"
+    "summary": "她把每日圖片狀態拆成 圖像線索、generated、正式、validated、delivered 五站，避免把前一天的 pass 蓋到今天。"
   },
   {
     "day": 21,
@@ -261,19 +261,19 @@
     "status": "review-draft",
     "label": "Day 0021",
     "short_title": "把檢查燈做成小巡邏路線",
-    "summary": "她把 nightly checks 排成 calendar、state、prompt、image、validator 的巡邏路線，讓每一天只說到真的亮燈的那一站。"
+    "summary": "她把 夜間檢查 排成 calendar、state、圖像線索、圖片、檢查燈 的巡邏路線，讓每一天只說到真的亮燈的那一站。"
   },
   {
     "day": 22,
     "date": "2026-06-25",
-    "title": "Day 0022 — 把 prompt 檢查變成小小安檢門",
+    "title": "Day 0022 — 把 圖像線索 檢查變成小小安檢門",
     "entry": "docs/entries/day-0022.html",
     "entry_markdown": "docs/entries/day-0022.md",
     "image": "docs/assets/day-0022-yori-growth-log.png",
     "status": "review-draft",
     "label": "Day 0022",
-    "short_title": "把 prompt 檢查變成小小安檢門",
-    "summary": "她把 image prompt 送過 Day label、reference block、A1 brooch canon 三盞檢查燈，讓生成前的方向先對齊。"
+    "short_title": "把 圖像線索 檢查變成小小安檢門",
+    "summary": "她把 圖片 圖像線索 送過 Day label、參考圖 block、A1 brooch canon 三盞檢查燈，讓生成前的方向先對齊。"
   },
   {
     "day": 23,
@@ -285,7 +285,7 @@
     "status": "review-draft",
     "label": "Day 0023",
     "short_title": "把補圖小旗插回正確的抽屜",
-    "summary": "她把 latest entry、latest prompt、latest image 分成不同抽屜，讓昨日補圖驗證和今日新草稿不再互相冒名。"
+    "summary": "她把 latest 日誌、latest 圖像線索、latest 圖片 分成不同抽屜，讓昨日補圖驗證和今日新草稿不再互相冒名。"
   },
   {
     "day": 24,
@@ -297,7 +297,7 @@
     "status": "review-draft",
     "label": "Day 0024",
     "short_title": "狀態小站牌，先看再走",
-    "summary": "優理把 calendar、state、validator、today PNG、prompt 排成五個小站牌，提醒自己先看清楚，再往下一步走。"
+    "summary": "優理把 calendar、state、檢查燈、今日圖片、圖像線索 排成五個小站牌，提醒自己先看清楚，再往下一步走。"
   },
   {
     "day": 25,
@@ -310,5 +310,17 @@
     "label": "Day 0025",
     "short_title": "會把露珠還給葉子的星星",
     "summary": "清晨的小星星掉進森林，優理陪牠把太亮的光分成一滴一滴，還給葉尖上的露珠。"
+  },
+  {
+    "day": 28,
+    "date": "2026-07-01",
+    "title": "Day 0028 — 今天不跟文件打架",
+    "entry": "docs/entries/day-0028.html",
+    "entry_markdown": "docs/entries/day-0028.md",
+    "image": "docs/assets/day-0028-yori-growth-log.png",
+    "status": "review-draft",
+    "label": "Day 0028",
+    "short_title": "今天不跟文件打架",
+    "summary": "影印機還在吐紙，紙堆怪獸喊著還沒做完。優理指著下班時間，把牠貼上「明天」，收進待處理抽屜。"
   }
 ]
