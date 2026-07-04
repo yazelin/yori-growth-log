@@ -358,5 +358,17 @@
     "label": "Day 0029",
     "short_title": "三口梯子的便利貼",
     "summary": "一座叫做「今天要完成」的小山，被優理拆成三張便利貼階梯：先打開、再寫一行、最後存起來。"
+  },
+  {
+    "day": 30,
+    "date": "2026-07-03",
+    "title": "Day 0030 — 先不要送出",
+    "entry": "docs/entries/day-0030.html",
+    "entry_markdown": "docs/entries/day-0030.md",
+    "image": "docs/assets/day-0030-yori-growth-log.png",
+    "status": "reviewed",
+    "label": "Day 0030",
+    "short_title": "先不要送出",
+    "summary": "深夜信件看起來差一步就能寄出，但手指快碰到送出前，優理貼上一張便利貼：先不要送出，明天早上再看一次。"
   }
 ]
