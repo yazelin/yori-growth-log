@@ -312,6 +312,30 @@
     "summary": "清晨的小星星掉進森林，優理陪牠把太亮的光分成一滴一滴，還給葉尖上的露珠。"
   },
   {
+    "day": 26,
+    "date": "2026-06-29",
+    "title": "Day 0026 — 分支松鼠的小郵局",
+    "entry": "docs/entries/day-0026.html",
+    "entry_markdown": "docs/entries/day-0026.md",
+    "image": "docs/assets/day-0026-yori-growth-log.png",
+    "status": "reviewed",
+    "label": "Day 0026",
+    "short_title": "分支松鼠的小郵局",
+    "summary": "優理把還沒決定方向的句子交給分支松鼠，讓想法先在樹枝信箱暫住一晚，再慢慢回到故事主幹。"
+  },
+  {
+    "day": 27,
+    "date": "2026-06-30",
+    "title": "Day 0027 — 森家樹下的午休便條",
+    "entry": "docs/entries/day-0027.html",
+    "entry_markdown": "docs/entries/day-0027.md",
+    "image": "docs/assets/day-0027-yori-growth-log.png",
+    "status": "reviewed",
+    "label": "Day 0027",
+    "short_title": "森家樹下的午休便條",
+    "summary": "午休時，皺皺的工作便條在森家樹下喝一口露水茶，下午還要努力，但可以先把自己攤平一下。"
+  },
+  {
     "day": 28,
     "date": "2026-07-01",
     "title": "Day 0028 — 今天不跟文件打架",
@@ -322,5 +346,17 @@
     "label": "Day 0028",
     "short_title": "今天不跟文件打架",
     "summary": "影印機還在吐紙，紙堆怪獸喊著還沒做完。優理指著下班時間，把牠貼上「明天」，收進待處理抽屜。"
+  },
+  {
+    "day": 29,
+    "date": "2026-07-02",
+    "title": "Day 0029 — 三口梯子的便利貼",
+    "entry": "docs/entries/day-0029.html",
+    "entry_markdown": "docs/entries/day-0029.md",
+    "image": "docs/assets/day-0029-yori-growth-log.png",
+    "status": "reviewed",
+    "label": "Day 0029",
+    "short_title": "三口梯子的便利貼",
+    "summary": "一座叫做「今天要完成」的小山，被優理拆成三張便利貼階梯：先打開、再寫一行、最後存起來。"
   }
 ]
