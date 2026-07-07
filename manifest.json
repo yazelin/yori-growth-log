@@ -382,5 +382,29 @@
     "label": "Day 0031",
     "short_title": "附件呢？",
     "summary": "信件最後一行寫著「麻煩請看附件」，手指卻差點按下送出；迴紋針守門員舉旗提醒：附件呢？"
+  },
+  {
+    "day": 32,
+    "date": "2026-07-05",
+    "title": "Day 0032 — 信件先排隊",
+    "entry": "docs/entries/day-0032.html",
+    "entry_markdown": "docs/entries/day-0032.md",
+    "image": "docs/assets/day-0032-yori-growth-log.png",
+    "status": "reviewed",
+    "label": "Day 0032",
+    "short_title": "信件先排隊",
+    "summary": "午休後收件匣變成紙信小蛾；優理用「今天／明天／可以等」三個盒子，示範收件匣三盒分流法。"
+  },
+  {
+    "day": 33,
+    "date": "2026-07-06",
+    "title": "Day 0033 — 這版是最新版嗎",
+    "entry": "docs/entries/day-0033.html",
+    "entry_markdown": "docs/entries/day-0033.md",
+    "image": "docs/assets/day-0033-yori-growth-log.png",
+    "status": "reviewed",
+    "label": "Day 0033",
+    "short_title": "這版是最新版嗎",
+    "summary": "下班前一排 final 檔案都像最新版；優理先看日期、問用途，再讓真正要交付的那份戴上「最新」皇冠。"
   }
 ]
