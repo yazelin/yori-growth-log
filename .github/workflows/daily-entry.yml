@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '30 13 * * *'   # 台北 21:30 每天一篇
   workflow_dispatch:
+    inputs:
+      force:
+        description: '強制發（忽略同日已發過的防呆，測試用）'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -34,6 +39,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CODEX_IMAGE_KEY: ${{ secrets.CODEX_IMAGE_KEY }}
+          FORCE_TODAY: ${{ github.event.inputs.force == 'true' && '1' || '0' }}
         run: python scripts/publish_entry.py
 
       - name: 提交

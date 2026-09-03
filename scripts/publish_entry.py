@@ -147,7 +147,7 @@ def publish(d, image_path=None):
     entries = load_entries()
     day = entries[-1]["day"] + 1
     date = taipei_today()
-    if any(e["date"] == date for e in entries):
+    if os.environ.get("FORCE_TODAY") != "1" and any(e["date"] == date for e in entries):
         print(f"{date} 已有日記，跳過"); return
     label = f"Day {day:04d}"
     slug = f"day-{day:04d}"
@@ -219,6 +219,6 @@ if __name__ == "__main__":
         publish(d, img)
     else:
         entries = load_entries()
-        if any(e["date"] == taipei_today() for e in entries):
+        if os.environ.get("FORCE_TODAY") != "1" and any(e["date"] == taipei_today() for e in entries):
             print("今天已發過"); sys.exit(0)
         publish(auto_write(entries))
