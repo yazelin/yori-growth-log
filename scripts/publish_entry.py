@@ -8,10 +8,10 @@
       全自動：Gemini 寫稿 → codex-image-service 產圖 → 寫檔。
 
 金鑰：LLMSHARE_API_KEY（寫稿，走 llm-share.duotify.com 閘道）、CODEX_IMAGE_KEY（產圖）。
-只用 stdlib；圖的參考錨是 scripts/style-anchor-*.jpg（已縮 1024，不需 Pillow）。
+相依：Pillow（PNG→webp）。圖的參考錨是 scripts/style-anchor-*.jpg（已縮 1024）。
 任何一步失敗就整篇不發（exit 1），不會留半套檔案。
 """
-import base64, datetime, json, os, re, sys, time, urllib.request, zoneinfo
+import base64, datetime, io, json, os, re, sys, time, urllib.request, zoneinfo
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENTRY_FIELDS = ["short_title", "summary", "body_md", "image_prompt", "alt"]
@@ -133,15 +133,22 @@ def gen_image(prompt, out_path):
             imgs = r.get("images") or r.get("data") or []
             b64 = imgs[0].get("b64_json") or imgs[0].get("base64")
             if b64:
-                open(out_path, "wb").write(base64.b64decode(b64))
+                raw = base64.b64decode(b64)
             else:
                 url = imgs[0]["url"]
                 if url.startswith("/"): url = IMG_BASE + url
-                urllib.request.urlretrieve(url, out_path)
+                raw = urllib.request.urlopen(url, timeout=120).read()
+            _save_webp(raw, out_path)
             return
         if st in ("failed", "error"):
             print("產圖失敗：", json.dumps(r)[:300], file=sys.stderr); sys.exit(1)
     print("產圖逾時", file=sys.stderr); sys.exit(1)
+
+def _save_webp(raw_bytes, out_path):
+    """站上一律 webp（PNG 直出一張 1MB 級，36 張把首頁壓到 94MB，2026-09-03 踩過）。"""
+    from PIL import Image
+    im = Image.open(io.BytesIO(raw_bytes))
+    im.save(out_path, "WEBP", quality=85, method=6)
 
 # ---------- 發佈 ----------
 def publish(d, image_path=None):
@@ -152,12 +159,12 @@ def publish(d, image_path=None):
         print(f"{date} 已有日記，跳過"); return
     label = f"Day {day:04d}"
     slug = f"day-{day:04d}"
-    img_name = f"{slug}-yori-growth-log.png"
+    img_name = f"{slug}-yori-growth-log.webp"
     img_path = os.path.join(ROOT, "docs", "assets", img_name)
 
     # 1) 圖先到位（失敗就整篇不發）
     if image_path:
-        open(img_path, "wb").write(open(image_path, "rb").read())
+        _save_webp(open(image_path, "rb").read(), img_path)
     else:
         gen_image(d["image_prompt"], img_path)
 

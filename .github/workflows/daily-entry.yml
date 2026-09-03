@@ -27,6 +27,9 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: 裝相依
+        run: pip install --quiet Pillow
+
       - name: 確認金鑰
         env:
           LLMSHARE_API_KEY: ${{ secrets.LLMSHARE_API_KEY }}

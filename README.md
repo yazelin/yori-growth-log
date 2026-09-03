@@ -28,7 +28,7 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
    必須把之前某條小規則往前推一步、用在新地方、或補漏洞，結尾折一條新的小規則進 notebook。
 2. 配圖打 codex-image-service（gpt-image），參考圖固定兩張錨（`scripts/style-anchor-*.jpg`：
    角色錨＋畫風錨），畫面必須畫出當日「進步點」的瞬間與日常物件隱喻，禁畫面文字。
-3. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。任何一步失敗整篇不發，隔天再來。
+3. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。圖一律存 webp（q85），站上不放 PNG。任何一步失敗整篇不發，隔天再來。
 
 需要的 repo secrets：`LLMSHARE_API_KEY`（寫稿）、`CODEX_IMAGE_KEY`（產圖）。
 手動補發：Actions 頁面 workflow_dispatch；同一天已有日記會自動跳過。
