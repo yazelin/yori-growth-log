@@ -430,5 +430,17 @@
     "label": "Day 0035",
     "short_title": "草稿裡的半封信",
     "summary": "Day 0032 的三盒分流排好了收件匣，但優理下午發現草稿匣裡還躲著一隻翅膀濕濕的紙信蛾，只寫到一半。她把小燈推近，補上 Day 0032 沒畫到的那一步：清空「今天」盒子前，先問草稿匣有沒有寫到一半的。"
+  },
+  {
+    "day": 36,
+    "date": "2026-09-04",
+    "title": "Day 0036 — 舊版休息區的封存封條",
+    "entry": "docs/entries/day-0036.html",
+    "entry_markdown": "docs/entries/day-0036.md",
+    "image": "docs/assets/day-0036-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0036",
+    "short_title": "舊版休息區的封存封條",
+    "summary": "優理把 Day 0033 的「最新版皇冠檢查法」往前推一步，發現舊版搬進休息區後，搜尋時還是會跳出來。他為舊版貼上日期封條，讓它們真正睡著。"
   }
 ]
