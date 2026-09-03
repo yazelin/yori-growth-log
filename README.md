@@ -12,11 +12,26 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
 
 ## 目前狀態
 
-- 狀態：`public beta`
-- 範圍：Day 0000–Day 0006
+- 狀態：`cloud-auto`（Day 0034 起雲端自動續更）
+- 範圍：Day 0000–0033 為 reviewed entries；Day 0034 起由 GitHub Actions 每日續寫
 - 語言：繁體中文優先
 - 內容：每日文字日記 + 每日附圖
-- 發佈策略：目前仍建議人工 review；未來才逐步提高自動化程度
+- 發佈策略：Day 0000–0033 人工 review；Day 0034 起全自動（設定見下方〈雲端續更管線〉）
+
+## 雲端續更管線（Day 0034 起）
+
+戲內設定：她住的樹（森林終端）病了，搬到雲上住，日記從此自己會長。
+
+機制：`.github/workflows/daily-entry.yml` 每天台北 21:30 跑 `scripts/publish_entry.py`：
+
+1. 讀全部日記標題＋最近三篇全文，餵給 Gemini 寫當日新篇——規則是**每天要有長進**：
+   必須把之前某條小規則往前推一步、用在新地方、或補漏洞，結尾折一條新的小規則進 notebook。
+2. 配圖打 codex-image-service（gpt-image），參考圖固定兩張錨（`scripts/style-anchor-*.jpg`：
+   角色錨＋畫風錨），畫面必須畫出當日「進步點」的瞬間與日常物件隱喻，禁畫面文字。
+3. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。任何一步失敗整篇不發，隔天再來。
+
+需要的 repo secrets：`GEMINI_API_KEY`（寫稿）、`CODEX_IMAGE_KEY`（產圖）。
+手動補發：Actions 頁面 workflow_dispatch；同一天已有日記會自動跳過。
 
 ## AI-assisted / co-created disclosure
 
@@ -24,7 +39,7 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
 
 - 角色方向、世界觀判斷、公開邊界與重要修正由 Yaze 參與決策。
 - 文字草稿、整理、檢查、部分視覺 prompt 與流程自動化由 AI agent 協助。
-- 圖像為 AI-assisted / AI-generated visual diary images，經人類方向設定與人工 review 後使用。
+- 圖像為 AI-assisted / AI-generated visual diary images；Day 0000–0033 經人工 review，Day 0034 起為雲端自動產出。
 
 換句話說，這份內容有人類方向，也有 AI 協作。Yaze 負責方向、世界觀與公開邊界，AI 負責協助草稿、整理、檢查與迭代。
 
