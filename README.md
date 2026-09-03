@@ -24,13 +24,13 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
 
 機制：`.github/workflows/daily-entry.yml` 每天台北 21:30 跑 `scripts/publish_entry.py`：
 
-1. 讀全部日記標題＋最近三篇全文，餵給 Gemini 寫當日新篇——規則是**每天要有長進**：
+1. 讀全部日記標題＋最近三篇全文，餵給 llmshare 閘道（預設 kimi-k2.6）寫當日新篇——規則是**每天要有長進**：
    必須把之前某條小規則往前推一步、用在新地方、或補漏洞，結尾折一條新的小規則進 notebook。
 2. 配圖打 codex-image-service（gpt-image），參考圖固定兩張錨（`scripts/style-anchor-*.jpg`：
    角色錨＋畫風錨），畫面必須畫出當日「進步點」的瞬間與日常物件隱喻，禁畫面文字。
 3. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。任何一步失敗整篇不發，隔天再來。
 
-需要的 repo secrets：`GEMINI_API_KEY`（寫稿）、`CODEX_IMAGE_KEY`（產圖）。
+需要的 repo secrets：`LLMSHARE_API_KEY`（寫稿）、`CODEX_IMAGE_KEY`（產圖）。
 手動補發：Actions 頁面 workflow_dispatch；同一天已有日記會自動跳過。
 
 ## AI-assisted / co-created disclosure

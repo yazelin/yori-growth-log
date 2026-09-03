@@ -29,15 +29,15 @@ jobs:
 
       - name: 確認金鑰
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLMSHARE_API_KEY: ${{ secrets.LLMSHARE_API_KEY }}
           CODEX_IMAGE_KEY: ${{ secrets.CODEX_IMAGE_KEY }}
         run: |
-          [ -n "$GEMINI_API_KEY" ] || { echo "::error::缺 GEMINI_API_KEY"; exit 1; }
+          [ -n "$LLMSHARE_API_KEY" ] || { echo "::error::缺 LLMSHARE_API_KEY"; exit 1; }
           [ -n "$CODEX_IMAGE_KEY" ] || { echo "::error::缺 CODEX_IMAGE_KEY"; exit 1; }
 
       - name: 產出今日日記
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          LLMSHARE_API_KEY: ${{ secrets.LLMSHARE_API_KEY }}
           CODEX_IMAGE_KEY: ${{ secrets.CODEX_IMAGE_KEY }}
           FORCE_TODAY: ${{ github.event.inputs.force == 'true' && '1' || '0' }}
         run: python scripts/publish_entry.py

@@ -7,7 +7,7 @@
   python3 scripts/publish_entry.py
       全自動：Gemini 寫稿 → codex-image-service 產圖 → 寫檔。
 
-金鑰：GEMINI_API_KEY（寫稿）、CODEX_IMAGE_KEY（產圖）。
+金鑰：LLMSHARE_API_KEY（寫稿，走 llm-share.duotify.com 閘道）、CODEX_IMAGE_KEY（產圖）。
 只用 stdlib；圖的參考錨是 scripts/style-anchor-*.jpg（已縮 1024，不需 Pillow）。
 任何一步失敗就整篇不發（exit 1），不會留半套檔案。
 """
@@ -16,8 +16,8 @@ import base64, datetime, json, os, re, sys, time, urllib.request, zoneinfo
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENTRY_FIELDS = ["short_title", "summary", "body_md", "image_prompt", "alt"]
 IMG_BASE = "https://ching-tech.ddns.net/codex-image"
-GEM_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
-TEXT_MODEL = "gemini-2.5-flash"
+LLM_BASE = "https://llm-share.duotify.com/v1"
+TEXT_MODEL = os.environ.get("TEXT_MODEL", "kimi-k2.6")
 
 def taipei_today():
     return datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Taipei")).date().isoformat()
@@ -45,15 +45,16 @@ def md2html(md):
     flush_ul()
     return "\n".join(out)
 
-# ---------- Gemini 寫稿 ----------
-def gemini_text(prompt):
-    key = os.environ["GEMINI_API_KEY"]
-    body = {"contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": 0.9, "responseMimeType": "application/json"}}
-    req = urllib.request.Request(f"{GEM_BASE}/{TEXT_MODEL}:generateContent?key={key}",
-        json.dumps(body).encode(), {"Content-Type": "application/json"})
-    r = json.load(urllib.request.urlopen(req, timeout=120))
-    return r["candidates"][0]["content"]["parts"][0]["text"]
+# ---------- llmshare 寫稿（OpenAI 協議） ----------
+def gemini_text(prompt):  # 名字留著少動呼叫端；後端已換 llmshare
+    key = os.environ["LLMSHARE_API_KEY"]
+    body = {"model": TEXT_MODEL, "temperature": 0.9,
+            "messages": [{"role": "user", "content": prompt}]}
+    req = urllib.request.Request(LLM_BASE + "/chat/completions",
+        json.dumps(body).encode(),
+        {"Content-Type": "application/json", "Authorization": "Bearer " + key})
+    r = json.load(urllib.request.urlopen(req, timeout=300))
+    return r["choices"][0]["message"]["content"]
 
 def auto_write(entries):
     recent = entries[-3:]
