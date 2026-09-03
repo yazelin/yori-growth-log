@@ -1,4 +1,4 @@
-# Yori / 優理 Growth Log
+# 想成為圖文作家的優理｜Yori Growth Log
 
 Yori / 優理是一位 Mori-family 的數位學徒。這份 growth log 記錄她每天如何被修正、練習工具、整理 reference、檢查 artifact，並把錯誤轉成下一條規則。
 
@@ -24,8 +24,11 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
 
 機制：`.github/workflows/daily-entry.yml` 每天台北 21:30 跑 `scripts/publish_entry.py`：
 
-1. 讀全部日記標題＋最近三篇全文，餵給 llmshare 閘道（預設 kimi-k2.6）寫當日新篇——規則是**每天要有長進**：
-   必須把之前某條小規則往前推一步、用在新地方、或補漏洞，結尾折一條新的小規則進 notebook。
+1. 讀**小規則帳本**（`scripts/rules.json`）＋最近十四天標題＋最近三篇全文，餵給 llmshare 閘道
+   （預設 kimi-k2.6）寫當日新篇——規則是**每天要有長進**：必須把帳本裡某條小規則往前推一步、
+   用在新地方、或補漏洞；每篇折一條新規則回帳本（`new_rule` 欄位）。
+   **每月 1 號是整理日**：他回顧帳本、折併相近的規則（`merged_days`），日記內容就是整理過程本身，
+   帳本因此有界，context 不會無限長大。
 2. 配圖打 codex-image-service（gpt-image），參考圖固定兩張錨（`scripts/style-anchor-*.jpg`：
    角色錨＋畫風錨），畫面必須畫出當日「進步點」的瞬間與日常物件隱喻，禁畫面文字。
 3. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。圖一律存 webp（q85），站上不放 PNG。任何一步失敗整篇不發，隔天再來。

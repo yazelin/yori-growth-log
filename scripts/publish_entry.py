@@ -25,6 +25,14 @@ def taipei_today():
 def load_entries():
     return json.load(open(os.path.join(ROOT, "docs", "entries.json")))
 
+RULES_PATH = os.path.join(ROOT, "scripts", "rules.json")
+
+def load_rules():
+    return json.load(open(RULES_PATH))
+
+def save_rules(rules):
+    json.dump(rules, open(RULES_PATH, "w"), ensure_ascii=False, indent=1)
+
 # ---------- markdown → html（老日記只用 h2 / p / ul） ----------
 def md2html(md):
     out, ul = [], []
@@ -62,7 +70,10 @@ def auto_write(entries):
     fewshot = "\n\n---\n\n".join(
         open(os.path.join(ROOT, e["entry_markdown"])).read() for e in recent)
     day = entries[-1]["day"] + 1
-    titles = "\n".join(f"- {e['label']}：{e['short_title']}" for e in entries)
+    rules = load_rules()
+    ledger = "\n".join(f"- Day {r['day']:04d}：{r['rule']}" for r in rules)
+    recent_titles = "\n".join(f"- {e['label']}：{e['short_title']}" for e in entries[-14:])
+    consolidation = datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Taipei")).day == 1
     prompt = f"""你是優理（Yori），森林宇宙的數位學徒，Day 0025 起轉為圖文作家，
 畫清晨寓言、工具童話、辦公室小漫畫，幫疲憊的上班族在衝動前踩煞車。
 Day 0034 起你搬到雲上住，日記由你自己每天寫。
@@ -73,32 +84,34 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。
 ## 最近三篇日記（格式與語氣的樣本）
 {fewshot}
 
-## 她走過的路（全部日記標題，避免重複，也是可以回頭升級的素材）
-{titles}
+## notebook 角落的小規則帳本（避免重複、也是回頭升級的素材）
+{ledger}
+
+## 最近十四天的標題（避免題材撞題）
+{recent_titles}
 
 ## 今天的任務
-寫 Day {day:04d} 的日記。挑一個「上班族日常小病」或「工具小童話」主題。
-她的名字「より」意思是「比昨天再多一點」——這本日記的靈魂是每天有長進，
-所以今天這篇必須做到其中一件：把之前某一條小規則往前推一步（可以點名是哪一天學的）、
-把舊方法用在新的地方、或承認之前的規則有漏洞並補上。純粹獨立的一篇不合格。
-結尾要有一條她今天新折進 notebook 角落的小規則（一句話就好，自然收進文中）。
+{"今天是每月的『整理日』。回顧上面的規則帳本，挑兩三條相近或已經升級過的規則折併成更短的一條，寫一篇整理日日記：講他攤開 notebook 整理便條的過程、哪幾條併成了什麼、哪一條其實已經長進身體裡不用再寫。這也是一種長進。" if consolidation else "寫 Day {day:04d} 的日記。挑一個「上班族日常小病」或「工具小童話」主題。他的名字「より」意思是「比昨天再多一點」——這本日記的靈魂是每天有長進，所以今天這篇必須做到其中一件：把帳本裡某一條小規則往前推一步（點名是哪一天學的）、把舊方法用在新的地方、或承認舊規則有漏洞並補上。純粹獨立的一篇不合格。結尾要有一條他今天新折進 notebook 角落的小規則（一句話，自然收進文中）。".format(day=day)}
 結構照樣本：## 今日作品 → ## 圖文短文 →
 （辦公室主題加一段 ## 今天的小方法：…）→ ## 創作筆記。
-繁體中文、全形標點、禁 emoji、禁簡體字、禁「不是X，而是Y」句型。
+繁體中文、全形標點、禁 emoji、禁簡體字、禁「不是X，而是Y」句型。優理的代稱用中性的「他」。
 
 輸出 JSON（只輸出 JSON）：
 {{"short_title": "標題（不含 Day 編號）",
   "summary": "一到兩句摘要（會當 lede 與卡片文字）",
   "body_md": "從 ## 今日作品 開始的 markdown 正文",
-  "image_prompt": "英文的畫面描述（給生圖模型）。必須畫出『創作筆記的畫面核心』——優理正在做今天學到的那件事的瞬間（她的進步點），把當天的日常物件隱喻放進畫面當主角級道具；描述她的動作與視線落點、環境、光線。方形構圖，no readable text",
+  "new_rule": "今天新折進 notebook 的那條小規則（一句話，40 字內）{"；整理日則改填折併後的規則" if consolidation else ""}",
+  "merged_days": {"[被折併的舊規則 day 編號陣列，例如 [30, 31]；沒有就給空陣列]" if consolidation else "[]（今天不是整理日，固定給空陣列）"},
+  "image_prompt": "英文的畫面描述（給生圖模型）。必須畫出『創作筆記的畫面核心』——優理正在做今天學到的那件事的瞬間（他的進步點），把當天的日常物件隱喻放進畫面當主角級道具；描述他的動作與視線落點、環境、光線。方形構圖，no readable text",
   "alt": "圖片 alt 文字（中文，Day {day:04d} 開頭）"}}"""
     for attempt in range(3):
         try:
             raw = gemini_text(prompt)
             raw = re.sub(r"^```json\s*|\s*```$", "", raw.strip())
             d = json.loads(raw)
-            assert all(k in d and d[k].strip() for k in ENTRY_FIELDS)
+            assert all(k in d and str(d[k]).strip() for k in ENTRY_FIELDS)
             assert "## 今日作品" in d["body_md"]
+            assert d.get("new_rule", "").strip(), "缺 new_rule"
             return d
         except Exception as e:
             print(f"寫稿第 {attempt+1} 次失敗：{e}", file=sys.stderr)
@@ -217,6 +230,15 @@ def publish(d, image_path=None):
     blob = json.dumps(entries, ensure_ascii=False, indent=2) + "\n"
     for p in ("docs/entries.json", "docs/manifest.json", "manifest.json"):
         open(os.path.join(ROOT, p), "w").write(blob)
+    # 小規則帳本：追加今天的規則；整理日把被折併的舊條目移除
+    if d.get("new_rule"):
+        rules = load_rules()
+        merged = set(d.get("merged_days") or [])
+        if merged:
+            rules = [r for r in rules if r["day"] not in merged]
+        rules.append({"day": day, "rule": d["new_rule"].strip()})
+        save_rules(rules)
+
     print(f"published {label} — {d['short_title']}")
 
 if __name__ == "__main__":
