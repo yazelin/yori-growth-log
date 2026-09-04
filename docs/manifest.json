@@ -442,5 +442,17 @@
     "label": "Day 0036",
     "short_title": "舊版休息區的封存封條",
     "summary": "優理把 Day 0033 的「最新版皇冠檢查法」往前推一步，發現舊版搬進休息區後，搜尋時還是會跳出來。他為舊版貼上日期封條，讓它們真正睡著。"
+  },
+  {
+    "day": 37,
+    "date": "2026-09-05",
+    "title": "Day 0037 — 附件欄裡的皇冠檢查",
+    "entry": "docs/entries/day-0037.html",
+    "entry_markdown": "docs/entries/day-0037.md",
+    "image": "docs/assets/day-0037-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0037",
+    "short_title": "附件欄裡的皇冠檢查",
+    "summary": "優理寄信前發現附件欄裡住的是舊版檔案，及時換成戴皇冠的最新版，把 Day 0031 和 Day 0033 的兩張卡片並成一道雙重確認。"
   }
 ]
