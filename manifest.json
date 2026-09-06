@@ -466,5 +466,17 @@
     "label": "Day 0038",
     "short_title": "可以等盒裡的灰塵",
     "summary": "優理打開「可以等」盒子，發現裡面的紙信蛾翅膀積了灰，有一隻已經過了約定的回覆日。他幫每一封信補上應答日期，讓「可以等」真正只是暫時停留，不是永遠遺忘。"
+  },
+  {
+    "day": 39,
+    "date": "2026-09-07",
+    "title": "Day 0039 — 暫記紙上的日期封條",
+    "entry": "docs/entries/day-0039.html",
+    "entry_markdown": "docs/entries/day-0039.md",
+    "image": "docs/assets/day-0039-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0039",
+    "short_title": "暫記紙上的日期封條",
+    "summary": "優理發現桌面上那張從不關門的暫記紙，疊滿了不同日子的字跡。他把 Day 0036 的封存封條拿過來，一段一段剪開，讓時間不再擠在同一頁。"
   }
 ]
