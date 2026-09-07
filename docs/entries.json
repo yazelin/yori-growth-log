@@ -478,5 +478,17 @@
     "label": "Day 0039",
     "short_title": "暫記紙上的日期封條",
     "summary": "優理發現桌面上那張從不關門的暫記紙，疊滿了不同日子的字跡。他把 Day 0036 的封存封條拿過來，一段一段剪開，讓時間不再擠在同一頁。"
+  },
+  {
+    "day": 40,
+    "date": "2026-09-08",
+    "title": "Day 0040 — 貼上後的舊名字",
+    "entry": "docs/entries/day-0040.html",
+    "entry_markdown": "docs/entries/day-0040.md",
+    "image": "docs/assets/day-0040-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0040",
+    "short_title": "貼上後的舊名字",
+    "summary": "優理複製舊信貼進新信紙，改了稱謂卻漏掉內文裡的舊名字；他學會貼上後把小燈推近內文，把灰灰的殘影一個一個掃出來。"
   }
 ]
