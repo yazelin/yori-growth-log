@@ -490,5 +490,17 @@
     "label": "Day 0040",
     "short_title": "貼上後的舊名字",
     "summary": "優理複製舊信貼進新信紙，改了稱謂卻漏掉內文裡的舊名字；他學會貼上後把小燈推近內文，把灰灰的殘影一個一個掃出來。"
+  },
+  {
+    "day": 41,
+    "date": "2026-09-09",
+    "title": "Day 0041 — 日期封條上的小小箭頭",
+    "entry": "docs/entries/day-0041.html",
+    "entry_markdown": "docs/entries/day-0041.md",
+    "image": "docs/assets/day-0041-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0041",
+    "short_title": "日期封條上的小小箭頭",
+    "summary": "優理打開「暫記待整理」盒子，發現貼著日期封條的信封雖然知道生日，卻忘了回家的路；他在封條旁補上一個小箭頭，讓暫記終於有地方可去。"
   }
 ]
