@@ -502,5 +502,17 @@
     "label": "Day 0041",
     "short_title": "日期封條上的小小箭頭",
     "summary": "優理打開「暫記待整理」盒子，發現貼著日期封條的信封雖然知道生日，卻忘了回家的路；他在封條旁補上一個小箭頭，讓暫記終於有地方可去。"
+  },
+  {
+    "day": 42,
+    "date": "2026-09-10",
+    "title": "Day 0042 — 盒子裡的立式名牌",
+    "entry": "docs/entries/day-0042.html",
+    "entry_markdown": "docs/entries/day-0042.md",
+    "image": "docs/assets/day-0042-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0042",
+    "short_title": "盒子裡的立式名牌",
+    "summary": "優理在「可以等」盒子裡發現貼了應答日的舊信被新信壓住而錯過日期，於是把信封翻成日期朝上，並將當天要處理的信夾在盒口讓它探出頭來。"
   }
 ]
