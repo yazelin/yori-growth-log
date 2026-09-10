@@ -514,5 +514,17 @@
     "label": "Day 0042",
     "short_title": "盒子裡的立式名牌",
     "summary": "優理在「可以等」盒子裡發現貼了應答日的舊信被新信壓住而錯過日期，於是把信封翻成日期朝上，並將當天要處理的信夾在盒口讓它探出頭來。"
+  },
+  {
+    "day": 43,
+    "date": "2026-09-11",
+    "title": "Day 0043 — 舊格式的小灰影",
+    "entry": "docs/entries/day-0043.html",
+    "entry_markdown": "docs/entries/day-0043.md",
+    "image": "docs/assets/day-0043-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0043",
+    "short_title": "舊格式的小灰影",
+    "summary": "優理把 Day 0040 的內文掃描再推一步，發現舊信裡的格式與連結會像一層灰影黏在新信上。他學會先讓文字走過純文字小門，再讓新信穿上自己的衣服。"
   }
 ]
