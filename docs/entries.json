@@ -526,5 +526,17 @@
     "label": "Day 0043",
     "short_title": "舊格式的小灰影",
     "summary": "優理把 Day 0040 的內文掃描再推一步，發現舊信裡的格式與連結會像一層灰影黏在新信上。他學會先讓文字走過純文字小門，再讓新信穿上自己的衣服。"
+  },
+  {
+    "day": 44,
+    "date": "2026-09-12",
+    "title": "Day 0044 — 門口掛著的舊外套",
+    "entry": "docs/entries/day-0044.html",
+    "entry_markdown": "docs/entries/day-0044.md",
+    "image": "docs/assets/day-0044-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0044",
+    "short_title": "門口掛著的舊外套",
+    "summary": "優理學會掃完內文後，發現主旨欄還掛著舊信的門牌。他伸手換下那件舊外套，讓新信對上自己的地址。"
   }
 ]
