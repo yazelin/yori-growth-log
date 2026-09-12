@@ -538,5 +538,17 @@
     "label": "Day 0044",
     "short_title": "門口掛著的舊外套",
     "summary": "優理學會掃完內文後，發現主旨欄還掛著舊信的門牌。他伸手換下那件舊外套，讓新信對上自己的地址。"
+  },
+  {
+    "day": 45,
+    "date": "2026-09-13",
+    "title": "Day 0045 — 口袋裡的舊名片",
+    "entry": "docs/entries/day-0045.html",
+    "entry_markdown": "docs/entries/day-0045.md",
+    "image": "docs/assets/day-0045-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0045",
+    "short_title": "口袋裡的舊名片",
+    "summary": "優理把 Day 0040 的內文掃描延伸到信尾簽名檔，發現舊名片還藏在口袋裡，差點讓對方撥到空號。"
   }
 ]
