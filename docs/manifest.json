@@ -550,5 +550,17 @@
     "label": "Day 0045",
     "short_title": "口袋裡的舊名片",
     "summary": "優理把 Day 0040 的內文掃描延伸到信尾簽名檔，發現舊名片還藏在口袋裡，差點讓對方撥到空號。"
+  },
+  {
+    "day": 46,
+    "date": "2026-09-14",
+    "title": "Day 0046 — 信尾拖著的舊繩索",
+    "entry": "docs/entries/day-0046.html",
+    "entry_markdown": "docs/entries/day-0046.md",
+    "image": "docs/assets/day-0046-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0046",
+    "short_title": "信尾拖著的舊繩索",
+    "summary": "掃完內文、換好主旨和名片後，優理發現信紙後面還拖著一條舊回覆引文的長繩索。他把小燈推近信尾，拿起剪刀，讓新信不再拖著舊對話出門。"
   }
 ]
