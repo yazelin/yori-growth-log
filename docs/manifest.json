@@ -598,5 +598,17 @@
     "label": "Day 0049",
     "short_title": "信裡的明天已經過期",
     "summary": "優理把 Day 0040 的掃描鏈再延長一站，發現舊信裡的「明天」和「下週」會在寄達前先過期。"
+  },
+  {
+    "day": 50,
+    "date": "2026-09-18",
+    "title": "Day 0050 — 信裡的藍色舊路口",
+    "entry": "docs/entries/day-0050.html",
+    "entry_markdown": "docs/entries/day-0050.md",
+    "image": "docs/assets/day-0050-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0050",
+    "short_title": "信裡的藍色舊路口",
+    "summary": "優理把 Day 0040 的內文掃描又推了一步，發現舊信裡的藍色連結雖然文字換新了，網址卻還偷偷指著舊專案的門。他把每一個藍字點開，確認它真的通往今天說的地方。"
   }
 ]
