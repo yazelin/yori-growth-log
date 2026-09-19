@@ -622,5 +622,17 @@
     "label": "Day 0051",
     "short_title": "鏡子裡的灰邊框",
     "summary": "優理發現舊信走過純文字小門後，還有透明的格式殘留在對方桌上顯形。他舉起小鏡子，學會寄出前先寄一封給自己，從對方的視角拆信。"
+  },
+  {
+    "day": 52,
+    "date": "2026-09-20",
+    "title": "Day 0052 — 內文裡的舊稱呼",
+    "entry": "docs/entries/day-0052.html",
+    "entry_markdown": "docs/entries/day-0052.md",
+    "image": "docs/assets/day-0052-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0052",
+    "short_title": "內文裡的舊稱呼",
+    "summary": "優理做完 Day 0040 到 Day 0051 的所有檢查，卻漏了藏在句子裡的舊稱呼；他把「跟上次一樣」圈出來，換成給新窗口的第一次問候。"
   }
 ]
