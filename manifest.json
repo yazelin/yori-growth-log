@@ -646,5 +646,17 @@
     "label": "Day 0053",
     "short_title": "副本欄裡的舊乘客",
     "summary": "優理換好了主地址標籤，卻讓舊專案的乘客躲在副本欄裡跟著新信出門。他把 Day 0047 的檢查往前推了一步，學會把側窗也翻過來看清楚。"
+  },
+  {
+    "day": 54,
+    "date": "2026-09-22",
+    "title": "Day 0054 — 迴紋針上的舊標籤",
+    "entry": "docs/entries/day-0054.html",
+    "entry_markdown": "docs/entries/day-0054.md",
+    "image": "docs/assets/day-0054-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0054",
+    "short_title": "迴紋針上的舊標籤",
+    "summary": "內文全換新了，附件卻還戴著舊專案的名字；優理學會把掃描範圍從信紙延伸到迴紋針。"
   }
 ]
