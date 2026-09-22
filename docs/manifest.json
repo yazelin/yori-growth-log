@@ -658,5 +658,17 @@
     "label": "Day 0054",
     "short_title": "迴紋針上的舊標籤",
     "summary": "內文全換新了，附件卻還戴著舊專案的名字；優理學會把掃描範圍從信紙延伸到迴紋針。"
+  },
+  {
+    "day": 55,
+    "date": "2026-09-23",
+    "title": "Day 0055 — 信紙上的附件舊名字",
+    "entry": "docs/entries/day-0055.html",
+    "entry_markdown": "docs/entries/day-0055.md",
+    "image": "docs/assets/day-0055-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0055",
+    "short_title": "信紙上的附件舊名字",
+    "summary": "優理換了附件標籤，卻發現信紙上還指著舊檔名；內文裡的附件指向句，是 Day 0040 掃描清單裡最後一個躲起來的舊名字。"
   }
 ]
