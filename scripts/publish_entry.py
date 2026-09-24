@@ -336,7 +336,7 @@ if __name__ == "__main__":
         publish(d, img)
     else:
         entries = load_entries()
-        if os.environ.get("FORCE_TODAY") != "1" and any(e["date"] == taipei_today() for e in entries):
+        if not DRY and os.environ.get("FORCE_TODAY") != "1" and any(e["date"] == taipei_today() for e in entries):
             print("今天已發過"); sys.exit(0)
         d = auto_write(entries)
         dry_run(d) if DRY else publish(d)
