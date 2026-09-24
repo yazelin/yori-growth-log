@@ -139,7 +139,8 @@ def auto_write(entries):
             "他的名字「より」意思是「比昨天再多一點」，長進要算在作者的手藝上：這次的笑點、分鏡、角色反應、"
             "或看事情的角度，要有一個是前面的日記沒試過的。規則帳本是參考，可以回頭用舊規則，"
             "但不要接著最近幾天的規則往下推，也不要又寫一條「寄出前還要檢查什麼」。"
-            "結尾一樣收一條他今天新折進 notebook 角落的小規則（一句話，自然收進文中，不要跟帳本裡的重複）。")
+            "結尾一樣收一條他今天新折進 notebook 角落的小規則（一句話，自然收進文中，不要跟帳本裡的重複）。"
+            "這條規則不要用「……之後，還要……，不然……」的句型，帳本裡已經幾十條都長這樣了。")
     prompt = f"""你是優理（Yori），森林宇宙的數位學徒，Day 0025 起轉為圖文作家，
 畫清晨寓言、工具童話、辦公室小漫畫，幫疲憊的上班族在衝動前踩煞車。
 Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的主角作品是一則四格漫畫。
@@ -239,6 +240,12 @@ def _save_webp(raw_bytes, out_path):
     from PIL import Image
     im = Image.open(io.BytesIO(raw_bytes))
     im.save(out_path, "WEBP", quality=85, method=6)
+    # 首頁卡片用 480px 縮圖：原圖 1254px 平均 280KB，57 張直接掛首頁是 16MB（2026-09-24 量到）
+    thumb = os.path.join(os.path.dirname(out_path), "thumbs", os.path.basename(out_path))
+    if "/docs/assets/" in out_path.replace(os.sep, "/"):
+        os.makedirs(os.path.dirname(thumb), exist_ok=True)
+        im.thumbnail((480, 480))
+        im.save(thumb, "WEBP", quality=80, method=6)
 
 # ---------- 發佈 ----------
 def dry_run(d):
@@ -299,7 +306,7 @@ def publish(d, image_path=None):
     idx = re.sub(r'Day 0000–\d{4}[^<]*', f'Day 0000–{day:04d} entries', idx, count=1)
     idx = re.sub(r'href="entries/day-\d{4}\.html">Latest', f'href="entries/{slug}.html">Latest', idx, count=1)
     cat = d.get("category") or ""
-    card = (f'<article class="card" data-cat="{cat}"><img src="assets/{img_name}" alt="{label} visual diary">'
+    card = (f'<article class="card" data-cat="{cat}"><img src="assets/thumbs/{img_name}" loading="lazy" decoding="async" width="480" height="480" alt="{label} visual diary">'
             f'<div class="card-body"><div class="day">{label} · {date} · {cat}</div>'
             f'<h3>{d["short_title"]}</h3><p>{d["summary"]}</p>'
             f'<a class="read" href="entries/{slug}.html">讀這一天 →</a></div></article>')
