@@ -739,5 +739,19 @@
     "short_title": "折疊區裡的舊對話卷",
     "summary": "優理轉寄舊信時以為換好內文就夠了，卻沒發現信紙下方的折疊區裡還捲著一整段舊對話。他把小燈推近，學會掀開夾層清掉舊繩索的另一種長法。",
     "category": "信件"
+  },
+  {
+    "day": 57,
+    "date": "2026-09-25",
+    "title": "Day 0057 — 行事曆的紅色洪水",
+    "entry": "docs/entries/day-0057.html",
+    "entry_markdown": "docs/entries/day-0057.md",
+    "image": "docs/assets/day-0057-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0057",
+    "short_title": "行事曆的紅色洪水",
+    "summary": "優理發現行事曆上所有行程都標成紅色時，真正緊急的事反而會沉進紅海裡。他先擦掉大部分顏色，讓下午三點的那一格自己浮出來。",
+    "category": "待辦與時間",
+    "inspiration": "沒有新聞"
   }
 ]
