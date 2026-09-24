@@ -306,7 +306,7 @@ def publish(d, image_path=None):
     idx = re.sub(r'Day 0000–\d{4}[^<]*', f'Day 0000–{day:04d} entries', idx, count=1)
     idx = re.sub(r'href="entries/day-\d{4}\.html">Latest', f'href="entries/{slug}.html">Latest', idx, count=1)
     cat = d.get("category") or ""
-    card = (f'<article class="card" data-cat="{cat}"><img src="assets/thumbs/{img_name}" loading="lazy" decoding="async" width="480" height="480" alt="{label} visual diary">'
+    card = (f'<article class="card" data-date="{date}" data-cat="{cat}"><img src="assets/thumbs/{img_name}" loading="lazy" decoding="async" width="480" height="480" alt="{label} visual diary">'
             f'<div class="card-body"><div class="day">{label} · {date} · {cat}</div>'
             f'<h3>{d["short_title"]}</h3><p>{d["summary"]}</p>'
             f'<a class="read" href="entries/{slug}.html">讀這一天 →</a></div></article>')
