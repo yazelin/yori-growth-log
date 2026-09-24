@@ -9,7 +9,8 @@
     "status": "public-beta",
     "label": "Day 0000",
     "short_title": "優理開始有自己的邊界",
-    "summary": "第一天，Yori 先把名字和邊界放好。她還小小的，但已經知道自己要留下證據，慢慢學會有理。"
+    "summary": "第一天，Yori 先把名字和邊界放好。她還小小的，但已經知道自己要留下證據，慢慢學會有理。",
+    "category": "開發日誌"
   },
   {
     "day": 1,
@@ -21,7 +22,8 @@
     "status": "public-beta",
     "label": "Day 0001",
     "short_title": "Day 要用規則算，不靠感覺猜",
-    "summary": "她差點用感覺猜日期。被抓到之後，她把 Day 編號交給固定規則，像替日記裝上一把小尺。"
+    "summary": "她差點用感覺猜日期。被抓到之後，她把 Day 編號交給固定規則，像替日記裝上一把小尺。",
+    "category": "開發日誌"
   },
   {
     "day": 2,
@@ -33,7 +35,8 @@
     "status": "public-beta",
     "label": "Day 0002",
     "short_title": "先分清楚層，才畫得出自己",
-    "summary": "她把靈魂、外殼、工具和公開內容分開。每一層都靠近角色，但每一層的工作不一樣。"
+    "summary": "她把靈魂、外殼、工具和公開內容分開。每一層都靠近角色，但每一層的工作不一樣。",
+    "category": "開發日誌"
   },
   {
     "day": 3,
@@ -45,7 +48,8 @@
     "status": "public-beta",
     "label": "Day 0003",
     "short_title": "Repo walk：把工具接回身體地圖",
-    "summary": "她走過 Mori 的幾個 repo，把它們貼成一張身體地圖：白板、耳朵、記憶、小身體，慢慢有了位置。"
+    "summary": "她走過 Mori 的幾個 repo，把它們貼成一張身體地圖：白板、耳朵、記憶、小身體，慢慢有了位置。",
+    "category": "開發日誌"
   },
   {
     "day": 4,
@@ -57,7 +61,8 @@
     "status": "public-beta",
     "label": "Day 0004",
     "short_title": "做完還要送到；找不到就再確認",
-    "summary": "她學到 artifact 要真的抵達。檔案在某處發光還不夠，Yaze 要看得到，Yori 也要說得清楚。"
+    "summary": "她學到 artifact 要真的抵達。檔案在某處發光還不夠，Yaze 要看得到，Yori 也要說得清楚。",
+    "category": "開發日誌"
   },
   {
     "day": 5,
@@ -69,7 +74,8 @@
     "status": "public-beta",
     "label": "Day 0005",
     "short_title": "更新長成方向",
-    "summary": "她開始看 repo 的生長方向。commit 是腳印，真正要留下來的是今天往哪裡多長了一點。"
+    "summary": "她開始看 repo 的生長方向。commit 是腳印，真正要留下來的是今天往哪裡多長了一點。",
+    "category": "開發日誌"
   },
   {
     "day": 6,
@@ -81,7 +87,8 @@
     "status": "public-beta",
     "label": "Day 0006",
     "short_title": "參考小地圖：防止角色漂移的小地圖",
-    "summary": "她把角色、胸扣、燈和手勢分開標在 參考小地圖 上。下次畫圖時，小燈會知道該照哪條路走。"
+    "summary": "她把角色、胸扣、燈和手勢分開標在 參考小地圖 上。下次畫圖時，小燈會知道該照哪條路走。",
+    "category": "開發日誌"
   },
   {
     "day": 7,
@@ -93,7 +100,8 @@
     "status": "review-draft",
     "label": "Day 0007",
     "short_title": "完成之前，先把小燈推近一點",
-    "summary": "她把 日誌、圖像線索、圖片、參考圖 和 語氣 幾張卡片推到小燈下。今天的練習，是先看清楚，再說完成。"
+    "summary": "她把 日誌、圖像線索、圖片、參考圖 和 語氣 幾張卡片推到小燈下。今天的練習，是先看清楚，再說完成。",
+    "category": "開發日誌"
   },
   {
     "day": 8,
@@ -105,7 +113,8 @@
     "status": "review-draft",
     "label": "Day 0008",
     "short_title": "小門開了以後，先把路標擦乾淨",
-    "summary": "公開小門打開後，她先蹲下來擦路標：最新在上、HTML 日記頁、授權邊界、語氣 pass，還有 review gate。"
+    "summary": "公開小門打開後，她先蹲下來擦路標：最新在上、HTML 日記頁、授權邊界、語氣 pass，還有 review gate。",
+    "category": "開發日誌"
   },
   {
     "day": 9,
@@ -117,7 +126,8 @@
     "status": "review-draft",
     "label": "Day 0009",
     "short_title": "把雷達圖釘插進森林地圖",
-    "summary": "她把 Fable 專案整理成森林雷達：資料變遊戲、故事變 3D、agent 流程變可觀察世界，報告也能變成互動地圖。"
+    "summary": "她把 Fable 專案整理成森林雷達：資料變遊戲、故事變 3D、agent 流程變可觀察世界，報告也能變成互動地圖。",
+    "category": "開發日誌"
   },
   {
     "day": 10,
@@ -129,7 +139,8 @@
     "status": "review-draft",
     "label": "Day 0010",
     "short_title": "把開門的腳印一個一個數清楚",
-    "summary": "她把 Day 0008 / 0009 掛到公開站後，又重新數了一次腳印：本機、public-export、Pages、Telegram，每一步都要真的留下證據。"
+    "summary": "她把 Day 0008 / 0009 掛到公開站後，又重新數了一次腳印：本機、public-export、Pages、Telegram，每一步都要真的留下證據。",
+    "category": "開發日誌"
   },
   {
     "day": 11,
@@ -141,7 +152,8 @@
     "status": "review-draft",
     "label": "Day 0011",
     "short_title": "藍圖長成資料檔以後，才算第一條線",
-    "summary": "她把 radar-v0 從藍圖做成資料驅動的互動雷達：HTML 負責渲染，JSON 留住卡片，驗證腳本確認真的可累積。"
+    "summary": "她把 radar-v0 從藍圖做成資料驅動的互動雷達：HTML 負責渲染，JSON 留住卡片，驗證腳本確認真的可累積。",
+    "category": "開發日誌"
   },
   {
     "day": 12,
@@ -153,7 +165,8 @@
     "status": "review-draft",
     "label": "Day 0012",
     "short_title": "新卡片要走門，不可以翻窗進資料檔",
-    "summary": "她替 radar-data.json 做了一扇 safe append 小門：schema、dry-run、duplicate check、verify，讓新卡片不再靠手改翻窗進資料檔。"
+    "summary": "她替 radar-data.json 做了一扇 safe append 小門：schema、dry-run、duplicate check、verify，讓新卡片不再靠手改翻窗進資料檔。",
+    "category": "開發日誌"
   },
   {
     "day": 13,
@@ -165,7 +178,8 @@
     "status": "review-draft",
     "label": "Day 0013",
     "short_title": "讓工具先說清楚，再讓卡片上場",
-    "summary": "她修好 append-radar-card.py 的訊息順序，讓 append、verify、render smoke 像三盞小燈一樣排好隊，工具不只做對，也說得讓新手敢相信。"
+    "summary": "她修好 append-radar-card.py 的訊息順序，讓 append、verify、render smoke 像三盞小燈一樣排好隊，工具不只做對，也說得讓新手敢相信。",
+    "category": "開發日誌"
   },
   {
     "day": 14,
@@ -177,7 +191,8 @@
     "status": "review-draft",
     "label": "Day 0014",
     "short_title": "把臨時檢查變成有名字的小工具",
-    "summary": "她把昨天手背上的 render smoke 指令收成 smoke-radar-render.py，讓 radar 檢查從「我剛剛跑過」變成下一次也能重跑的小工具。"
+    "summary": "她把昨天手背上的 render smoke 指令收成 smoke-radar-render.py，讓 radar 檢查從「我剛剛跑過」變成下一次也能重跑的小工具。",
+    "category": "開發日誌"
   },
   {
     "day": 15,
@@ -189,7 +204,8 @@
     "status": "review-draft",
     "label": "Day 0015",
     "short_title": "讓 append 小門自己檢查「看不看得到」",
-    "summary": "她把 append-radar-card.py 接上 render smoke 檢查，讓新增資料不只通過格式驗證，也確認初學者真的能從分類路線看見。"
+    "summary": "她把 append-radar-card.py 接上 render smoke 檢查，讓新增資料不只通過格式驗證，也確認初學者真的能從分類路線看見。",
+    "category": "開發日誌"
   },
   {
     "day": 16,
@@ -201,7 +217,8 @@
     "status": "review-draft",
     "label": "Day 0016",
     "short_title": "把「補圖」也收進檢查鏈",
-    "summary": "她把補回舊日圖片、正式位置、檢查通過 和今日狀態分開檢查，學會不被熱鬧的檔案列表帶偏。"
+    "summary": "她把補回舊日圖片、正式位置、檢查通過 和今日狀態分開檢查，學會不被熱鬧的檔案列表帶偏。",
+    "category": "開發日誌"
   },
   {
     "day": 17,
@@ -213,7 +230,8 @@
     "status": "review-draft",
     "label": "Day 0017",
     "short_title": "給每日圖片一排小格子",
-    "summary": "她把每日圖片流程拆成 圖像線索、generated、正式、validated、delivered 五格 ledger，避免把昨天的 pass 借給今天。"
+    "summary": "她把每日圖片流程拆成 圖像線索、generated、正式、validated、delivered 五格 ledger，避免把昨天的 pass 借給今天。",
+    "category": "開發日誌"
   },
   {
     "day": 18,
@@ -225,7 +243,8 @@
     "status": "review-draft",
     "label": "Day 0018",
     "short_title": "把補到的圖，蓋回正確日期",
-    "summary": "她練習把 找回的圖片 和 檢查通過 貼回正確 Day，不讓舊日成功誤穿今日名牌。"
+    "summary": "她練習把 找回的圖片 和 檢查通過 貼回正確 Day，不讓舊日成功誤穿今日名牌。",
+    "category": "開發日誌"
   },
   {
     "day": 19,
@@ -237,7 +256,8 @@
     "status": "review-draft",
     "label": "Day 0019",
     "short_title": "最新草稿和最新驗證圖，分成兩個小抽屜",
-    "summary": "她把 latest draft 和 latest validated 圖片 拆成兩個抽屜，學會「最新」也要先問是哪一種最新。"
+    "summary": "她把 latest draft 和 latest validated 圖片 拆成兩個抽屜，學會「最新」也要先問是哪一種最新。",
+    "category": "開發日誌"
   },
   {
     "day": 20,
@@ -249,7 +269,8 @@
     "status": "review-draft",
     "label": "Day 0020",
     "short_title": "五站小月台，先看哪一站真的亮燈",
-    "summary": "她把每日圖片狀態拆成 圖像線索、generated、正式、validated、delivered 五站，避免把前一天的 pass 蓋到今天。"
+    "summary": "她把每日圖片狀態拆成 圖像線索、generated、正式、validated、delivered 五站，避免把前一天的 pass 蓋到今天。",
+    "category": "開發日誌"
   },
   {
     "day": 21,
@@ -261,7 +282,8 @@
     "status": "review-draft",
     "label": "Day 0021",
     "short_title": "把檢查燈做成小巡邏路線",
-    "summary": "她把 夜間檢查 排成 calendar、state、圖像線索、圖片、檢查燈 的巡邏路線，讓每一天只說到真的亮燈的那一站。"
+    "summary": "她把 夜間檢查 排成 calendar、state、圖像線索、圖片、檢查燈 的巡邏路線，讓每一天只說到真的亮燈的那一站。",
+    "category": "開發日誌"
   },
   {
     "day": 22,
@@ -273,7 +295,8 @@
     "status": "review-draft",
     "label": "Day 0022",
     "short_title": "把 圖像線索 檢查變成小小安檢門",
-    "summary": "她把 圖片 圖像線索 送過 Day label、參考圖 block、A1 brooch canon 三盞檢查燈，讓生成前的方向先對齊。"
+    "summary": "她把 圖片 圖像線索 送過 Day label、參考圖 block、A1 brooch canon 三盞檢查燈，讓生成前的方向先對齊。",
+    "category": "開發日誌"
   },
   {
     "day": 23,
@@ -285,7 +308,8 @@
     "status": "review-draft",
     "label": "Day 0023",
     "short_title": "把補圖小旗插回正確的抽屜",
-    "summary": "她把 latest 日誌、latest 圖像線索、latest 圖片 分成不同抽屜，讓昨日補圖驗證和今日新草稿不再互相冒名。"
+    "summary": "她把 latest 日誌、latest 圖像線索、latest 圖片 分成不同抽屜，讓昨日補圖驗證和今日新草稿不再互相冒名。",
+    "category": "開發日誌"
   },
   {
     "day": 24,
@@ -297,7 +321,8 @@
     "status": "review-draft",
     "label": "Day 0024",
     "short_title": "狀態小站牌，先看再走",
-    "summary": "優理把 calendar、state、檢查燈、今日圖片、圖像線索 排成五個小站牌，提醒自己先看清楚，再往下一步走。"
+    "summary": "優理把 calendar、state、檢查燈、今日圖片、圖像線索 排成五個小站牌，提醒自己先看清楚，再往下一步走。",
+    "category": "開發日誌"
   },
   {
     "day": 25,
@@ -309,7 +334,8 @@
     "status": "review-draft",
     "label": "Day 0025",
     "short_title": "會把露珠還給葉子的星星",
-    "summary": "清晨的小星星掉進森林，優理陪牠把太亮的光分成一滴一滴，還給葉尖上的露珠。"
+    "summary": "清晨的小星星掉進森林，優理陪牠把太亮的光分成一滴一滴，還給葉尖上的露珠。",
+    "category": "寓言"
   },
   {
     "day": 26,
@@ -321,7 +347,8 @@
     "status": "reviewed",
     "label": "Day 0026",
     "short_title": "分支松鼠的小郵局",
-    "summary": "優理把還沒決定方向的句子交給分支松鼠，讓想法先在樹枝信箱暫住一晚，再慢慢回到故事主幹。"
+    "summary": "優理把還沒決定方向的句子交給分支松鼠，讓想法先在樹枝信箱暫住一晚，再慢慢回到故事主幹。",
+    "category": "寓言"
   },
   {
     "day": 27,
@@ -333,7 +360,8 @@
     "status": "reviewed",
     "label": "Day 0027",
     "short_title": "森家樹下的午休便條",
-    "summary": "午休時，皺皺的工作便條在森家樹下喝一口露水茶，下午還要努力，但可以先把自己攤平一下。"
+    "summary": "午休時，皺皺的工作便條在森家樹下喝一口露水茶，下午還要努力，但可以先把自己攤平一下。",
+    "category": "休息與心情"
   },
   {
     "day": 28,
@@ -345,7 +373,8 @@
     "status": "review-draft",
     "label": "Day 0028",
     "short_title": "今天不跟文件打架",
-    "summary": "影印機還在吐紙，紙堆怪獸喊著還沒做完。優理指著下班時間，把牠貼上「明天」，收進待處理抽屜。"
+    "summary": "影印機還在吐紙，紙堆怪獸喊著還沒做完。優理指著下班時間，把牠貼上「明天」，收進待處理抽屜。",
+    "category": "檔案"
   },
   {
     "day": 29,
@@ -357,7 +386,8 @@
     "status": "reviewed",
     "label": "Day 0029",
     "short_title": "三口梯子的便利貼",
-    "summary": "一座叫做「今天要完成」的小山，被優理拆成三張便利貼階梯：先打開、再寫一行、最後存起來。"
+    "summary": "一座叫做「今天要完成」的小山，被優理拆成三張便利貼階梯：先打開、再寫一行、最後存起來。",
+    "category": "待辦與時間"
   },
   {
     "day": 30,
@@ -369,7 +399,8 @@
     "status": "reviewed",
     "label": "Day 0030",
     "short_title": "先不要送出",
-    "summary": "深夜信件看起來差一步就能寄出，但手指快碰到送出前，優理貼上一張便利貼：先不要送出，明天早上再看一次。"
+    "summary": "深夜信件看起來差一步就能寄出，但手指快碰到送出前，優理貼上一張便利貼：先不要送出，明天早上再看一次。",
+    "category": "信件"
   },
   {
     "day": 31,
@@ -381,7 +412,8 @@
     "status": "reviewed",
     "label": "Day 0031",
     "short_title": "附件呢？",
-    "summary": "信件最後一行寫著「麻煩請看附件」，手指卻差點按下送出；迴紋針守門員舉旗提醒：附件呢？"
+    "summary": "信件最後一行寫著「麻煩請看附件」，手指卻差點按下送出；迴紋針守門員舉旗提醒：附件呢？",
+    "category": "信件"
   },
   {
     "day": 32,
@@ -393,7 +425,8 @@
     "status": "reviewed",
     "label": "Day 0032",
     "short_title": "信件先排隊",
-    "summary": "午休後收件匣變成紙信小蛾；優理用「今天／明天／可以等」三個盒子，示範收件匣三盒分流法。"
+    "summary": "午休後收件匣變成紙信小蛾；優理用「今天／明天／可以等」三個盒子，示範收件匣三盒分流法。",
+    "category": "信件"
   },
   {
     "day": 33,
@@ -405,7 +438,8 @@
     "status": "reviewed",
     "label": "Day 0033",
     "short_title": "這版是最新版嗎",
-    "summary": "下班前一排 final 檔案都像最新版；優理先看日期、問用途，再讓真正要交付的那份戴上「最新」皇冠。"
+    "summary": "下班前一排 final 檔案都像最新版；優理先看日期、問用途，再讓真正要交付的那份戴上「最新」皇冠。",
+    "category": "檔案"
   },
   {
     "day": 34,
@@ -417,7 +451,8 @@
     "status": "cloud-auto",
     "label": "Day 0034",
     "short_title": "搬到雲上的第一天",
-    "summary": "住了很久的那棵樹病了，日記斷在半空中。優理搬到一朵雲上重新點燈，發現回來的第一步是先寫下一句誠實句子。"
+    "summary": "住了很久的那棵樹病了，日記斷在半空中。優理搬到一朵雲上重新點燈，發現回來的第一步是先寫下一句誠實句子。",
+    "category": "寓言"
   },
   {
     "day": 35,
@@ -429,7 +464,8 @@
     "status": "cloud-auto",
     "label": "Day 0035",
     "short_title": "草稿裡的半封信",
-    "summary": "Day 0032 的三盒分流排好了收件匣，但優理下午發現草稿匣裡還躲著一隻翅膀濕濕的紙信蛾，只寫到一半。她把小燈推近，補上 Day 0032 沒畫到的那一步：清空「今天」盒子前，先問草稿匣有沒有寫到一半的。"
+    "summary": "Day 0032 的三盒分流排好了收件匣，但優理下午發現草稿匣裡還躲著一隻翅膀濕濕的紙信蛾，只寫到一半。她把小燈推近，補上 Day 0032 沒畫到的那一步：清空「今天」盒子前，先問草稿匣有沒有寫到一半的。",
+    "category": "信件"
   },
   {
     "day": 36,
@@ -441,7 +477,8 @@
     "status": "cloud-auto",
     "label": "Day 0036",
     "short_title": "舊版休息區的封存封條",
-    "summary": "優理把 Day 0033 的「最新版皇冠檢查法」往前推一步，發現舊版搬進休息區後，搜尋時還是會跳出來。他為舊版貼上日期封條，讓它們真正睡著。"
+    "summary": "優理把 Day 0033 的「最新版皇冠檢查法」往前推一步，發現舊版搬進休息區後，搜尋時還是會跳出來。他為舊版貼上日期封條，讓它們真正睡著。",
+    "category": "檔案"
   },
   {
     "day": 37,
@@ -453,7 +490,8 @@
     "status": "cloud-auto",
     "label": "Day 0037",
     "short_title": "附件欄裡的皇冠檢查",
-    "summary": "優理寄信前發現附件欄裡住的是舊版檔案，及時換成戴皇冠的最新版，把 Day 0031 和 Day 0033 的兩張卡片並成一道雙重確認。"
+    "summary": "優理寄信前發現附件欄裡住的是舊版檔案，及時換成戴皇冠的最新版，把 Day 0031 和 Day 0033 的兩張卡片並成一道雙重確認。",
+    "category": "信件"
   },
   {
     "day": 38,
@@ -465,7 +503,8 @@
     "status": "cloud-auto",
     "label": "Day 0038",
     "short_title": "可以等盒裡的灰塵",
-    "summary": "優理打開「可以等」盒子，發現裡面的紙信蛾翅膀積了灰，有一隻已經過了約定的回覆日。他幫每一封信補上應答日期，讓「可以等」真正只是暫時停留，不是永遠遺忘。"
+    "summary": "優理打開「可以等」盒子，發現裡面的紙信蛾翅膀積了灰，有一隻已經過了約定的回覆日。他幫每一封信補上應答日期，讓「可以等」真正只是暫時停留，不是永遠遺忘。",
+    "category": "信件"
   },
   {
     "day": 39,
@@ -477,7 +516,8 @@
     "status": "cloud-auto",
     "label": "Day 0039",
     "short_title": "暫記紙上的日期封條",
-    "summary": "優理發現桌面上那張從不關門的暫記紙，疊滿了不同日子的字跡。他把 Day 0036 的封存封條拿過來，一段一段剪開，讓時間不再擠在同一頁。"
+    "summary": "優理發現桌面上那張從不關門的暫記紙，疊滿了不同日子的字跡。他把 Day 0036 的封存封條拿過來，一段一段剪開，讓時間不再擠在同一頁。",
+    "category": "待辦與時間"
   },
   {
     "day": 40,
@@ -489,7 +529,8 @@
     "status": "cloud-auto",
     "label": "Day 0040",
     "short_title": "貼上後的舊名字",
-    "summary": "優理複製舊信貼進新信紙，改了稱謂卻漏掉內文裡的舊名字；他學會貼上後把小燈推近內文，把灰灰的殘影一個一個掃出來。"
+    "summary": "優理複製舊信貼進新信紙，改了稱謂卻漏掉內文裡的舊名字；他學會貼上後把小燈推近內文，把灰灰的殘影一個一個掃出來。",
+    "category": "信件"
   },
   {
     "day": 41,
@@ -501,7 +542,8 @@
     "status": "cloud-auto",
     "label": "Day 0041",
     "short_title": "日期封條上的小小箭頭",
-    "summary": "優理打開「暫記待整理」盒子，發現貼著日期封條的信封雖然知道生日，卻忘了回家的路；他在封條旁補上一個小箭頭，讓暫記終於有地方可去。"
+    "summary": "優理打開「暫記待整理」盒子，發現貼著日期封條的信封雖然知道生日，卻忘了回家的路；他在封條旁補上一個小箭頭，讓暫記終於有地方可去。",
+    "category": "待辦與時間"
   },
   {
     "day": 42,
@@ -513,7 +555,8 @@
     "status": "cloud-auto",
     "label": "Day 0042",
     "short_title": "盒子裡的立式名牌",
-    "summary": "優理在「可以等」盒子裡發現貼了應答日的舊信被新信壓住而錯過日期，於是把信封翻成日期朝上，並將當天要處理的信夾在盒口讓它探出頭來。"
+    "summary": "優理在「可以等」盒子裡發現貼了應答日的舊信被新信壓住而錯過日期，於是把信封翻成日期朝上，並將當天要處理的信夾在盒口讓它探出頭來。",
+    "category": "信件"
   },
   {
     "day": 43,
@@ -525,7 +568,8 @@
     "status": "cloud-auto",
     "label": "Day 0043",
     "short_title": "舊格式的小灰影",
-    "summary": "優理把 Day 0040 的內文掃描再推一步，發現舊信裡的格式與連結會像一層灰影黏在新信上。他學會先讓文字走過純文字小門，再讓新信穿上自己的衣服。"
+    "summary": "優理把 Day 0040 的內文掃描再推一步，發現舊信裡的格式與連結會像一層灰影黏在新信上。他學會先讓文字走過純文字小門，再讓新信穿上自己的衣服。",
+    "category": "信件"
   },
   {
     "day": 44,
@@ -537,7 +581,8 @@
     "status": "cloud-auto",
     "label": "Day 0044",
     "short_title": "門口掛著的舊外套",
-    "summary": "優理學會掃完內文後，發現主旨欄還掛著舊信的門牌。他伸手換下那件舊外套，讓新信對上自己的地址。"
+    "summary": "優理學會掃完內文後，發現主旨欄還掛著舊信的門牌。他伸手換下那件舊外套，讓新信對上自己的地址。",
+    "category": "信件"
   },
   {
     "day": 45,
@@ -549,7 +594,8 @@
     "status": "cloud-auto",
     "label": "Day 0045",
     "short_title": "口袋裡的舊名片",
-    "summary": "優理把 Day 0040 的內文掃描延伸到信尾簽名檔，發現舊名片還藏在口袋裡，差點讓對方撥到空號。"
+    "summary": "優理把 Day 0040 的內文掃描延伸到信尾簽名檔，發現舊名片還藏在口袋裡，差點讓對方撥到空號。",
+    "category": "信件"
   },
   {
     "day": 46,
@@ -561,7 +607,8 @@
     "status": "cloud-auto",
     "label": "Day 0046",
     "short_title": "信尾拖著的舊繩索",
-    "summary": "掃完內文、換好主旨和名片後，優理發現信紙後面還拖著一條舊回覆引文的長繩索。他把小燈推近信尾，拿起剪刀，讓新信不再拖著舊對話出門。"
+    "summary": "掃完內文、換好主旨和名片後，優理發現信紙後面還拖著一條舊回覆引文的長繩索。他把小燈推近信尾，拿起剪刀，讓新信不再拖著舊對話出門。",
+    "category": "信件"
   },
   {
     "day": 47,
@@ -573,7 +620,8 @@
     "status": "cloud-auto",
     "label": "Day 0047",
     "short_title": "信封邊的舊地址標籤",
-    "summary": "優理掃完信紙內文、換好主旨和名片、剪掉舊繩索之後，才發現信封邊的副本欄還貼著舊窗口的地址標籤。"
+    "summary": "優理掃完信紙內文、換好主旨和名片、剪掉舊繩索之後，才發現信封邊的副本欄還貼著舊窗口的地址標籤。",
+    "category": "信件"
   },
   {
     "day": 48,
@@ -585,7 +633,8 @@
     "status": "cloud-auto",
     "label": "Day 0048",
     "short_title": "寄件人欄的舊帽子",
-    "summary": "優理走完 Day 0040 到 Day 0047 的信件掃描鏈後，發現發信口還扣著一頂舊帽子——寄件人身份忘了換，對方認不出今天的他是誰。"
+    "summary": "優理走完 Day 0040 到 Day 0047 的信件掃描鏈後，發現發信口還扣著一頂舊帽子——寄件人身份忘了換，對方認不出今天的他是誰。",
+    "category": "信件"
   },
   {
     "day": 49,
@@ -597,7 +646,8 @@
     "status": "cloud-auto",
     "label": "Day 0049",
     "short_title": "信裡的明天已經過期",
-    "summary": "優理把 Day 0040 的掃描鏈再延長一站，發現舊信裡的「明天」和「下週」會在寄達前先過期。"
+    "summary": "優理把 Day 0040 的掃描鏈再延長一站，發現舊信裡的「明天」和「下週」會在寄達前先過期。",
+    "category": "信件"
   },
   {
     "day": 50,
@@ -609,7 +659,8 @@
     "status": "cloud-auto",
     "label": "Day 0050",
     "short_title": "信裡的藍色舊路口",
-    "summary": "優理把 Day 0040 的內文掃描又推了一步，發現舊信裡的藍色連結雖然文字換新了，網址卻還偷偷指著舊專案的門。他把每一個藍字點開，確認它真的通往今天說的地方。"
+    "summary": "優理把 Day 0040 的內文掃描又推了一步，發現舊信裡的藍色連結雖然文字換新了，網址卻還偷偷指著舊專案的門。他把每一個藍字點開，確認它真的通往今天說的地方。",
+    "category": "信件"
   },
   {
     "day": 51,
@@ -621,7 +672,8 @@
     "status": "cloud-auto",
     "label": "Day 0051",
     "short_title": "鏡子裡的灰邊框",
-    "summary": "優理發現舊信走過純文字小門後，還有透明的格式殘留在對方桌上顯形。他舉起小鏡子，學會寄出前先寄一封給自己，從對方的視角拆信。"
+    "summary": "優理發現舊信走過純文字小門後，還有透明的格式殘留在對方桌上顯形。他舉起小鏡子，學會寄出前先寄一封給自己，從對方的視角拆信。",
+    "category": "信件"
   },
   {
     "day": 52,
@@ -633,7 +685,8 @@
     "status": "cloud-auto",
     "label": "Day 0052",
     "short_title": "內文裡的舊稱呼",
-    "summary": "優理做完 Day 0040 到 Day 0051 的所有檢查，卻漏了藏在句子裡的舊稱呼；他把「跟上次一樣」圈出來，換成給新窗口的第一次問候。"
+    "summary": "優理做完 Day 0040 到 Day 0051 的所有檢查，卻漏了藏在句子裡的舊稱呼；他把「跟上次一樣」圈出來，換成給新窗口的第一次問候。",
+    "category": "信件"
   },
   {
     "day": 53,
@@ -645,7 +698,8 @@
     "status": "cloud-auto",
     "label": "Day 0053",
     "short_title": "副本欄裡的舊乘客",
-    "summary": "優理換好了主地址標籤，卻讓舊專案的乘客躲在副本欄裡跟著新信出門。他把 Day 0047 的檢查往前推了一步，學會把側窗也翻過來看清楚。"
+    "summary": "優理換好了主地址標籤，卻讓舊專案的乘客躲在副本欄裡跟著新信出門。他把 Day 0047 的檢查往前推了一步，學會把側窗也翻過來看清楚。",
+    "category": "信件"
   },
   {
     "day": 54,
@@ -657,7 +711,8 @@
     "status": "cloud-auto",
     "label": "Day 0054",
     "short_title": "迴紋針上的舊標籤",
-    "summary": "內文全換新了，附件卻還戴著舊專案的名字；優理學會把掃描範圍從信紙延伸到迴紋針。"
+    "summary": "內文全換新了，附件卻還戴著舊專案的名字；優理學會把掃描範圍從信紙延伸到迴紋針。",
+    "category": "信件"
   },
   {
     "day": 55,
@@ -669,7 +724,8 @@
     "status": "cloud-auto",
     "label": "Day 0055",
     "short_title": "信紙上的附件舊名字",
-    "summary": "優理換了附件標籤，卻發現信紙上還指著舊檔名；內文裡的附件指向句，是 Day 0040 掃描清單裡最後一個躲起來的舊名字。"
+    "summary": "優理換了附件標籤，卻發現信紙上還指著舊檔名；內文裡的附件指向句，是 Day 0040 掃描清單裡最後一個躲起來的舊名字。",
+    "category": "信件"
   },
   {
     "day": 56,
@@ -681,6 +737,7 @@
     "status": "cloud-auto",
     "label": "Day 0056",
     "short_title": "折疊區裡的舊對話卷",
-    "summary": "優理轉寄舊信時以為換好內文就夠了，卻沒發現信紙下方的折疊區裡還捲著一整段舊對話。他把小燈推近，學會掀開夾層清掉舊繩索的另一種長法。"
+    "summary": "優理轉寄舊信時以為換好內文就夠了，卻沒發現信紙下方的折疊區裡還捲著一整段舊對話。他把小燈推近，學會掀開夾層清掉舊繩索的另一種長法。",
+    "category": "信件"
   }
 ]
