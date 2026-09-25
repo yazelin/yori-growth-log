@@ -753,5 +753,19 @@
     "summary": "優理發現行事曆上所有行程都標成紅色時，真正緊急的事反而會沉進紅海裡。他先擦掉大部分顏色，讓下午三點的那一格自己浮出來。",
     "category": "待辦與時間",
     "inspiration": "沒有新聞"
+  },
+  {
+    "day": 58,
+    "date": "2026-09-26",
+    "title": "Day 0058 — 咖啡龍有幾節",
+    "entry": "docs/entries/day-0058.html",
+    "entry_markdown": "docs/entries/day-0058.md",
+    "image": "docs/assets/day-0058-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0058",
+    "short_title": "咖啡龍有幾節",
+    "summary": "優理發現買九送九的數字會長成十八杯的長龍，決定先喝自己的水，明天再想想。",
+    "category": "休息與心情",
+    "inspiration": "迎戰中秋連假與教師節，各大超商與連鎖咖啡展開優惠大戰，包括7-ELEVEN推出指定美式與拿鐵買9送9、星巴克與CoCo祭出指定飲品買一送一活動。"
   }
 ]
