@@ -285,7 +285,6 @@ def publish(d, image_path=None):
     prev_slug = os.path.basename(prev["entry"])
     tpl = open(os.path.join(ROOT, "scripts", "entry_template.html")).read()
     html = (tpl.replace("{{TITLE_FULL}}", f"{label} — {d['short_title']}")
-               .replace("{{SELF_FILE}}", f"{slug}.html")
                .replace("{{DAY_LABEL}}", label).replace("{{DATE}}", date)
                .replace("{{TITLE_SHORT}}", d["short_title"])
                .replace("{{SUMMARY}}", d["summary"])
@@ -308,7 +307,6 @@ def publish(d, image_path=None):
     idx = re.sub(r'(<figure class="hero-card"><img src=")assets/[^"]+(")',
                  rf"\g<1>assets/{img_name}\g<2>", idx, count=1)
     idx = re.sub(r'Day 0000–\d{4}[^<]*', f'Day 0000–{day:04d} entries', idx, count=1)
-    idx = re.sub(r'href="entries/day-\d{4}\.html">Latest', f'href="entries/{slug}.html">Latest', idx, count=1)
     cat = d.get("category") or ""
     card = (f'<article class="card" data-date="{date}" data-cat="{cat}"><img src="assets/thumbs/{img_name}" loading="lazy" decoding="async" width="480" height="480" alt="{label} visual diary">'
             f'<div class="card-body"><div class="day">{label} · {date} · {cat}</div>'

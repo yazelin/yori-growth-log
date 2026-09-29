@@ -33,6 +33,8 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
    角色錨＋畫風錨），畫面必須畫出當日「進步點」的瞬間與日常物件隱喻，禁畫面文字。
 3. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。圖一律存 webp（q85），站上不放 PNG。任何一步失敗整篇不發，隔天再來。
 
+管線只會改上面列的檔。`about.html`、`experiments/radar-v0.html` 不會被更新，所以這兩頁只寫不會變的事（不寫「目前第幾天」「最新一篇」），導覽列也不放指向某一篇的 Latest 連結，最新日記一律看 index。
+
 需要的 repo secrets：`LLMSHARE_API_KEY`（寫稿）、`CODEX_IMAGE_KEY`（產圖）。
 手動補發：Actions 頁面 workflow_dispatch；同一天已有日記會自動跳過。
 
