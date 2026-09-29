@@ -24,18 +24,24 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
 
 機制：`.github/workflows/daily-entry.yml` 每天台北 21:30 跑 `scripts/publish_entry.py`：
 
-1. 讀**小規則帳本**（`scripts/rules.json`）＋最近十四天標題＋最近三篇全文，餵給 llmshare 閘道
-   （預設 kimi-k2.6）寫當日新篇——規則是**每天要有長進**：必須把帳本裡某條小規則往前推一步、
-   用在新地方、或補漏洞；每篇折一條新規則回帳本（`new_rule` 欄位）。
-   **每月 1 號是整理日**：他回顧帳本、折併相近的規則（`merged_days`），日記內容就是整理過程本身，
-   帳本因此有界，context 不會無限長大。
-2. 配圖打 codex-image-service（gpt-image），參考圖固定兩張錨（`scripts/style-anchor-*.jpg`：
-   角色錨＋畫風錨），畫面必須畫出當日「進步點」的瞬間與日常物件隱喻，禁畫面文字。
-3. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。圖一律存 webp（q85），站上不放 PNG。任何一步失敗整篇不發，隔天再來。
+1. 看新聞找靈感：透過 gemini-web 的 Google 搜尋，找台灣上班族午餐會聊的新聞，挑一則轉成辦公室日常的
+   一個小場面（不照抄、不評論新聞）。新聞抓不到就從上班族日常自己找題材。用過的新聞記在 entries.json
+   的 `inspiration`，之後避開。
+2. 寫稿：llmshare 閘道（預設 kimi-k2.6），餵語氣規範、三篇固定範本（Day 0027／0030／0033）、
+   小規則帳本（`scripts/rules.json`，參考用）、最近十四天標題。題材分類有冷卻：最近三篇用過的分類當天不選。
+   長進算在作者的手藝上：笑點、分鏡、角色反應或看事情的角度，要有一個是前面沒試過的。
+   每篇結尾收一條新的小規則回帳本（`new_rule`）。
+   每月 1 號是整理日：那天不看新聞，他回顧帳本，把兩三條相近的規則折併成一條（`merged_days` 移除舊條），
+   日記內容就是整理的過程。帳本因此有界，context 不會無限長大。
+   （2026-09-24 改版前，Day 0034–0056 只餵自己的舊日記、每篇強制接著升級前一條規則，
+   結果連續十幾天都在寫「寄出前還要檢查什麼」，所以改成上面這樣。）
+3. 配圖：codex-image-service（gpt-image）畫一則四格漫畫，參考圖固定兩張錨（`scripts/style-anchor-*.jpg`：
+   角色錨＋畫風錨）。
+4. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。圖一律存 webp（q85），站上不放 PNG。任何一步失敗整篇不發，隔天再來。
 
 管線只會改上面列的檔。`about.html`、`experiments/radar-v0.html` 不會被更新，所以這兩頁只寫不會變的事（不寫「目前第幾天」「最新一篇」），導覽列也不放指向某一篇的 Latest 連結，最新日記一律看 index。
 
-需要的 repo secrets：`LLMSHARE_API_KEY`（寫稿）、`CODEX_IMAGE_KEY`（產圖）。
+需要的 repo secrets：`LLMSHARE_API_KEY`（寫稿）、`CODEX_IMAGE_KEY`（產圖）、`GEMINI_API_KEY`（看新聞，缺了就不看新聞照寫）。
 手動補發：Actions 頁面 workflow_dispatch；同一天已有日記會自動跳過。
 
 ## AI-assisted / co-created disclosure
