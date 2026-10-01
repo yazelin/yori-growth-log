@@ -25,7 +25,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENTRY_FIELDS = ["short_title", "summary", "body_md", "image_prompt", "alt"]
 IMG_BASE = "https://ching-tech.ddns.net/codex-image"
 LLM_BASE = "https://llm-share.duotify.com/v1"
-TEXT_MODEL = os.environ.get("TEXT_MODEL", "kimi-k2.6")
+# 2026-10-01 從 kimi-k2.6 換成 deepseek-v4.1-flash：六個模型同題比較，它 36 秒寫完、引用的便條全對得上帳本；
+# kimi 要 225 秒，還寫出前後矛盾的一篇（比較稿在 yaze-journal wednesday-live/素材-1007/優理寫稿比較-1001.md）
+TEXT_MODEL = os.environ.get("TEXT_MODEL", "deepseek-v4.1-flash")
 GEMINI_WEB_BASE = os.environ.get("GEMINI_WEB_BASE_URL", "https://ching-tech.ddns.net/gemini-web").rstrip("/")
 DRY = os.environ.get("DRY_RUN") == "1"
 # 題材分類：最近 COOLDOWN 篇用過的分類當天不能再選。開發日誌只給 Day 0000–0024 那段舊紀錄用。
@@ -114,6 +116,23 @@ def fetch_news(recent_news):
     print("今天不看新聞，自由發揮", file=sys.stderr)
     return []
 
+# ---------- 標點修正：機械性的錯不值得讓模型重寫一輪 ----------
+_CJK = r"[\u4e00-\u9fff「」（）、。，：；？！]"
+_FW = {",": "，", ";": "；", ":": "：", "?": "？", "!": "！"}
+
+def fix_punct(text):
+    """破折號改逗號；中文之間的半形標點換成全形。換模型也照樣適用。"""
+    text = re.sub(r"\s*(——|—)\s*", "，", text)   # ASCII 的 -- 不動，免得改壞 markdown 的 ---
+    text = re.sub(r"，([。，：；？！」）])", r"\1", text)   # 破折號後面本來就接標點時，不要多一個逗號
+    return re.sub(rf"(?<={_CJK})\s*([,;:?!])\s*(?={_CJK})", lambda m: _FW[m.group(1)], text)
+
+def fix_entry(d):
+    """所有中文欄位都過一次；image_prompt 是英文分鏡，不動。"""
+    for k, v in d.items():
+        if k != "image_prompt" and isinstance(v, str):
+            d[k] = fix_punct(v)
+    return d
+
 def auto_write(entries):
     guide = open(os.path.join(ROOT, "YORI_VOICE_GUIDE.md")).read()
     fewshot = "\n\n---\n\n".join(
@@ -190,7 +209,7 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
             assert d.get("new_rule", "").strip(), "缺 new_rule"
             if d.get("category") not in CATEGORIES:
                 d["category"] = allowed[0]
-            return d
+            return fix_entry(d)
         except Exception as e:
             print(f"寫稿第 {attempt+1} 次失敗：{e}", file=sys.stderr)
             time.sleep(10)
@@ -339,6 +358,15 @@ def publish(d, image_path=None):
 
 if __name__ == "__main__":
     args = sys.argv[1:]
+    if args == ["--selftest"]:
+        assert fix_punct("移到抽屜最裡面——那條已經不用了") == "移到抽屜最裡面，那條已經不用了"
+        assert fix_punct("三張便條——") == "三張便條，"
+        assert fix_punct("我說——。") == "我說。"
+        assert fix_punct("今天,我想:先停") == "今天，我想：先停"
+        assert fix_punct("Day 0040, 0049") == "Day 0040, 0049"   # 英數之間的半形不動
+        assert fix_entry({"body_md": "a——b", "image_prompt": "Panel 1 -- x"})["image_prompt"] == "Panel 1 -- x"
+        assert fix_punct("上\n\n---\n\n下") == "上\n\n---\n\n下"
+        print("selftest ok"); sys.exit(0)
     if args and args[0] == "--from-json":
         d = json.load(open(args[1]))
         img = args[3] if len(args) > 3 and args[2] == "--image" else None
