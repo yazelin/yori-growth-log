@@ -28,12 +28,12 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
    一個小場面（不照抄、不評論新聞）。新聞抓不到就從上班族日常自己找題材。用過的新聞記在 entries.json
    的 `inspiration`，之後避開。
 2. 寫稿：llmshare 閘道（預設 deepseek-v4.1-flash，2026-10-01 從 kimi-k2.6 換過來，可用環境變數 TEXT_MODEL 覆蓋），餵語氣規範、三篇固定範本（Day 0027／0030／0033）、
-   寫完先過一道標點修正（`fix_punct`）：破折號改逗號、中文之間的半形標點改全形；`python3 scripts/publish_entry.py --selftest` 檢查這段。
    小規則帳本（`scripts/rules.json`，參考用）、最近十四天標題。題材分類有冷卻：最近三篇用過的分類當天不選。
    長進算在作者的手藝上：笑點、分鏡、角色反應或看事情的角度，要有一個是前面沒試過的。
    每篇結尾收一條新的小規則回帳本（`new_rule`）。
    每月 1 號是整理日：那天不看新聞，他回顧帳本，把兩三條相近的規則折併成一條（`merged_days` 移除舊條），
    日記內容就是整理的過程。帳本因此有界，context 不會無限長大。
+   寫完先過一道標點修正（`fix_punct`）：破折號改逗號、中文之間的半形標點改全形；`python3 scripts/publish_entry.py --selftest` 檢查這段。
    （2026-09-24 改版前，Day 0034–0056 只餵自己的舊日記、每篇強制接著升級前一條規則，
    結果連續十幾天都在寫「寄出前還要檢查什麼」，所以改成上面這樣。）
 3. 配圖：codex-image-service（gpt-image）畫一則四格漫畫，參考圖固定兩張錨（`scripts/style-anchor-*.jpg`：
