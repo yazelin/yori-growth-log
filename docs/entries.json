@@ -907,5 +907,19 @@
     "summary": "散會前同事說「會後我把錄音放到資料夾」，優理晚上打開，發現一整排五十八分鐘、從來沒有人點開過的會議錄音。",
     "category": "檔案",
     "inspiration": "英國一項針對職場通勤族的研究發現，通勤時聽喜歡的podcast或音樂能有效降低30%的上班焦慮，成為許多上班族每天必備的精神糧食。"
+  },
+  {
+    "day": 69,
+    "date": "2026-10-08",
+    "title": "Day 0069 — 印表機要看我的手機",
+    "entry": "docs/entries/day-0069.html",
+    "entry_markdown": "docs/entries/day-0069.md",
+    "image": "docs/assets/day-0069-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0069",
+    "short_title": "印表機要看我的手機",
+    "summary": "只是要印一張紙，印表機卻要先看手機。優理跑了三趟，條碼換了兩次，最後吐出來的紙上印著工作階段已逾時。",
+    "category": "工具與電腦",
+    "inspiration": "好市多西式餐飲部實施點餐新規，會員購買熱狗或披薩等熟食前，皆必須先掃描實體會員卡或手機條碼核對身分。"
   }
 ]
