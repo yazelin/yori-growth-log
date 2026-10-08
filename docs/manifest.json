@@ -921,5 +921,19 @@
     "summary": "只是要印一張紙，印表機卻要先看手機。優理跑了三趟，條碼換了兩次，最後吐出來的紙上印著工作階段已逾時。",
     "category": "工具與電腦",
     "inspiration": "好市多西式餐飲部實施點餐新規，會員購買熱狗或披薩等熟食前，皆必須先掃描實體會員卡或手機條碼核對身分。"
+  },
+  {
+    "day": 70,
+    "date": "2026-10-09",
+    "title": "Day 0070 — 會議室裡最大的一團布",
+    "entry": "docs/entries/day-0070.html",
+    "entry_markdown": "docs/entries/day-0070.md",
+    "image": "docs/assets/day-0070-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0070",
+    "short_title": "會議室裡最大的一團布",
+    "summary": "下午的會議室冷氣太強，優理披上號稱能隱形的午睡毯，五分鐘後縮成一團，被主持人點名時還以為自己藏得很好。",
+    "category": "會議與溝通",
+    "inspiration": "日本市面上推出一款專為辦公室設計的「隱形人外衣」造型午睡毯，主打蓋上後就像穿了魔法斗篷般秒速入睡，成為許多上班族的紓壓新寵。"
   }
 ]
