@@ -963,5 +963,19 @@
     "summary": "下午辦公室揪飲料，兩杯八十九元。優理自告奮勇當統計的人，把每一杯剪成小卡在桌上兩兩配對，配到最後才發現，名單上少了自己的那一杯。",
     "category": "待辦與時間",
     "inspiration": "連鎖手搖飲品牌推出「A+B區指定飲品」兩杯組合價89元的開工省錢玩法，包含黑糖粉粿奶茶搭桂香烏龍，吸引許多辦公室同事揪團湊單。"
+  },
+  {
+    "day": 73,
+    "date": "2026-10-12",
+    "title": "Day 0073 — 字幕不會笑",
+    "entry": "docs/entries/day-0073.html",
+    "entry_markdown": "docs/entries/day-0073.md",
+    "image": "docs/assets/day-0073-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0073",
+    "short_title": "字幕不會笑",
+    "summary": "即時翻譯把國外同事的玩笑翻成一條平平的句子，優理差點留下來加班。他把字幕框往旁邊拖，才看見對方從頭到尾都在笑。",
+    "category": "工具與電腦",
+    "inspiration": "蘋果於最新發布的系統更新中推出AI通話即時翻譯與自動摘要功能，支援多國語言切換，讓許多外商上班族直呼開會與電話溝通方便許多。"
   }
 ]
