@@ -977,5 +977,19 @@
     "summary": "即時翻譯把國外同事的玩笑翻成一條平平的句子，優理差點留下來加班。他把字幕框往旁邊拖，才看見對方從頭到尾都在笑。",
     "category": "工具與電腦",
     "inspiration": "蘋果於最新發布的系統更新中推出AI通話即時翻譯與自動摘要功能，支援多國語言切換，讓許多外商上班族直呼開會與電話溝通方便許多。"
+  },
+  {
+    "day": 74,
+    "date": "2026-10-13",
+    "title": "Day 0074 — 摸魚偷閒那一欄",
+    "entry": "docs/entries/day-0074.html",
+    "entry_markdown": "docs/entries/day-0074.md",
+    "image": "docs/assets/day-0074-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0074",
+    "short_title": "摸魚偷閒那一欄",
+    "summary": "週會投影幕上，分頁工具把同事的頁面分成「認真工作」三個和「摸魚偷閒」十七個；優理把右邊那欄打開，發現裡面全是幫大家查的資料。",
+    "category": "會議與溝通",
+    "inspiration": "日本開發者推出新款智慧分頁管理工具，能將瀏覽器分頁自動分類為「認真工作」與「摸魚偷閒」兩大類，吸引不少雙螢幕辦公室族群下檔試用。"
   }
 ]
