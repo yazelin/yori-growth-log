@@ -1005,5 +1005,19 @@
     "summary": "新聞說 AI 助理可以連續工作七小時，辦公室裡大家笑著想像早點下班；優理回到座位，發現螢幕角落那個「要儲存嗎？」已經舉手舉了四個小時。",
     "category": "檔案",
     "inspiration": "針對微軟最新推出的AI助理代理功能，各大企業辦公室開始討論其能連續自主運作長達七小時的特性，預計將大幅改變未來的日常工作流程。"
+  },
+  {
+    "day": 76,
+    "date": "2026-10-15",
+    "title": "Day 0076 — 熱鬧到代班為止",
+    "entry": "docs/entries/day-0076.html",
+    "entry_markdown": "docs/entries/day-0076.md",
+    "image": "docs/assets/day-0076-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0076",
+    "short_title": "熱鬧到代班為止",
+    "summary": "婚假從八天變成十四天，辦公室瞬間熱鬧起來，直到有人問了一句代班。今天優理畫的是催婚的熱情，和第四格忽然安靜下來的辦公室。",
+    "category": "休息與心情",
+    "inspiration": "台灣勞動部實施最新規定，自2026年10月起有薪婚假由原本的8天正式增至14天，成為辦公室同事間羨慕與開玩笑催婚的熱門話題。"
   }
 ]
