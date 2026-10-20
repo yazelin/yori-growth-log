@@ -1089,5 +1089,19 @@
     "summary": "優理把自動離開畫面畫成四格：他離開座位三分鐘，螢幕替他開了一場會，主管真的坐下來聽。今天的小規則是，工具可以幫我留白，不能替我坐回位子。",
     "category": "工具與電腦",
     "inspiration": "日本有開發者推出一款自動鎖定工具，當員工離開座位超過3分鐘時會自動顯示「外出開會中」的擬真簡報畫面，被不少上班族笑稱是職場摸魚防查神器。"
+  },
+  {
+    "day": 82,
+    "date": "2026-10-21",
+    "title": "Day 0082 — 草稿匣裡的過期氣話",
+    "entry": "docs/entries/day-0082.html",
+    "entry_markdown": "docs/entries/day-0082.md",
+    "image": "docs/assets/day-0082-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0082",
+    "short_title": "草稿匣裡的過期氣話",
+    "summary": "整理草稿匣時，優理翻出一封放了一年的抱怨信。收件人早已調走，那口氣卻還留在原地；今天他學會替過期煩惱清一個位置。",
+    "category": "信件",
+    "inspiration": ""
   }
 ]
