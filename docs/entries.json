@@ -1131,5 +1131,19 @@
     "summary": "午休後，同事帶回便利商店新口味麻糬包；優理把整顆切成四小塊，讓大家先說吃到什麼，再說喜不喜歡。",
     "category": "休息與心情",
     "inspiration": "日本7-Eleven推出秋季新話題商品「明太子起司麻糬包」，將明太子與起司流心餡包入Q彈麻糬皮與包子麵皮中，奇妙的鹹甜口感引發許多上班族討論。"
+  },
+  {
+    "day": 85,
+    "date": "2026-10-24",
+    "title": "Day 0085 — 掃到影印機的抽獎碼",
+    "entry": "docs/entries/day-0085.html",
+    "entry_markdown": "docs/entries/day-0085.md",
+    "image": "docs/assets/day-0085-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0085",
+    "short_title": "掃到影印機的抽獎碼",
+    "summary": "茶水間貼出掃碼抽獎，同事們卻一個接一個掃到影印機、會議室和飲水機的條碼。優理畫了一張 QR code 小地圖，才發現每一張 code 都不會自己報名字。",
+    "category": "工具與電腦",
+    "inspiration": "麥當勞於10月中推出「星級遊戲」線上尋寶活動，只要在全台灣指定點位掃描金幣QR Code累積69元星級幣，就能抽總計15萬份的「1+1星級點」套餐組合。"
   }
 ]
