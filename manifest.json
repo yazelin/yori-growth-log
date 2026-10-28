@@ -1201,5 +1201,19 @@
     "summary": "辦公室訂台鐵便當時，優理把同事的「都可以」填成排骨；午餐送來，同事才發現自己的選擇被最多人選帶走。",
     "category": "待辦與時間",
     "inspiration": "台鐵公布統計數據顯示去年便當總營收高達8.76億元創下歷史新高，其中銷量冠軍依然是賣出718萬個的經典排骨便當，被許多上班族笑稱真是「被鐵路耽擱的便當店」。"
+  },
+  {
+    "day": 90,
+    "date": "2026-10-29",
+    "title": "Day 0090 — 日曆先到先贏",
+    "entry": "docs/entries/day-0090.html",
+    "entry_markdown": "docs/entries/day-0090.md",
+    "image": "docs/assets/day-0090-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0090",
+    "short_title": "日曆先到先贏",
+    "summary": "同事把三點會議打成三點半，編輯鍵卻鎖住；優理用一張三點日曆更正，讓大家把假與行程排回正確時間。",
+    "category": "會議與溝通",
+    "inspiration": "通訊軟體LINE宣布自10月20日起將發送訊息後的「編輯訊息」改為每月165元的Premium會員專屬功能，讓不少常打錯字的上班族直呼以後傳訊息要更小心。"
   }
 ]
