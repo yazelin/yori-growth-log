@@ -27,7 +27,11 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
 1. 看新聞找靈感：透過 gemini-web 的 Google 搜尋，找台灣上班族午餐會聊的新聞，挑一則轉成辦公室日常的
    一個小場面（不照抄、不評論新聞）。新聞抓不到就從上班族日常自己找題材。用過的新聞記在 entries.json
    的 `inspiration`，之後避開。
-2. 寫稿：llmshare 閘道（預設 deepseek-v4.1-flash，2026-10-01 從 kimi-k2.6 換過來，可用環境變數 TEXT_MODEL 覆蓋），餵語氣規範、三篇固定範本（Day 0027／0030／0033）、
+2. 先寫四格（`write_comic`，2026-11-02 起）：同一個模型先想三個結局不同的版本，照 `GAG_RULES` 自我檢查
+   （遮住第四格猜不猜得到結局、第四格有沒有在講道理）挑一個，寫成分鏡與標題橫幅。日記再圍著定稿的四格寫。
+   改版原因：Day 0057–0094 的四格是寫完日記才拆出來的，常見的毛病是第四格把道理講出來、第三格先把笑點說掉、
+   四格變成一天行程的四個地點、標題橫幅先講結局。劇本存在 entries.json 的 `comic`，之後可以回頭查哪篇沒成立。
+3. 寫稿：llmshare 閘道（預設 deepseek-v4.1-flash，2026-10-01 從 kimi-k2.6 換過來，可用環境變數 TEXT_MODEL 覆蓋），餵語氣規範、三篇固定範本（Day 0027／0030／0033）、
    小規則帳本（`scripts/rules.json`，參考用）、最近十四天標題。題材分類有冷卻：最近三篇用過的分類當天不選。
    長進算在作者的手藝上：笑點、分鏡、角色反應或看事情的角度，要有一個是前面沒試過的。
    每篇結尾收一條新的小規則回帳本（`new_rule`）。
@@ -36,9 +40,9 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
    寫完先過一道標點修正（`fix_punct`）：破折號改逗號、中文之間的半形標點改全形；`python3 scripts/publish_entry.py --selftest` 檢查這段。
    （2026-09-24 改版前，Day 0034–0056 只餵自己的舊日記、每篇強制接著升級前一條規則，
    結果連續十幾天都在寫「寄出前還要檢查什麼」，所以改成上面這樣。）
-3. 配圖：codex-image-service（gpt-image）畫一則四格漫畫，參考圖固定兩張錨（`scripts/style-anchor-*.jpg`：
+4. 配圖：codex-image-service（gpt-image）畫一則四格漫畫，參考圖固定兩張錨（`scripts/style-anchor-*.jpg`：
    角色錨＋畫風錨）。
-4. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。圖一律存 webp（q85），站上不放 PNG。任何一步失敗整篇不發，隔天再來。
+5. 產出 md＋html＋更新 index 與三份 JSON 鏡像，直接 commit。圖一律存 webp（q85），站上不放 PNG。任何一步失敗整篇不發，隔天再來。
 
 管線只會改上面列的檔。`about.html`、`experiments/radar-v0.html` 不會被更新，所以這兩頁只寫不會變的事（不寫「目前第幾天」「最新一篇」），導覽列也不放指向某一篇的 Latest 連結，最新日記一律看 index。
 
