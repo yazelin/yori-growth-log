@@ -44,6 +44,68 @@ def load_entries():
 
 RULES_PATH = os.path.join(ROOT, "scripts", "rules.json")
 
+# 手藝經驗（2026-11-02）：寫完當天的稿，審稿一步挑毛病、寫成一句心得存進來；隔天寫四格與日記時讀。
+# 每月整理日把心得折成最多八條原則。長進靠這份檔案累積，日記本身不寫創作過程。
+CRAFT_PATH = os.path.join(ROOT, "scripts", "craft.json")
+GAG_TYPES = ["期待落空", "誤會揭開", "認真過頭", "旁人吐槽", "拉遠揭露"]
+
+def load_craft():
+    try:
+        return json.load(open(CRAFT_PATH))
+    except FileNotFoundError:
+        return {"principles": [], "notes": []}
+
+def craft_block(craft):
+    lines = [f"- {x}" for x in craft["principles"]] + \
+            [f"- Day {n['day']:04d}：{n['lesson']}" for n in craft["notes"][-10:]]
+    return ("## 你過去累積的手藝經驗（照著做，但不要寫進作品裡）\n" + "\n".join(lines)) if lines else ""
+
+def ask_json(prompt, check, what):
+    for attempt in range(3):
+        try:
+            d = json.loads(re.sub(r"^```json\s*|\s*```$", "", gemini_text(prompt).strip()), strict=False)
+            assert check(d)
+            return d
+        except Exception as e:
+            print(f"{what}第 {attempt+1} 次失敗：{e}", file=sys.stderr)
+            time.sleep(10)
+    return None
+
+def critique(d):
+    """審今天的稿，回一則心得（失敗回 None，不擋發佈）。"""
+    prompt = f"""你是嚴格的四格漫畫與中文編輯，審下面這篇日記與它的四格分鏡。
+{GAG_RULES}
+
+## 不通順的例子（這類句子要挑出來）
+「把這句話抱在懷裡，像接到一張新的小卡片」「重點要住在哪裡」「力氣不會讓釘子變聰明」「共用螢幕可以承載一場會議」：
+把東西擬人、硬塞比喻、翻譯腔、唸出來不像人講話。
+
+## 四格分鏡
+{d['image_prompt']}
+
+## 日記
+{d['body_md']}
+
+只輸出 JSON：
+{{"gag_type": "這則四格的結局類型，只能填：{'、'.join(GAG_TYPES)}",
+  "comic_issues": ["四格違反哪條規則（沒有就空陣列）"],
+  "prose_issues": ["原文照抄不通順的句子（沒有就空陣列）"],
+  "lesson": "從上面挑最要緊的一個問題，寫成下次可以照做的一句心得（三十字內）；都沒問題就寫這篇最值得保留的做法"}}"""
+    c = ask_json(prompt, lambda c: c.get("lesson", "").strip(), "審稿")
+    if c:
+        print("審稿：", json.dumps(c, ensure_ascii=False), file=sys.stderr)
+    return c
+
+def fold_craft(craft):
+    """整理日：原則＋心得折成最多八條原則，心得清空。失敗就原樣保留。"""
+    if not craft["notes"]:
+        return craft
+    prompt = ("下面是一位四格漫畫作者累積的原則與每日心得。合併重複、刪掉已經不需要的，"
+              "折成最多八條具體、可照做的原則（每條三十字內）。\n"
+              + craft_block(craft) + '\n只輸出 JSON：{"principles": ["原則一", "..."]}')
+    r = ask_json(prompt, lambda r: 0 < len(r.get("principles", [])) <= 8, "整理手藝經驗")
+    return {"principles": r["principles"], "notes": []} if r else craft
+
 def load_rules():
     return json.load(open(RULES_PATH))
 
@@ -133,6 +195,81 @@ def fix_entry(d):
             d[k] = fix_punct(v)
     return d
 
+# 2026-11-02：先寫笑點、再寫日記。Day 0057–0094 的四格是寫完日記才順手拆成四格，
+# 笑點常常不成立：第四格把日記的道理講出來（Day 0077、0091）、第三格先把笑點說掉（Day 0094）、
+# 四格變成一天行程的四個地點（Day 0094）、標題橫幅把笑點先講了（Day 0091）。
+# 成立的那篇（Day 0087）是同一個場景、前三格不透露、第四格一句吐槽配一個畫面。
+GAG_RULES = """## 四格笑點怎麼寫（逐條遵守）
+1. 只講一件事、一個場景、幾分鐘內發生的事。不要把一天的行程拆成四個地點，不要把兩則新聞湊在一起。
+2. 起：第一格交代情境，沒讀過日記的人看畫面就懂（新聞標題、同事、辦公室）。
+   承：第二格把期待推高，或讓優理認真投入。
+   轉：第三格把局面推到最緊張，但絕對不能透露、暗示或先講出結局。
+   結：第四格才揭曉，用以下其中一種：期待落空的反轉、誤會揭開、認真過頭變荒謬、旁人一句吐槽、鏡頭拉遠看到真相。
+3. 第四格不准講道理、不准總結、不准解釋笑點。笑點要靠畫面或角色表情成立；
+   如果第四格的台詞刪掉讀者還是懂，就刪掉，只留表情或一個短促的反應（十字內）。
+4. 對白是一般上班族真的會說的話。不准用比喻或日記裡的概念當台詞（例如「這格只能等它自己下班」）。
+   不准出現小燈、notebook、森林終端、雲上這類只有日記讀者才懂的設定詞。
+5. 標題橫幅八個字以內，只交代題目，不能講出結局或道理。
+6. 分鏡裡主角一律只寫「Yori」，不要描述他的外貌、性別、服裝或髮型（外貌由參考圖決定），代稱不用 she/he。
+
+## 範例
+好的（Day 0087，同一個座位，前三格只是在準備換駕照）：
+1 同事拿手機：「台灣駕照可以直接換當地駕照。」 2 優理把駕照、護照、大頭照排好。
+3 同事拿起舊駕照，不安：「這張是我大學拍的，還認得出我嗎？」 4 優理看照片，認真回：「這張比較像你弟。」
+壞的（Day 0094）：第一格辦公室、第二格五金行、第三格家裡室友說「你買垃圾桶怎麼沒加蓋？」、
+第四格室友說「那這個可以當垃圾桶了。」問題：四個地點像行程表；第三格已經把垃圾桶的笑點講掉，第四格只是重複。
+
+## 自我檢查（選定前逐題問）
+- 遮住第四格，前三格能猜到結局嗎？猜得到就換一個結局。
+- 第四格有沒有在講道理或解釋？有就刪。
+- 不看日記、只看四格，陌生人會笑嗎？"""
+
+def write_comic(news, allowed, consolidation, recent_titles="", craft=None, recent_gags=()):
+    """先產四格劇本（三個候選、依 GAG_RULES 自評挑一個）。回傳 dict：category, inspiration, banner, image_prompt。"""
+    if consolidation:
+        source = "今天是整理日：題材是優理整理桌上一堆便利貼，把幾張意思一樣的併成一張。分類填「休息與心情」。"
+    elif news:
+        source = ("## 今天的新聞（挑一則當靈感，轉成上班族日常的一個小場面；不要照抄新聞，也不要評論新聞）\n"
+                  + "\n".join(f"- {n}" for n in news))
+    else:
+        source = "今天沒有新聞，從上班族日常自己找一個小場面。"
+    prompt = f"""你是四格漫畫編劇。主角優理（Yori）是個在辦公室上班的小學徒，認真、有點天然。
+{source}
+題材分類只能從這幾個選：{'、'.join(allowed)}
+最近十四天的標題（題材別撞）：
+{recent_titles}
+
+{GAG_RULES}
+
+{craft_block(craft or {"principles": [], "notes": []})}
+最近幾篇用過的結局類型：{'、'.join(recent_gags) or '無'}（今天優先用別的：{'、'.join(GAG_TYPES)}）
+
+先想三個結局類型不同的版本，每個一句話寫在 candidates，照自我檢查挑最好笑的一個，再把它寫成完整劇本。
+繁體中文、全形標點、禁 emoji、禁簡體字。
+只輸出 JSON（字串內不要用半形雙引號，引用改用「」）：
+{{"candidates": ["版本一的一句話大綱", "版本二", "版本三"],
+  "pick_reason": "為什麼選這個（一句話，說明遮住第四格猜不到結局）",
+  "category": "分類",
+  "inspiration": "{'選中的那則新聞原文（原樣複製）' if news and not consolidation else '空字串'}",
+  "banner": "標題橫幅（八字內，不洩露結局）",
+  "image_prompt": "英文分鏡，依序 Panel 1 到 Panel 4：每格寫場景、角色動作與表情、鏡頭（特寫、中景、拉遠），對白用繁體中文寫在「」裡，每格最多一句、二十字內；第四格可以沒有對白。四格同一個場景。"}}"""
+    for attempt in range(3):
+        try:
+            raw = re.sub(r"^```json\s*|\s*```$", "", gemini_text(prompt).strip())
+            c = json.loads(raw, strict=False)
+            assert c.get("image_prompt", "").count("Panel") >= 4 and c.get("banner", "").strip()
+            if c.get("category") not in CATEGORIES:
+                c["category"] = allowed[0]
+            print("四格候選：", json.dumps(c.get("candidates"), ensure_ascii=False),
+                  "\n選：", c.get("pick_reason", ""), file=sys.stderr)
+            c["banner"] = fix_punct(c["banner"])
+            c["image_prompt"] = f"Title banner text: 「{c['banner']}」\n" + c["image_prompt"]
+            return c
+        except Exception as e:
+            print(f"寫四格第 {attempt+1} 次失敗：{e}", file=sys.stderr)
+            time.sleep(10)
+    sys.exit(1)
+
 def auto_write(entries):
     guide = open(os.path.join(ROOT, "YORI_VOICE_GUIDE.md")).read()
     fewshot = "\n\n---\n\n".join(
@@ -147,16 +284,20 @@ def auto_write(entries):
     cooling = [c for c in (e.get("category") for e in entries[-COOLDOWN:]) if c]
     allowed = [c for c in CATEGORIES if c not in cooling]
     consolidation = datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Taipei")).day == 1
-    news_block = ("## 今天的新聞（挑一則當靈感，轉成上班族日常的一個小場面；不要照抄新聞，也不要評論新聞）\n"
-                  + "\n".join(f"- {n}" for n in news)) if news else \
-                 "## 今天沒有新聞可看\n從上班族日常自己找一個小場面。"
+    craft = load_craft()
+    if consolidation:
+        craft = fold_craft(craft)
+    recent_gags = [n.get("gag_type") for n in craft["notes"][-3:] if n.get("gag_type")]
+    comic = write_comic(news, CATEGORIES if consolidation else allowed, consolidation,
+                        recent_titles, craft, recent_gags)
+    comic_block = ("## 今天的四格（已經定稿，日記圍著它寫，不要改劇情、不要改對白）\n"
+                   + (f"靈感新聞：{comic['inspiration']}\n" if comic.get("inspiration") else "")
+                   + comic["image_prompt"])
     task = ("今天是每月的『整理日』。回顧上面的規則帳本，挑兩三條相近或已經升級過的規則折併成更短的一條，"
             "寫一篇整理日日記：講他攤開 notebook 整理便條的過程、哪幾條併成了什麼、哪一條其實已經長進身體裡不用再寫。"
-            "這篇的四格漫畫畫他整理便條的過程。") if consolidation else (
-            f"寫 Day {day:04d} 的日記。題材分類只能從這幾個選：{'、'.join(allowed)}"
-            f"（{'、'.join(cooling) or '無'} 最近剛寫過，今天不選）。"
-            "他的名字「より」意思是「比昨天再多一點」，長進要算在作者的手藝上：這次的笑點、分鏡、角色反應、"
-            "或看事情的角度，要有一個是前面的日記沒試過的。規則帳本是參考，可以回頭用舊規則，"
+            "四格已經畫好，日記的今日作品介紹這則四格。") if consolidation else (
+            f"寫 Day {day:04d} 的日記，主角作品是上面那則已定稿的四格。"
+            "日記不寫創作過程：不寫分鏡怎麼安排、笑點怎麼設計、Yaze 看稿給意見這類幕後話。規則帳本是參考，可以回頭用舊規則，"
             "但不要接著最近幾天的規則往下推，也不要又寫一條「寄出前還要檢查什麼」。"
             "結尾一樣收一條他今天新折進 notebook 角落的小規則（一句話，自然收進文中，不要跟帳本裡的重複）。"
             "這條規則不要用「……之後，還要……，不然……」的句型，帳本裡已經幾十條都長這樣了。")
@@ -167,10 +308,12 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
 ## 語氣規範（嚴格遵守）
 {guide}
 
+{craft_block(craft)}
+
 ## 三篇舊作（只學格式與語氣，題材不要跟它們一樣）
 {fewshot}
 
-{news_block}
+{comic_block}
 
 ## notebook 角落的小規則帳本（參考用，別寫重複的規則）
 {ledger}
@@ -183,33 +326,34 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
 結構照樣本：## 今日作品 → ## 圖文短文 →
 （辦公室主題加一段 ## 今天的小方法：…）→ ## 創作筆記。
 創作筆記的「類型」寫 Four-panel comic / 四格漫畫。
-四格漫畫的對白另有規則（日記正文照語氣規範，對白不照）：四格要能單獨看懂，
-不讀日記也知道在講什麼；對白是一般上班族講得出口的完整口語；
-不准用沒交代過對象的代名詞開頭（例如第一格就說「它」）；
-不准出現小燈、notebook、森林終端、雲上這類只有日記讀者才懂的設定詞。
+今日作品照四格的順序介紹，但不要把第四格的笑點先講破；道理與小規則寫在圖文短文裡，四格本身不講道理。
 繁體中文、全形標點、禁 emoji、禁簡體字、禁「不是X，而是Y」句型。優理的代稱用中性的「他」。
+白話規則：全文用第三人稱寫優理，不用「我」。不要把東西擬人（例如「桌面沒有被問過」「釘子變聰明」「它願意離開桌面」）。
+比喻只在讀者一看就懂時用，整篇最多一個。每一句國中生讀得懂、唸出來像真人在講話。
 
 輸出 JSON（只輸出 JSON，字串內不要用半形雙引號，引用改用「」）：
 {{"short_title": "標題（不含 Day 編號）",
   "summary": "一到兩句摘要（會當 lede 與卡片文字）",
   "body_md": "從 ## 今日作品 開始的 markdown 正文",
-  "category": "題材分類，只能填：{'、'.join(allowed if not consolidation else CATEGORIES)} 其中一個",
-  "inspiration": "{'你選中的那則新聞原文（原樣複製）' if news else '沒有新聞，填空字串'}",
   "new_rule": "今天新折進 notebook 的那條小規則（一句話，40 字內）{'；整理日則改填折併後的規則' if consolidation else ''}",
   "merged_days": {"[被折併的舊規則 day 編號陣列，例如 [30, 31]；沒有就給空陣列]" if consolidation else "[]（今天不是整理日，固定給空陣列）"},
-  "image_prompt": "英文的四格漫畫分鏡（給生圖模型）：依序寫 Panel 1 到 Panel 4，每格寫畫面、優理或其他角色的動作與表情，對白用繁體中文寫在引號「」裡（每格最多一句、二十字內）。四格要照起承轉合：第一格交代情境（沒讀過日記的人也看得出發生什麼事，例如畫面上的新聞標題、同事、辦公室場景），第四格是反轉或笑點。場景跟著故事走，不要每天都在雲上書桌。",
   "alt": "圖片 alt 文字（中文，Day {day:04d} 開頭）"}}"""
     for attempt in range(3):
         try:
             raw = gemini_text(prompt)
             raw = re.sub(r"^```json\s*|\s*```$", "", raw.strip())
             d = json.loads(raw, strict=False)
+            d.update(category=comic["category"], inspiration=comic.get("inspiration", ""),
+                     image_prompt=comic["image_prompt"])
             assert all(k in d and str(d[k]).strip() for k in ENTRY_FIELDS)
             assert "## 今日作品" in d["body_md"]
             assert d.get("new_rule", "").strip(), "缺 new_rule"
-            if d.get("category") not in CATEGORIES:
-                d["category"] = allowed[0]
-            return fix_entry(d)
+            d = fix_entry(d)
+            c = critique(d)
+            if c:
+                craft["notes"].append({"day": day, "gag_type": c.get("gag_type", ""), "lesson": c["lesson"].strip()})
+            d["_craft"] = craft
+            return d
         except Exception as e:
             print(f"寫稿第 {attempt+1} 次失敗：{e}", file=sys.stderr)
             time.sleep(10)
@@ -226,8 +370,8 @@ def gen_image(prompt, out_path):
             "Image 1 is the character sheet for Yori (small digital apprentice: grey-green hair with cyan tips, "
             "green eyes, pointed ears with cyan circuit lines, small round warm-gold '#' brooch, cream "
             "hooded cloak, brass terminal lantern with cyan '>' glow). Keep Yori's design exactly.\n"
-            "Image 2 shows the comic FORMAT to follow: four numbered panels in a 2x2 grid, a short title "
-            "banner, speech bubbles with Traditional Chinese text, clean line art with soft warm colors. "
+            "Image 2 shows the comic FORMAT to follow: four numbered panels in a 2x2 grid, a title "
+            "banner showing exactly the banner text in the script, speech bubbles with Traditional Chinese text, clean line art with soft warm colors. "
             "Follow its layout and rendering only; do NOT copy its story, props or scene.\n"
             "Comic script:\n" + prompt +
             "\nSquare 2x2 four-panel layout. All dialogue in Traditional Chinese, short and legible, "
@@ -341,7 +485,8 @@ def publish(d, image_path=None):
                     "image": f"docs/assets/{img_name}",
                     "status": "cloud-auto", "label": label,
                     "short_title": d["short_title"], "summary": d["summary"],
-                    "category": d.get("category", ""), "inspiration": d.get("inspiration", "")})
+                    "category": d.get("category", ""), "inspiration": d.get("inspiration", ""),
+                    "comic": d.get("image_prompt", "")})  # 存劇本，日後才能回頭分析哪篇笑點沒成立
     blob = json.dumps(entries, ensure_ascii=False, indent=2) + "\n"
     for p in ("docs/entries.json", "docs/manifest.json", "manifest.json"):
         open(os.path.join(ROOT, p), "w").write(blob)
@@ -353,6 +498,8 @@ def publish(d, image_path=None):
             rules = [r for r in rules if r["day"] not in merged]
         rules.append({"day": day, "rule": d["new_rule"].strip()})
         save_rules(rules)
+    if d.get("_craft"):
+        json.dump(d["_craft"], open(CRAFT_PATH, "w"), ensure_ascii=False, indent=1)
 
     print(f"published {label} — {d['short_title']}")
 
