@@ -1,0 +1,167 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* 優理的手帳：夜裡的森林書桌，燈籠照著一本攤開的綠皮日記 */
+:root{
+  --leather:#1f3a2b; --leather-hi:#2c5039; --paper:#f3ead3; --paper-edge:#e6d9b8;
+  --ink:#2b2a22; --pencil:#a89c7f; --gold:#c9a24a; --gold-hi:#ecc874; --cyan:#3fd6c8;
+  --hand:"LXGW WenKai TC","Kaiti TC","STKaiti","BiauKai","DFKai-SB",serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{font-family:var(--hand);color:var(--ink);
+  background:radial-gradient(ellipse 70% 60% at 50% 55%,rgba(236,200,116,.16),transparent 70%),
+             url(__FOREST__) center/cover,#141f17;
+  display:flex;align-items:center;justify-content:center}
+/* 螢火蟲：整頁唯一的動態 */
+.ff{position:fixed;width:5px;height:5px;border-radius:50%;background:var(--gold-hi);box-shadow:0 0 8px 3px rgba(236,200,116,.55);opacity:0;animation:drift 9s ease-in-out infinite;pointer-events:none}
+@keyframes drift{0%{opacity:0;transform:translate(0,0)}25%{opacity:.9}70%{opacity:.6}100%{opacity:0;transform:translate(26px,-60px)}}
+@media (prefers-reduced-motion:reduce){.ff{animation:none;opacity:.5}}
+
+/* 書：綠皮封面露邊，兩頁紙 */
+.book{position:relative;width:min(94vw,168vh);height:min(88vh,52vw);display:flex;padding:1.3vh;
+  background:linear-gradient(90deg,var(--leather),var(--leather-hi) 49.6%,#16291e 50%,var(--leather-hi) 50.4%,var(--leather));
+  border-radius:1.4vh;box-shadow:0 3vh 7vh rgba(0,0,0,.6),inset 0 0 0 .25vh rgba(201,162,74,.5)}
+.page{position:relative;flex:1;background:var(--paper);overflow:hidden;
+  background-image:radial-gradient(rgba(120,100,60,.13) .12vh,transparent .14vh);background-size:2.4vh 2.4vh}
+.page.l{flex:0 0 36%;border-radius:.8vh 0 0 .8vh;box-shadow:inset -2.2vh 0 2.4vh -1.6vh rgba(60,45,20,.35)}
+.page.r{border-radius:0 .8vh .8vh 0;box-shadow:inset 2.2vh 0 2.4vh -1.6vh rgba(60,45,20,.35)}
+/* 角落的電路線：金線接青藍節點，像她袍子上的紋 */
+.trace{position:absolute;width:12vh;height:12vh;pointer-events:none;opacity:.8}
+.trace.tl{bottom:1.4vh;left:1.4vh;transform:rotate(-90deg)}.trace.br{bottom:1.4vh;right:1.4vh;transform:rotate(180deg)}
+
+/* 左頁 */
+.l .in{position:absolute;inset:4.5vh 4vh 3.5vh 4.5vh;display:flex;flex-direction:column}
+.yr{font-size:2.1vh;color:var(--pencil);letter-spacing:.2em}
+.mo{font-size:8.6vh;font-weight:700;line-height:1;margin:.6vh 0 .4vh;color:var(--leather)}
+.cnt{font-size:2.1vh;color:#6b6250}
+.nav{display:flex;gap:1.2vh;margin-top:1.6vh}
+.nav button,.open{font-family:inherit;cursor:pointer}
+.nav button{font-size:2vh;padding:.5vh 1.4vh;background:none;border:.18vh solid var(--ink);border-radius:999px;color:var(--ink)}
+.nav button:disabled{opacity:.25;cursor:default}
+.nav button:not(:disabled):hover,.nav button:focus-visible{background:var(--leather);color:var(--paper);outline:none}
+.pv{margin-top:auto;display:flex;flex-direction:column;align-items:center}
+.photo{position:relative;width:100%;aspect-ratio:1/1;max-height:42vh;background:#fff center/contain no-repeat;
+  border:.9vh solid #fffdf5;box-shadow:0 .5vh 1.2vh rgba(60,45,20,.3);transform:rotate(-1.2deg)}
+.photo:before,.photo:after{content:"";position:absolute;width:9vh;height:2.6vh;background:rgba(63,214,200,.38);top:-1.6vh}
+.photo:before{left:-2vh;transform:rotate(-28deg)}.photo:after{right:-2vh;transform:rotate(28deg)}
+.photo.empty{background:repeating-linear-gradient(-45deg,transparent 0 1.2vh,rgba(168,156,127,.18) 1.2vh 1.4vh)}
+.pd{margin-top:2vh;font-size:2vh;color:#6b6250}
+.pt{font-size:3.2vh;font-weight:700;text-align:center;line-height:1.3;margin:.6vh 0 1.4vh;min-height:4.2vh}
+.open{font-size:2.4vh;font-weight:700;padding:.9vh 2.6vh;border:none;border-radius:.6vh;color:#2a1f08;
+  background:linear-gradient(var(--gold-hi),var(--gold));box-shadow:0 .4vh 0 #8a6a24,0 0 2.4vh rgba(236,200,116,.55)}
+.open:hover,.open:focus-visible{outline:none;filter:brightness(1.08)}
+.open[hidden]{display:none}
+.multi{display:flex;flex-wrap:wrap;gap:.8vh;justify-content:center}
+.multi button{font:inherit;font-size:1.8vh;padding:.4vh 1.2vh;border:.15vh dashed var(--ink);border-radius:.6vh;background:none;cursor:pointer}
+
+/* 右頁：月曆 */
+.r .in{position:absolute;inset:4.5vh 4.5vh 3.5vh 4vh;display:flex;flex-direction:column}
+.wk,.g{display:grid;grid-template-columns:repeat(7,1fr);gap:1.1vh}
+.wk div{text-align:center;font-size:2vh;color:var(--pencil);padding-bottom:.8vh}
+.g{flex:1;grid-auto-rows:1fr}
+.d{position:relative;border-radius:.4vh}
+.d .n{position:absolute;top:.3vh;left:.6vh;font-size:2vh;color:var(--pencil)}
+.d.has{cursor:pointer;background:#fff center 62%/cover no-repeat;border:.5vh solid #fffdf5;box-shadow:0 .3vh .7vh rgba(60,45,20,.28)}
+/* 四格只露第一格；沒選到的蒙一層舊紙色，選到的才是原色 */
+.d.has.comic{background-size:215%;background-position:4% 14%}
+.d.has{filter:sepia(.28) saturate(.8)}.d.has.sel,.d.has:focus-visible{filter:none}
+.d.has:nth-child(3n){transform:rotate(1.4deg)}.d.has:nth-child(3n+1){transform:rotate(-1deg)}
+.d.has .n{top:-.5vh;left:-.5vh;background:#fffdf5;color:var(--ink);padding:0 .7vh;border-bottom-right-radius:.6vh;font-weight:700}
+.d.has:focus-visible,.d.sel{outline:.4vh solid var(--gold);outline-offset:.2vh;box-shadow:0 0 2.2vh rgba(236,200,116,.9)}
+.d.today .n:after{content:"#";display:inline-grid;place-items:center;width:2.4vh;height:2.4vh;margin-left:.5vh;border-radius:50%;
+  background:radial-gradient(var(--gold-hi),var(--gold));color:#3a2a08;font-size:1.6vh;font-weight:700;vertical-align:middle}
+.d.rest{border:.15vh dashed rgba(168,156,127,.45)}
+.d.more:after{content:attr(data-more);position:absolute;right:.4vh;bottom:.4vh;font-size:1.5vh;background:var(--leather);color:var(--paper);padding:0 .6vh;border-radius:.4vh}
+
+/* 直式螢幕：上下翻 */
+@media (max-aspect-ratio:1/1){
+  .book{flex-direction:column;width:96vw;height:94vh;background:var(--leather)}
+  .page.l{flex:0 0 auto;border-radius:.8vh .8vh 0 0}
+  .page.r{border-radius:0 0 .8vh .8vh}
+  .l .in{position:relative;inset:auto;padding:2vh 4vw;display:grid;grid-template-columns:auto 1fr;column-gap:4vw;align-items:center}
+  .yr{grid-column:1}.mo{grid-column:1;font-size:5.6vh}.cnt{grid-column:1;font-size:1.7vh}
+  .nav{grid-column:1;flex-wrap:wrap;gap:.8vh}.nav button{font-size:1.6vh}
+  .pv{grid-column:2;grid-row:1/5;margin:0}
+  .photo{width:auto;height:15vh;border-width:.6vh}.photo:before,.photo:after{display:none}
+  .pd{margin-top:1vh;font-size:1.5vh}.pt{font-size:2vh;margin:.3vh 0 .8vh;min-height:0}.open{font-size:1.8vh;padding:.6vh 1.6vh}
+  .trace{display:none}
+  .r .in{inset:2vh 3vw}.wk,.g{gap:1vw}.g{flex:0 0 auto;grid-auto-rows:auto}.d{aspect-ratio:1/1}
+  .d.has{border-width:.3vh}.d .n{font-size:1.5vh}
+}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<g id="tr" fill="none" stroke-linecap="round">
+  <path d="M4 60 V22 Q4 4 22 4 H60" stroke="#c9a24a" stroke-width="1.6"/>
+  <path d="M14 70 V30 Q14 14 30 14 H44 L54 24 H76" stroke="#c9a24a" stroke-width="1.2" opacity=".7"/>
+  <circle cx="76" cy="24" r="3" fill="#3fd6c8"/><circle cx="60" cy="4" r="2.4" fill="#c9a24a"/><circle cx="4" cy="60" r="2.4" fill="#c9a24a"/>
+  <path d="M24 40 q8 -10 18 -6 q-6 10 -18 6z M30 36 l10 -3" stroke="#4f7a52" stroke-width="1.2" fill="rgba(79,122,82,.25)"/>
+</g></defs></svg>
+<div class="book">
+  <section class="page l"><svg class="trace tl" viewBox="0 0 90 90"><use href="#tr"/></svg>
+    <div class="in">
+      <div class="yr" id="yr"></div><div class="mo" id="mo"></div><div class="cnt" id="cnt"></div>
+      <div class="nav"><button id="prev">上個月</button><button id="next">下個月</button><button id="today" hidden></button></div>
+      <div class="pv"><div class="photo empty" id="ph"></div><div class="pd" id="pd"></div><div class="pt" id="pt"></div>
+        <div class="multi" id="pm"></div><button class="open" id="op" hidden>翻開這一天</button></div>
+    </div></section>
+  <section class="page r"><svg class="trace br" viewBox="0 0 90 90"><use href="#tr"/></svg>
+    <div class="in"><div class="wk" id="wk"></div><div class="g" id="g"></div></div></section>
+</div>
+<script>
+// 同步程式把這一行換成那個月的資料：{year, month, today, prev, next, days:{"29":[{key,title,thumb,img,day}]}, rest:[...], latest}
+var M = /*DATA*/{"year":2026,"month":11,"today":"2026-11-02","prev":true,"next":false,"days":{},"rest":[],"latest":null}/*END*/;
+function go(v){
+  parent.postMessage({type:'larch:set',name:'diary_go',value:v},'*');
+  setTimeout(function(){parent.postMessage({type:'larch:complete',result:'go',payload:{go:v}},'*')},120);
+}
+var MO = ['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+var $ = function(id){return document.getElementById(id)};
+$('yr').textContent = M.year;
+$('mo').textContent = MO[M.month-1] + '月';
+var cnt = Object.keys(M.days).reduce(function(a,k){return a+M.days[k].length},0);
+$('cnt').textContent = cnt ? '這個月畫了 ' + cnt + ' 篇' : '這個月還沒有日記';
+$('prev').disabled = !M.prev; $('next').disabled = !M.next;
+$('prev').onclick = function(){go('prev')}; $('next').onclick = function(){go('next')};
+if (M.latest) { $('today').hidden = false; $('today').textContent = M.latest.slice(0,10) === M.today ? '今天' : '最新一篇'; $('today').onclick = function(){go(M.latest)}; }
+
+var sel = null;
+function show(c, posts, day){
+  if (sel) sel.classList.remove('sel'); sel = c; c.classList.add('sel');
+  var p = posts[0];
+  $('ph').className = 'photo'; $('ph').style.backgroundImage = 'url("' + (p.img || p.thumb) + '")';
+  $('pd').textContent = M.month + ' 月 ' + day + ' 日' + (p.day != null ? '，Day ' + String(p.day).padStart(4,'0') : '');
+  $('pt').textContent = posts.length === 1 ? p.title : '';
+  var pm = $('pm'); pm.innerHTML = '';
+  if (posts.length > 1) posts.forEach(function(q){var b=document.createElement('button');b.textContent=q.title;b.onclick=function(){go(q.key)};pm.appendChild(b)});
+  $('op').hidden = posts.length !== 1; $('op').onclick = function(){go(p.key)};
+}
+'日一二三四五六'.split('').forEach(function(w){var d=document.createElement('div');d.textContent=w;$('wk').appendChild(d)});
+var first = new Date(M.year, M.month-1, 1).getDay(), n = new Date(M.year, M.month, 0).getDate(), g = $('g'), init = null, last = null;
+for (var i = 0; i < first; i++) g.appendChild(document.createElement('span'));
+for (var day = 1; day <= n; day++) (function(day){
+  var c = document.createElement('div'), posts = M.days[day] || [];
+  var iso = M.year + '-' + String(M.month).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+  c.className = 'd' + (posts.length ? ' has' : '') + (iso === M.today ? ' today' : '') + ((M.rest||[]).indexOf(day) >= 0 ? ' rest' : '');
+  var nn = document.createElement('span'); nn.className = 'n'; nn.textContent = day; c.appendChild(nn);
+  if (posts.length) {
+    c.style.backgroundImage = 'url("' + posts[0].thumb + '")';
+    c.tabIndex = 0; c.setAttribute('role','button'); c.setAttribute('aria-label', M.month + ' 月 ' + day + ' 日：' + posts[0].title);
+    if (posts[0].comic) c.classList.add('comic');
+    if (posts.length > 1) { c.classList.add('more'); c.dataset.more = posts.length + ' 篇'; }
+    // 第一下選起來看大圖，選中的再按一下就翻開
+    c.onclick = function(){ if (sel === c && posts.length === 1) go(posts[0].key); else show(c, posts, day); };
+    c.onkeydown = function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.onclick(); } };
+    c.onmouseenter = function(){ show(c, posts, day); };
+    last = function(){ show(c, posts, day); };
+    if (M.latest && posts.some(function(p){return p.key === M.latest})) init = last;
+  }
+  g.appendChild(c);
+})(day);
+(init || last || function(){ $('pd').textContent = '這個月還沒有日記'; })();
+for (var k = 0; k < 14; k++) { var f = document.createElement('i'); f.className = 'ff';
+  f.style.left = (Math.random()*100) + 'vw'; f.style.top = (20 + Math.random()*75) + 'vh'; f.style.animationDelay = (-Math.random()*9) + 's';
+  document.body.appendChild(f); }
+parent.postMessage({type:'larch:ready'},'*');
+</script></body></html>

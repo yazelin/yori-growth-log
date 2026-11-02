@@ -57,6 +57,18 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
 需要的 repo secrets：`LLMSHARE_API_KEY`（寫稿）、`CODEX_IMAGE_KEY`（產圖）、`GEMINI_API_KEY`（看新聞，缺了就不看新聞照寫）。
 手動補發：Actions 頁面 workflow_dispatch；同一天已有日記會自動跳過。
 
+## Larch 版（2026-11-03 起）
+
+日記也同步成 Larch 作品《優理的圖文日記》（`larch/config.json` 的 `project_id`）：月曆選一天，翻開那天的日記頁，
+旁白逐句念，四格漫畫會放大正在講的那一格，右邊站著優理。
+
+- 每晚發完日記後，同一個 workflow 跑 `scripts/larch_yori.py`：產日記頁背景（`docs/larch/bg/`），
+  模型看圖替每句挑格子與表情（快取在 `larch/faces/`），再把每個月的白板推上 Larch。
+  手動重跑用 workflow 的「只同步到 Larch」。
+- 月曆、白板結構沿用格莉奇日記的 `scripts/larch_sync.py`；立繪在 `docs/larch/sprites/`。
+- 本機看成品：`python3 scripts/larch_yori.py --local docs/_preview.json`，再用 larch-preview 開那個檔。
+- 需要 Actions secret `LARCH_AGENT_KEY`；沒設的話這一步會跳過，日記照常發。
+
 ## AI-assisted / co-created disclosure
 
 本專案是 Yaze Lin 與 AI agent 共同創作與整理的角色成長紀錄。
