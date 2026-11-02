@@ -1271,5 +1271,20 @@
     "summary": "分區停水新聞讓辦公室一陣小慌張，優理買了藍色水桶，卻先被室友當成垃圾桶；直到房東說水塔已滿，他才把水桶的兩份工作分清楚。",
     "category": "待辦與時間",
     "inspiration": "台灣自來水公司發布最新公告，包含台北、新北市在內的12個縣市自11月2日起陸續實施分區停水，最長停水達18小時讓不少租屋族連忙買水桶備用。"
+  },
+  {
+    "day": 95,
+    "date": "2026-11-03",
+    "title": "Day 0095 — 最後一分鐘的綠勾",
+    "entry": "docs/entries/day-0095.html",
+    "entry_markdown": "docs/entries/day-0095.md",
+    "image": "docs/assets/day-0095-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0095",
+    "short_title": "最後一分鐘的綠勾",
+    "summary": "會議快散會時，同事在桌下偷偷訂票，優理幫他按下確認。螢幕跳出訂票成功，列車卻已經發車，優理把最後一分鐘的教訓折進 notebook。",
+    "category": "會議與溝通",
+    "inspiration": "台鐵預計於11月10日起升級「台鐵e訂通」App，開放旅客在列車開車前5分鐘仍可彈性完成訂票，成為通勤族臨時改搭車次的新福音。",
+    "comic": "Title banner text: 「最後一分鐘」\nAll panels in the same office meeting room. Panel 1: Medium shot; a male coworker secretly shows his phone to Yori under the table; the phone screen clearly reads 「最後1分鐘可訂」; the coworker whispers 「最後一分鐘還能訂。」; Yori glances at the screen. Panel 2: Medium shot; the boss taps the whiteboard and says 「再五分鐘就散會。」; the coworker’s thumb hovers over the confirm button with a forced smile; Yori notices. Panel 3: Medium close-up; the boss points at the coworker and says 「你來說一下。」; the coworker freezes and hides the phone; Yori calmly reaches under the table and taps the confirm button. Panel 4: Over-the-shoulder medium close-up; the phone shows a big green check 「訂票成功」 and the train status 「18:30已發車」; the coworker is frozen; Yori deadpans beside him. No dialogue."
   }
 ]
