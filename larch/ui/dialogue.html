@@ -1,0 +1,31 @@
+<style>
+@import url("https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&display=swap");
+:root{--leather:#1f3a2b;--paper:#f3ead3;--edge:#e6d9b8;--ink:#2b2a22;--gold:#c9a24a;--cyan:#3fd6c8}
+*{box-sizing:border-box}
+html,body{margin:0;background:transparent;overflow:hidden}
+/* 只蓋左邊：日記頁的紙在畫面左 63%，右邊站著優理，對話框跟紙對齊，不擋到她和燈 */
+body{padding:8px 12px}
+.box{width:64%}
+/* 生圖的手帳紙條（docs/larch/ui/paper.webp）切九格：左邊皮革書背、上下撕邊、右上紙膠帶照原比例，中間跟著框伸展 */
+.box{position:relative;min-height:128px;color:var(--ink);border-style:solid;border-width:16px 60px 6px 34px;
+  border-image:url("https://yazelin.github.io/yori-growth-log/larch/ui/paper.webp") 40 150 12 80 fill / 16px 60px 6px 34px stretch;
+  filter:drop-shadow(0 14px 22px rgba(0,0,0,.55))}
+.tb{padding:4px clamp(10px,1.5vw,24px) 0}
+.name{display:inline-block;padding:2px 12px;border-radius:6px;background:var(--leather);color:var(--paper);font-size:15px;font-weight:700;letter-spacing:.06em}
+.name:empty{display:none}
+.text{margin:0;padding:8px clamp(10px,1.5vw,24px) 18px;font-size:var(--larch-text-size,24px);line-height:1.75;min-height:3.4em}
+.next{position:absolute;right:-30px;bottom:6px;width:30px;height:30px;border:0;border-radius:8px;background:transparent;color:var(--leather);cursor:pointer}
+.next::before{content:"";position:absolute;left:9px;top:8px;border-left:12px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent;animation:blink 1.1s steps(2) infinite}
+.next:hover{background:rgba(31,58,43,.12)}
+.next:focus-visible{outline:2px solid var(--leather);outline-offset:2px}
+@keyframes blink{50%{opacity:.25}}
+@media (max-width:720px){body{padding:6px 8px}.box{width:auto;min-height:0}.text{font-size:min(var(--larch-text-size,16px),16px);line-height:1.6;padding:4px 6px 10px;min-height:0}}
+@media (prefers-reduced-motion:reduce){.next::before{animation:none}}
+/* 播放器會替台詞套專案字型，這裡換成跟日記頁一樣的霞鶩文楷 */
+html{--larch-project-font:"LXGW WenKai TC","Kaiti TC","BiauKai","DFKai-SB",serif!important}
+</style>
+<section class="box" aria-label="對話">
+  <div class="tb"><span class="name" data-larch-slot="speaker"></span></div>
+  <p class="text" data-larch-slot="text"></p>
+  <button class="next" data-larch-action="advance" aria-label="繼續"></button>
+</section>

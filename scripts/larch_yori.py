@@ -8,7 +8,6 @@
   --local 只產專案 JSON 給本機 larch-preview 看，不連 Larch。
 """
 import argparse
-import base64
 import json
 import logging
 import os
@@ -98,12 +97,12 @@ def build(ps, ask=True):
         for day in data["days"].values():
             for q in day:  # 每篇都有圖：縮圖換成這個站的
                 d = by_key[q["key"]]
-                q["thumb"], q["excerpt"] = f"{BASE}/assets/thumbs/{d['image'].rsplit('/', 1)[-1]}", None
-                q["img"], q["day"], q["comic"] = f"{BASE}/{d['image']}", d["day"], d["comic"]
+                q["thumb"], q["excerpt"] = f"{CFG['base_url']}/assets/thumbs/{d['image'].rsplit('/', 1)[-1]}", None
+                q["img"], q["day"], q["comic"] = f"{CFG['base_url']}/{d['image']}", d["day"], d["comic"]
         return data
     larch_sync.calendar_data = calendar_data
-    forest = base64.b64encode((ROOT / "larch/forest.jpg").read_bytes()).decode()
-    larch_sync.CAL_TPL = larch_sync.CAL_TPL.replace("__FOREST__", "data:image/jpeg;base64," + forest)
+    # 月曆的森林與書本走 Pages 網址（小遊戲框可以載外部圖片）；本機預覽由 prev 腳本換成預覽伺服器的路徑
+    larch_sync.CAL_TPL = larch_sync.CAL_TPL.replace("__UI__", CFG["base_url"] + "/larch/ui")
 
     boards = larch_sync.build(ps, lines_for, ps[-1]["date"], BASE)
     by_title = {f"{p['date']} {p['title']}": k for k, p in keyed}
@@ -126,21 +125,46 @@ def build(ps, ask=True):
     return boards
 
 
+def ui_settings():
+    """標題畫面、對話框與幾項播放設定。stageFit 用 contain：背景就是日記頁本身，直式手機上也要看得到整頁。"""
+    return {"titleScreenEnabled": True, "titleCoverImage": f"{BASE}/larch/cover.webp",
+            "projectThumbnail": f"{BASE}/larch/thumb.webp", "backgroundShade": 0, "stageFit": "contain",
+            "cgGalleryEnabled": True, "cgGallerySource": "picked"}
+
+
+def ui_html(surface):
+    return (ROOT / f"larch/ui/{surface}.html").read_text("utf-8")
+
+
+def sync_ui(api, pid):
+    """跟線上不同才寫：介面走 PUT /interface（帶 expectedHtml 當樂觀鎖），設定走 PATCH /settings 只送變的欄位。"""
+    settings = api.get(f"/projects/{pid}/settings")["settings"]
+    for surface in ("title", "dialogue"):
+        have = ((settings.get("customInterfaces") or {}).get(surface) or {})
+        if have.get("html") != ui_html(surface) or not have.get("enabled"):
+            api.request("PUT", f"/projects/{pid}/interface", {"surface": surface, "html": ui_html(surface), "enabled": True,
+                                                               "expectedHtml": have.get("html") or "", "summary": f"更新{surface}介面"})
+            log.info("已更新 %s 介面", surface)
+    changes = {k: v for k, v in ui_settings().items() if settings.get(k) != v}
+    if changes:
+        api.patch_settings(pid, changes, "標題畫面與播放設定")
+        log.info("已更新設定：%s", ", ".join(changes))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--local", help="只寫專案 JSON 到這個路徑（素材走相對路徑），不連 Larch")
+    ap.add_argument("--local", help="只寫專案 JSON 到這個路徑給 larch-preview 看（放在 docs/ 底下），不連 Larch")
     args = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     ps = posts()
-    if args.local:
-        global BASE
-        BASE = "."
     boards = build(ps, ask=not args.local)
     if args.local:
-        proj = {"name": "優理的圖文日記", "boards": [{"id": k, **v} for k, v in
-                                                     sorted(boards.items(), key=lambda kv: kv[0] != "board-main")]}
-        Path(args.local).write_text(json.dumps(proj, ensure_ascii=False), "utf-8")
+        proj = {"name": "優理的圖文日記", "description": CFG.get("description"),
+                "boards": [{"id": k, **v} for k, v in sorted(boards.items(), key=lambda kv: kv[0] != "board-main")],
+                "settings": {**ui_settings(), "customInterfaces": {s: {"enabled": True, "html": ui_html(s)} for s in ("title", "dialogue")}}}
+        # 預覽伺服器把 /files/ 對到 JSON 所在的資料夾（docs/），Pages 網址換成它，還沒推上去的素材也看得到
+        Path(args.local).write_text(json.dumps(proj, ensure_ascii=False).replace(BASE, "/files"), "utf-8")
         print(len(ps), "篇", sorted(boards))
         return
     today = ps[-1]["date"]  # 用最新一篇的日期：排程晚到隔天也不會把日記算錯天
@@ -150,6 +174,7 @@ def main():
         print(f"要更新 {len(todo)} 張 board：{', '.join(todo) or '（沒有）'}", flush=True)
         return
     replaced = larch_sync.sync_project_meta(api, pid, CFG.get("description"), {}, [])
+    sync_ui(api, pid)
     larch_sync.sync_cg(api, pid, larch_sync.cg_items(ps, BASE))
     todo = larch_sync.plan(boards, {} if replaced else larch_sync.remote_descriptions(api, pid))
     print(f"要更新 {len(todo)} 張 board：{', '.join(todo) or '（沒有）'}", flush=True)
