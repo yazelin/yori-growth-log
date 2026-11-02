@@ -372,7 +372,8 @@ def gen_image(prompt, out_path):
             "banner showing exactly the banner text in the script, speech bubbles with Traditional Chinese text, clean line art with soft warm colors. "
             "Take only its layout and rendering from it; the story, props and scene come from the script below.\n"
             "Comic script:\n" + prompt +
-            "\nSquare 2x2 four-panel layout. All dialogue in Traditional Chinese, short and legible, "
+            "\nSquare 2x2 four-panel layout. Each speech bubble holds only the words inside 「」, without the 「」 marks "
+            "and without speaker names; the bubble tail points to the speaker. All dialogue in Traditional Chinese, short and legible, "
             "spelled exactly as written in the script. Settings change with the story.")
     body = {"prompt": full, "size": "1024x1024", "quality": "high", "count": 1,
             "reference_images_base64": refs}
