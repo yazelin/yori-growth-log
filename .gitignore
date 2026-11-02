@@ -22,3 +22,4 @@ __pycache__/
 # Keep generated public assets tracked intentionally:
 # docs/assets/day-*.png
 drafts/dry-run/
+docs/_preview.json

@@ -13,6 +13,10 @@ on:
         description: '只試跑：稿與圖存成 artifact，不發佈'
         type: boolean
         default: false
+      larch_only:
+        description: '只同步到 Larch，不產新日記'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -32,9 +36,10 @@ jobs:
           python-version: '3.12'
 
       - name: 裝相依
-        run: pip install --quiet Pillow
+        run: pip install --quiet Pillow numpy
 
       - name: 確認金鑰
+        if: github.event.inputs.larch_only != 'true'
         env:
           LLMSHARE_API_KEY: ${{ secrets.LLMSHARE_API_KEY }}
           CODEX_IMAGE_KEY: ${{ secrets.CODEX_IMAGE_KEY }}
@@ -45,6 +50,7 @@ jobs:
           [ -n "$GEMINI_API_KEY" ] || echo "::warning::缺 GEMINI_API_KEY，今天不看新聞，自由發揮"
 
       - name: 產出今日日記
+        if: github.event.inputs.larch_only != 'true'
         env:
           LLMSHARE_API_KEY: ${{ secrets.LLMSHARE_API_KEY }}
           CODEX_IMAGE_KEY: ${{ secrets.CODEX_IMAGE_KEY }}
@@ -61,7 +67,7 @@ jobs:
           path: drafts/dry-run/
 
       - name: 提交
-        if: github.event.inputs.dry_run != 'true'
+        if: github.event.inputs.dry_run != 'true' && github.event.inputs.larch_only != 'true'
         run: |
           git config user.name "yori-cloud"
           git config user.email "actions@users.noreply.github.com"
@@ -70,3 +76,22 @@ jobs:
           day=$(python -c "import json;print(json.load(open('docs/entries.json'))[-1]['label'])")
           git commit -m "diary: ${day}（雲端自動續更）"
           git push
+
+      - name: 同步到 Larch
+        if: github.event.inputs.dry_run != 'true'
+        continue-on-error: true
+        env:
+          LARCH_AGENT_KEY: ${{ secrets.LARCH_AGENT_KEY }}
+          LLMSHARE_API_KEY: ${{ secrets.LLMSHARE_API_KEY }}
+        run: |
+          [ -n "$LARCH_AGENT_KEY" ] || { echo "::warning::缺 LARCH_AGENT_KEY，今天不同步 Larch"; exit 0; }
+          git config user.name "yori-cloud"
+          git config user.email "actions@users.noreply.github.com"
+          # 先產背景、挑格子與表情並推上去，卡片讀的是 GitHub Pages 上的背景
+          python scripts/larch_yori.py --dry-run
+          git add -- docs/larch/bg larch/faces
+          if ! git diff --cached --quiet; then
+            git commit -m "larch: $(TZ=Asia/Taipei date +%F) 同步"
+            git push
+          fi
+          python scripts/larch_yori.py || { echo "::warning::Larch 同步失敗，下一班會自動補上"; exit 1; }
