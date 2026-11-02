@@ -44,6 +44,68 @@ def load_entries():
 
 RULES_PATH = os.path.join(ROOT, "scripts", "rules.json")
 
+# 手藝經驗（2026-11-02）：寫完當天的稿，審稿一步挑毛病、寫成一句心得存進來；隔天寫四格與日記時讀。
+# 每月整理日把心得折成最多八條原則。長進靠這份檔案累積，日記本身不寫創作過程。
+CRAFT_PATH = os.path.join(ROOT, "scripts", "craft.json")
+GAG_TYPES = ["期待落空", "誤會揭開", "認真過頭", "旁人吐槽", "拉遠揭露"]
+
+def load_craft():
+    try:
+        return json.load(open(CRAFT_PATH))
+    except FileNotFoundError:
+        return {"principles": [], "notes": []}
+
+def craft_block(craft):
+    lines = [f"- {x}" for x in craft["principles"]] + \
+            [f"- Day {n['day']:04d}：{n['lesson']}" for n in craft["notes"][-10:]]
+    return ("## 你過去累積的手藝經驗（照著做，但不要寫進作品裡）\n" + "\n".join(lines)) if lines else ""
+
+def ask_json(prompt, check, what):
+    for attempt in range(3):
+        try:
+            d = json.loads(re.sub(r"^```json\s*|\s*```$", "", gemini_text(prompt).strip()), strict=False)
+            assert check(d)
+            return d
+        except Exception as e:
+            print(f"{what}第 {attempt+1} 次失敗：{e}", file=sys.stderr)
+            time.sleep(10)
+    return None
+
+def critique(d):
+    """審今天的稿，回一則心得（失敗回 None，不擋發佈）。"""
+    prompt = f"""你是嚴格的四格漫畫與中文編輯，審下面這篇日記與它的四格分鏡。
+{GAG_RULES}
+
+## 不通順的例子（這類句子要挑出來）
+「把這句話抱在懷裡，像接到一張新的小卡片」「重點要住在哪裡」「力氣不會讓釘子變聰明」「共用螢幕可以承載一場會議」：
+把東西擬人、硬塞比喻、翻譯腔、唸出來不像人講話。
+
+## 四格分鏡
+{d['image_prompt']}
+
+## 日記
+{d['body_md']}
+
+只輸出 JSON：
+{{"gag_type": "這則四格的結局類型，只能填：{'、'.join(GAG_TYPES)}",
+  "comic_issues": ["四格違反哪條規則（沒有就空陣列）"],
+  "prose_issues": ["原文照抄不通順的句子（沒有就空陣列）"],
+  "lesson": "從上面挑最要緊的一個問題，寫成下次可以照做的一句心得（三十字內）；都沒問題就寫這篇最值得保留的做法"}}"""
+    c = ask_json(prompt, lambda c: c.get("lesson", "").strip(), "審稿")
+    if c:
+        print("審稿：", json.dumps(c, ensure_ascii=False), file=sys.stderr)
+    return c
+
+def fold_craft(craft):
+    """整理日：原則＋心得折成最多八條原則，心得清空。失敗就原樣保留。"""
+    if not craft["notes"]:
+        return craft
+    prompt = ("下面是一位四格漫畫作者累積的原則與每日心得。合併重複、刪掉已經不需要的，"
+              "折成最多八條具體、可照做的原則（每條三十字內）。\n"
+              + craft_block(craft) + '\n只輸出 JSON：{"principles": ["原則一", "..."]}')
+    r = ask_json(prompt, lambda r: 0 < len(r.get("principles", [])) <= 8, "整理手藝經驗")
+    return {"principles": r["principles"], "notes": []} if r else craft
+
 def load_rules():
     return json.load(open(RULES_PATH))
 
@@ -162,7 +224,7 @@ GAG_RULES = """## 四格笑點怎麼寫（逐條遵守）
 - 第四格有沒有在講道理或解釋？有就刪。
 - 不看日記、只看四格，陌生人會笑嗎？"""
 
-def write_comic(news, allowed, consolidation, recent_titles=""):
+def write_comic(news, allowed, consolidation, recent_titles="", craft=None, recent_gags=()):
     """先產四格劇本（三個候選、依 GAG_RULES 自評挑一個）。回傳 dict：category, inspiration, banner, image_prompt。"""
     if consolidation:
         source = "今天是整理日：題材是優理整理桌上一堆便利貼，把幾張意思一樣的併成一張。分類填「休息與心情」。"
@@ -178,6 +240,9 @@ def write_comic(news, allowed, consolidation, recent_titles=""):
 {recent_titles}
 
 {GAG_RULES}
+
+{craft_block(craft or {"principles": [], "notes": []})}
+最近幾篇用過的結局類型：{'、'.join(recent_gags) or '無'}（今天優先用別的：{'、'.join(GAG_TYPES)}）
 
 先想三個結局類型不同的版本，每個一句話寫在 candidates，照自我檢查挑最好笑的一個，再把它寫成完整劇本。
 繁體中文、全形標點、禁 emoji、禁簡體字。
@@ -219,7 +284,12 @@ def auto_write(entries):
     cooling = [c for c in (e.get("category") for e in entries[-COOLDOWN:]) if c]
     allowed = [c for c in CATEGORIES if c not in cooling]
     consolidation = datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Taipei")).day == 1
-    comic = write_comic(news, CATEGORIES if consolidation else allowed, consolidation, recent_titles)
+    craft = load_craft()
+    if consolidation:
+        craft = fold_craft(craft)
+    recent_gags = [n.get("gag_type") for n in craft["notes"][-3:] if n.get("gag_type")]
+    comic = write_comic(news, CATEGORIES if consolidation else allowed, consolidation,
+                        recent_titles, craft, recent_gags)
     comic_block = ("## 今天的四格（已經定稿，日記圍著它寫，不要改劇情、不要改對白）\n"
                    + (f"靈感新聞：{comic['inspiration']}\n" if comic.get("inspiration") else "")
                    + comic["image_prompt"])
@@ -227,8 +297,7 @@ def auto_write(entries):
             "寫一篇整理日日記：講他攤開 notebook 整理便條的過程、哪幾條併成了什麼、哪一條其實已經長進身體裡不用再寫。"
             "四格已經畫好，日記的今日作品介紹這則四格。") if consolidation else (
             f"寫 Day {day:04d} 的日記，主角作品是上面那則已定稿的四格。"
-            "他的名字「より」意思是「比昨天再多一點」，長進要算在作者的手藝上：這次的笑點、分鏡、角色反應、"
-            "或看事情的角度，要有一個是前面的日記沒試過的。規則帳本是參考，可以回頭用舊規則，"
+            "日記不寫創作過程：不寫分鏡怎麼安排、笑點怎麼設計、Yaze 看稿給意見這類幕後話。規則帳本是參考，可以回頭用舊規則，"
             "但不要接著最近幾天的規則往下推，也不要又寫一條「寄出前還要檢查什麼」。"
             "結尾一樣收一條他今天新折進 notebook 角落的小規則（一句話，自然收進文中，不要跟帳本裡的重複）。"
             "這條規則不要用「……之後，還要……，不然……」的句型，帳本裡已經幾十條都長這樣了。")
@@ -238,6 +307,8 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
 
 ## 語氣規範（嚴格遵守）
 {guide}
+
+{craft_block(craft)}
 
 ## 三篇舊作（只學格式與語氣，題材不要跟它們一樣）
 {fewshot}
@@ -277,7 +348,12 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
             assert all(k in d and str(d[k]).strip() for k in ENTRY_FIELDS)
             assert "## 今日作品" in d["body_md"]
             assert d.get("new_rule", "").strip(), "缺 new_rule"
-            return fix_entry(d)
+            d = fix_entry(d)
+            c = critique(d)
+            if c:
+                craft["notes"].append({"day": day, "gag_type": c.get("gag_type", ""), "lesson": c["lesson"].strip()})
+            d["_craft"] = craft
+            return d
         except Exception as e:
             print(f"寫稿第 {attempt+1} 次失敗：{e}", file=sys.stderr)
             time.sleep(10)
@@ -422,6 +498,8 @@ def publish(d, image_path=None):
             rules = [r for r in rules if r["day"] not in merged]
         rules.append({"day": day, "rule": d["new_rule"].strip()})
         save_rules(rules)
+    if d.get("_craft"):
+        json.dump(d["_craft"], open(CRAFT_PATH, "w"), ensure_ascii=False, indent=1)
 
     print(f"published {label} — {d['short_title']}")
 
