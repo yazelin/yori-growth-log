@@ -89,6 +89,7 @@ def critique(d):
 {{"gag_type": "這則四格的結局類型，只能填：{'、'.join(GAG_TYPES)}",
   "comic_issues": ["四格跟哪條標準有差距（都符合就空陣列）"],
   "prose_issues": ["原文照抄，唸起來卡、不像真人講話的句子（都順就空陣列）"],
+  "score": "1 到 10 的整數：陌生人看這則四格會笑的程度，加上日記讀起來順不順",
   "lesson": "挑最要緊的一個差距，寫成下次要做的一個動作（三十字內，寫要做什麼）；都符合就寫這篇最值得保留的做法"}}"""
     c = ask_json(prompt, lambda c: c.get("lesson", "").strip(), "審稿")
     if c:
@@ -250,24 +251,43 @@ def write_comic(news, allowed, consolidation, recent_titles="", craft=None, rece
   "pick_reason": "為什麼選這個（一句話，說明遮住第四格猜不到結局）",
   "category": "分類",
   "inspiration": "{'選中的那則新聞原文（原樣複製）' if news and not consolidation else '空字串'}",
-  "banner": "標題橫幅（八字內，不洩露結局）",
+  "banner": "標題橫幅（八字內，像第一格的一句話，結局留給第四格）",
   "image_prompt": "英文分鏡，依序 Panel 1 到 Panel 4：每格寫場景、角色動作與表情、鏡頭（特寫、中景、拉遠），對白用繁體中文寫在「」裡，每格最多一句、二十字內；第四格可以沒有對白。四格同一個場景。"}}"""
-    for attempt in range(3):
-        try:
-            raw = re.sub(r"^```json\s*|\s*```$", "", gemini_text(prompt).strip())
-            c = json.loads(raw, strict=False)
-            assert c.get("image_prompt", "").count("Panel") >= 4 and c.get("banner", "").strip()
-            if c.get("category") not in CATEGORIES:
-                c["category"] = allowed[0]
-            print("四格候選：", json.dumps(c.get("candidates"), ensure_ascii=False),
-                  "\n選：", c.get("pick_reason", ""), file=sys.stderr)
-            c["banner"] = fix_punct(c["banner"])
-            c["image_prompt"] = f"Title banner text: 「{c['banner']}」\n" + c["image_prompt"]
-            return c
-        except Exception as e:
-            print(f"寫四格第 {attempt+1} 次失敗：{e}", file=sys.stderr)
-            time.sleep(10)
-    sys.exit(1)
+    ok = lambda c: c.get("image_prompt", "").count("Panel") >= 4 and c.get("banner", "").strip()
+    c = ask_json(prompt, ok, "寫四格")
+    if not c:
+        sys.exit(1)
+    print("四格候選：", json.dumps(c.get("candidates"), ensure_ascii=False),
+          "\n選：", c.get("pick_reason", ""), file=sys.stderr)
+    # 當天先審一次：跟標準有差距就照意見重寫一次（只重寫一次，第二稿直接用）
+    issues = review_comic(c)
+    if issues:
+        print("四格第一稿的差距：", json.dumps(issues, ensure_ascii=False), file=sys.stderr)
+        fix = (f"\n\n## 第一稿與編輯意見\n標題：{c['banner']}\n{c['image_prompt']}\n意見：\n"
+               + "\n".join(f"- {x}" for x in issues)
+               + "\n照意見寫出第二稿，需要的話整個結局換掉。")
+        c2 = ask_json(prompt + fix, ok, "重寫四格")
+        if c2:
+            c2["first_issues"] = issues
+            c = c2
+    if c.get("category") not in CATEGORIES:
+        c["category"] = allowed[0]
+    c["banner"] = fix_punct(c["banner"])
+    c["image_prompt"] = f"Title banner text: 「{c['banner']}」\n" + c["image_prompt"]
+    return c
+
+def review_comic(c):
+    """畫圖前審四格劇本，回傳差距清單（都符合就空清單；審稿失敗也當空清單，照第一稿畫）。"""
+    prompt = f"""你是嚴格的四格漫畫編輯，拿下面的標準對照這份劇本，找出會讓笑點不成立的差距。
+{GAG_RULES}
+
+## 劇本
+標題：{c['banner']}
+{c['image_prompt']}
+
+只輸出 JSON：{{"issues": ["會讓笑點不成立的差距，寫成具體的修改建議（都符合就空陣列）"]}}"""
+    r = ask_json(prompt, lambda r: isinstance(r.get("issues"), list), "審四格")
+    return [str(x) for x in r["issues"]] if r else []
 
 def auto_write(entries):
     guide = open(os.path.join(ROOT, "YORI_VOICE_GUIDE.md")).read()
@@ -348,7 +368,8 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
             d = fix_entry(d)
             c = critique(d)
             if c:
-                craft["notes"].append({"day": day, "gag_type": c.get("gag_type", ""), "lesson": c["lesson"].strip()})
+                craft["notes"].append({"day": day, "gag_type": c.get("gag_type", ""), "score": c.get("score"),
+                                       "revised": bool(comic.get("first_issues")), "lesson": c["lesson"].strip()})
             d["_craft"] = craft
             return d
         except Exception as e:
