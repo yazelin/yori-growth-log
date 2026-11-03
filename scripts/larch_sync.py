@@ -248,6 +248,7 @@ def publish_body(boards, posts, today, description):
     new = [p for _, p in larch_pages.post_key(posts) if p["date"] == today and str(p.get("body", "")).strip()]
     note = "、".join(f"〈{p.get('title', '')}〉" for p in new)
     return {"description": description,
+            "version": f"v{today[2:4]}.{today[5:7]}.{today[8:10]}",  # 版號用日期：2026-11-03 → v26.11.03，一天最多上架一次所以不會重複
             "publishedBoardIds": ["board-main"] + sorted(b for b in boards if b != "board-main"),
             "startBoardId": "board-main",
             "updateNote": f"新增 {int(today[5:7])}/{int(today[8:])} 的日記{note}" if new else "更新日記內容",
