@@ -216,7 +216,8 @@ def main():
         if larch_sync.published_today(api, pid, today):
             print("市集版今天已經更新過，不再上架", flush=True)
         else:
-            api.publish(pid, larch_sync.publish_body(boards, ps, today, (ROOT / "larch/listing.md").read_text("utf-8").strip()))
+            body = larch_sync.publish_body(boards, ps, today, (ROOT / "larch/listing.md").read_text("utf-8").strip())
+            api.publish(pid, {**body, "version": larch_sync.next_version(api, pid, body["version"])})
             print("已重新上架市集", flush=True)
 
 
