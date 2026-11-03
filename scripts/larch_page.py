@@ -28,7 +28,7 @@ def _sheet():
 def _forest():
     global _bg
     if _bg is None:
-        f = Image.open(ROOT / "docs/larch/ui/forest.jpg").convert("RGB").resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(3))
+        f = Image.open(ROOT / "docs/larch/ui/forest.webp").convert("RGB").resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(3))
         glow = Image.new("L", (W, H), 0)
         ImageDraw.Draw(glow).ellipse((W * .1, H * .05, W * .9, H * 1.05), fill=60)
         glow = glow.filter(ImageFilter.GaussianBlur(160))
