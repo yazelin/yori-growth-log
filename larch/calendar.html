@@ -12,12 +12,12 @@
 html,body{margin:0;height:100%;overflow:hidden}
 body{font-family:var(--hand);color:var(--ink);
   background:radial-gradient(ellipse 70% 60% at 50% 55%,rgba(236,200,116,.16),transparent 70%),
-             url(__UI__/forest.webp) center/cover,#141f17;
+             #141f17;
   display:flex;align-items:center;justify-content:center}
 /* 螢火蟲：整頁唯一的動態 */
 .ff{position:fixed;width:5px;height:5px;border-radius:50%;background:var(--gold-hi);box-shadow:0 0 8px 3px rgba(236,200,116,.55);opacity:0;animation:drift 9s ease-in-out infinite;pointer-events:none}
 @keyframes drift{0%{opacity:0;transform:translate(0,0)}25%{opacity:.9}70%{opacity:.6}100%{opacity:0;transform:translate(26px,-60px)}}
-@media (prefers-reduced-motion:reduce){.ff{animation:none;opacity:.5}}
+@media (prefers-reduced-motion:reduce){.ff{animation:none;opacity:.5}.im{transition:none}}
 
 /* 書：綠皮封面露邊，兩頁紙 */
 .book{position:relative;width:min(94vw,168vh);height:min(88vh,52vw);display:flex;padding:1.3vh;
@@ -74,9 +74,16 @@ body{font-family:var(--hand);color:var(--ink);
 .g{flex:1;grid-auto-rows:1fr}
 .d{position:relative;border-radius:.4vh}
 .d .n{position:absolute;top:.3vh;left:.6vh;font-size:2vh;color:var(--pencil)}
-.d.has{cursor:pointer;background:#fff center 62%/cover no-repeat;border:.5vh solid #fffdf5;box-shadow:0 .3vh .7vh rgba(60,45,20,.28)}
+.d.has{cursor:pointer;background:#fff;border:.5vh solid #fffdf5;box-shadow:0 .3vh .7vh rgba(60,45,20,.28)}
 /* 四格只露第一格；沒選到的蒙一層舊紙色，選到的才是原色 */
-.d.has.comic{background-size:215%;background-position:4% 14%}
+/* 圖載完才淡入（.on），已經在快取裡的直接顯示 */
+.im{position:absolute;inset:0;background:center 62%/cover no-repeat;opacity:0;transition:opacity .6s ease}
+.im.on{opacity:1}.im.now{transition:none}
+/* 森林與攤開的手帳也是載完才整張淡入，不會從上往下一條一條刷出來 */
+#bgf{position:fixed;inset:0;z-index:-1;background-size:cover;transition-duration:.9s}
+#bks{display:none;z-index:0;background-size:100% 100%;transition-duration:.9s}
+.d .n{z-index:1}
+.d.has.comic .im{background-size:215%;background-position:4% 14%}
 .d.has{filter:sepia(.28) saturate(.8)}.d.has.sel,.d.has:focus-visible{filter:none}
 .d.has:nth-child(3n){transform:rotate(1.4deg)}.d.has:nth-child(3n+1){transform:rotate(-1deg)}
 .d.has .n{top:-.5vh;left:-.5vh;background:#fffdf5;color:var(--ink);padding:0 .7vh;border-bottom-right-radius:.6vh;font-weight:700}
@@ -106,9 +113,10 @@ body{font-family:var(--hand);color:var(--ink);
 /* 橫式：生圖的攤開手帳（spread.webp）當書，兩頁的位置照圖量出來的比例放，裡面的字跟著書的高度縮放 */
 @media (min-aspect-ratio:1/1){
   .book{width:min(calc(100vw - 18vh),calc(94vh * 1600 / 975));height:auto;aspect-ratio:1600/975;padding:0;display:block;
-    background:url(__UI__/spread.webp) center/100% 100% no-repeat;border-radius:0;box-shadow:none;
+    background:none;border-radius:0;box-shadow:none;
     filter:drop-shadow(0 3vh 4vh rgba(0,0,0,.6));container-type:size}
-  .page{position:absolute;background:none;box-shadow:none!important;border-radius:0}
+  .page{position:absolute;z-index:1;background:none;box-shadow:none!important;border-radius:0}
+  #bks{display:block}
   .page.l{left:8.5%;width:38%;top:5%;height:79%}
   .page.r{left:53%;width:39%;top:5%;height:79%}
   .trace{display:none}
@@ -138,14 +146,15 @@ body{font-family:var(--hand);color:var(--ink);
   <circle cx="76" cy="24" r="3" fill="#3fd6c8"/><circle cx="60" cy="4" r="2.4" fill="#c9a24a"/><circle cx="4" cy="60" r="2.4" fill="#c9a24a"/>
   <path d="M24 40 q8 -10 18 -6 q-6 10 -18 6z M30 36 l10 -3" stroke="#4f7a52" stroke-width="1.2" fill="rgba(79,122,82,.25)"/>
 </g></defs></svg>
-<div class="book">
+<div class="im" id="bgf"></div>
+<div class="book"><div class="im" id="bks"></div>
   <button class="flip prev" id="prev" aria-label="上個月"><i></i><span>上個月</span></button>
   <button class="flip next" id="next" aria-label="下個月"><i></i><span>下個月</span></button>
   <section class="page l"><svg class="trace tl" viewBox="0 0 90 90"><use href="#tr"/></svg>
     <div class="in">
       <div class="yr" id="yr"></div><div class="mo" id="mo"></div><div class="cnt" id="cnt"></div>
       <div class="nav"><button id="today" hidden></button></div>
-      <div class="pv"><div class="photo empty" id="ph"></div><div class="pd" id="pd"></div><div class="pt" id="pt"></div>
+      <div class="pv"><div class="photo empty" id="ph"><div class="im" id="phi" style="background-size:contain;background-position:center"></div></div><div class="pd" id="pd"></div><div class="pt" id="pt"></div>
         <div class="multi" id="pm"></div><button class="open" id="op" hidden>翻開這一天</button></div>
     </div></section>
   <section class="page r"><svg class="trace br" viewBox="0 0 90 90"><use href="#tr"/></svg>
@@ -172,11 +181,20 @@ document.addEventListener('keydown', function(e){
 });
 if (M.latest) { $('today').hidden = false; $('today').textContent = M.latest.slice(0,10) === M.today ? '今天' : '最新一篇'; $('today').onclick = function(){go(M.latest)}; }
 
+// 圖先在背景載，載好才淡入；已經在快取裡的（同步就 complete）直接顯示，不必每次都淡一次
+function fadeIn(el, url){
+  var img = new Image(); el.dataset.url = url; el.classList.remove('on', 'now');
+  img.onload = function(){ if (el.dataset.url !== url) return;  // 滑得快時只顯示最後一張
+    el.style.backgroundImage = 'url("' + url + '")'; el.classList.add('on'); };
+  img.src = url;
+  if (img.complete && img.naturalWidth) { el.style.backgroundImage = 'url("' + url + '")'; el.classList.add('on', 'now'); }
+}
+fadeIn($('bgf'), '__UI__/forest.webp'); fadeIn($('bks'), '__UI__/spread.webp');
 var sel = null;
 function show(c, posts, day){
   if (sel) sel.classList.remove('sel'); sel = c; c.classList.add('sel');
   var p = posts[0];
-  $('ph').className = 'photo'; $('ph').style.backgroundImage = 'url("' + (p.img || p.thumb) + '")';
+  $('ph').className = 'photo'; fadeIn($('phi'), p.img || p.thumb);
   $('pd').textContent = M.month + ' 月 ' + day + ' 日' + (p.day != null ? '，Day ' + String(p.day).padStart(4,'0') : '');
   $('pt').textContent = posts.length === 1 ? p.title : '';
   var pm = $('pm'); pm.innerHTML = '';
@@ -192,7 +210,7 @@ for (var day = 1; day <= n; day++) (function(day){
   c.className = 'd' + (posts.length ? ' has' : '') + (iso === M.today ? ' today' : '') + ((M.rest||[]).indexOf(day) >= 0 ? ' rest' : '');
   var nn = document.createElement('span'); nn.className = 'n'; nn.textContent = day; c.appendChild(nn);
   if (posts.length) {
-    c.style.backgroundImage = 'url("' + posts[0].thumb + '")';
+    var im = document.createElement('div'); im.className = 'im'; c.appendChild(im); fadeIn(im, posts[0].thumb);
     c.tabIndex = 0; c.setAttribute('role','button'); c.setAttribute('aria-label', M.month + ' 月 ' + day + ' 日：' + posts[0].title);
     if (posts[0].comic) c.classList.add('comic');
     if (posts.length > 1) { c.classList.add('more'); c.dataset.more = posts.length + ' 篇'; }
