@@ -264,6 +264,18 @@ def published_today(api, project_id, today):
     return False
 
 
+def next_version(api, project_id, base):
+    """同一天再上架時版號往後加：市集現在是 v26.11.03 就用 v26.11.03.2，是 .2 就用 .3。"""
+    for w in api.get("/published").get("works") or []:
+        if w.get("projectId") == project_id:
+            cur = str(w.get("version") or "")
+            if cur == base:
+                return f"{base}.2"
+            if cur.startswith(base + ".") and cur[len(base) + 1:].isdigit():
+                return f"{base}.{int(cur[len(base) + 1:]) + 1}"
+    return base
+
+
 def remote_descriptions(api, project_id):
     proj = api.get(f"/projects/{project_id}")
     return {b["id"]: b.get("description") or "" for b in proj.get("boards", [])}
@@ -311,7 +323,8 @@ def main():
         if published_today(api, pid, today):
             print("市集版今天已經更新過，不再上架", flush=True)
         else:
-            api.publish(pid, publish_body(boards, posts, today, (ROOT / "larch" / "listing.md").read_text("utf-8").strip()))
+            body = publish_body(boards, posts, today, (ROOT / "larch" / "listing.md").read_text("utf-8").strip())
+            api.publish(pid, {**body, "version": next_version(api, pid, body["version"])})
             print("已重新上架市集", flush=True)
 
 
