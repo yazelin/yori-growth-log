@@ -22,14 +22,15 @@ PROMPT = """這是優理的四格漫畫，下面是同一天的日記旁白，�
 {lines}"""
 
 
-def _ask(prompt, image):
-    buf = io.BytesIO()
-    im = Image.open(image).convert("RGB")
-    im.thumbnail((900, 900))
-    im.save(buf, "JPEG", quality=85)
-    url = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
-    body = {"model": MODEL, "messages": [{"role": "user", "content": [
-        {"type": "text", "text": prompt}, {"type": "image_url", "image_url": {"url": url}}]}]}
+def _ask(prompt, image=None):
+    content = [{"type": "text", "text": prompt}]
+    if image:
+        buf = io.BytesIO()
+        im = Image.open(image).convert("RGB")
+        im.thumbnail((900, 900))
+        im.save(buf, "JPEG", quality=85)
+        content.append({"type": "image_url", "image_url": {"url": "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()}})
+    body = {"model": MODEL, "messages": [{"role": "user", "content": content}]}
     req = urllib.request.Request(os.environ.get("LLMSHARE_BASE_URL", "https://llm-share.duotify.com/v1") + "/chat/completions",
                                  json.dumps(body).encode(), {"Content-Type": "application/json",
                                                              "Authorization": "Bearer " + os.environ["LLMSHARE_API_KEY"]})

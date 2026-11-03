@@ -60,6 +60,8 @@ def _actor(base, face):
 def build(ps, ask=True):
     """回傳 {board_id: board}。順手補還沒產的背景、還沒挑的格子與表情。"""
     keyed = list(larch_pages.post_key(ps))
+    if ask:  # 標題斷行先問模型，背景才畫得出合格的斷行
+        larch_page.ask_titles([p["title"] for _, p in keyed])
     boxes = {}
     for key, p in keyed:
         src = ROOT / "docs" / p["image"]
@@ -79,11 +81,16 @@ def build(ps, ask=True):
             return line_cache[key]
         lines = larch_pages.fallback_split(p["body"])
         picks = larch_faces.pick(key, [l["text"] for l in lines], ROOT / "docs" / p["image"], FACE_CACHE, ask=ask)
-        out = []
+        out, drew = [], False
         for i, (l, k) in enumerate(zip(lines, picks)):
             # 0 是回到整張（四格沒畫的心得句）；第一句一定從格子開場，挑 0 或沒挑就放第 1 格
             panel = k["panel"] if i else (k["panel"] or 1)
-            out.append({**l, "face": k["face"], **({"panel": panel} if boxes[key] and panel is not None else {})})
+            face = k["face"]
+            # 模型很愛挑畫畫的動作：句子真的寫到畫畫才用，一篇最多一次
+            if face == "draw":
+                face = "draw" if not drew and re.search(r"[畫筆描塗繪]", l["text"]) else "plain"
+                drew = drew or face == "draw"
+            out.append({**l, "face": face, **({"panel": panel} if boxes[key] and panel is not None else {})})
         return line_cache.setdefault(key, out)
 
     larch_sync.SPEAKER = ""
