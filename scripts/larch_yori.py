@@ -15,6 +15,8 @@ import re
 import sys
 from pathlib import Path
 
+from PIL import Image
+
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from scripts import larch_faces, larch_page, larch_pages, larch_sync  # noqa: E402
@@ -23,7 +25,7 @@ from scripts.larch_panels import find_panels  # noqa: E402
 
 CFG = json.loads((ROOT / "larch/config.json").read_text("utf-8"))
 BASE = CFG["base_url"]
-BG, FACE_CACHE = ROOT / "docs/larch/bg", ROOT / "larch/faces"
+BG, FACE_CACHE, THUMBS = ROOT / "docs/larch/bg", ROOT / "larch/faces", ROOT / "docs/larch/thumbs"
 BODY_HEADS = ("圖文短文", "Yori 的日記", "今天的日記")
 POSES = {"draw", "phone", "mug", "hug"}  # 動作立繪手上沒有燈
 log = logging.getLogger("larch_yori")
@@ -57,6 +59,20 @@ def _actor(base, face):
     return {"actors": [yori, a("lamp-halo", f"{base}/larch/sprites/fx-halo.webp", "pulse")]}
 
 
+def thumb_name(p):
+    return Path(p["image"]).stem + ".webp"
+
+
+def make_thumb(p):
+    """月曆格子用的 200px 小圖（網站本來的縮圖是 360px，格子只顯示約 70px）。四格會放大兩倍只露第一格，所以不再更小。"""
+    out = THUMBS / thumb_name(p)
+    if not out.exists():
+        THUMBS.mkdir(parents=True, exist_ok=True)
+        im = Image.open(ROOT / "docs" / p["image"]).convert("RGB")
+        im.thumbnail((200, 200), Image.LANCZOS)
+        im.save(out, "WEBP", quality=80, method=6)
+
+
 def build(ps, ask=True):
     """回傳 {board_id: board}。順手補還沒產的背景、還沒挑的格子與表情。"""
     keyed = list(larch_pages.post_key(ps))
@@ -64,6 +80,7 @@ def build(ps, ask=True):
         larch_page.ask_titles([p["title"] for _, p in keyed])
     boxes = {}
     for key, p in keyed:
+        make_thumb(p)
         src = ROOT / "docs" / p["image"]
         boxes[key] = find_panels(src) if p["comic"] else None
         if p["comic"] and not boxes[key]:
@@ -104,7 +121,7 @@ def build(ps, ask=True):
         for day in data["days"].values():
             for q in day:  # 每篇都有圖：縮圖換成這個站的
                 d = by_key[q["key"]]
-                q["thumb"], q["excerpt"] = f"{CFG['base_url']}/assets/thumbs/{d['image'].rsplit('/', 1)[-1]}", None
+                q["thumb"], q["excerpt"] = f"{CFG['base_url']}/larch/thumbs/{thumb_name(d)}", None
                 q["img"], q["day"], q["comic"] = f"{CFG['base_url']}/{d['image']}", d["day"], d["comic"]
         return data
     larch_sync.calendar_data = calendar_data
