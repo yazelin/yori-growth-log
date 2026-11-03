@@ -162,7 +162,8 @@ def main():
     if args.local:
         proj = {"name": "優理的圖文日記", "description": CFG.get("description"),
                 "boards": [{"id": k, **v} for k, v in sorted(boards.items(), key=lambda kv: kv[0] != "board-main")],
-                "settings": {**ui_settings(), "customInterfaces": {s: {"enabled": True, "html": ui_html(s)} for s in ("title", "dialogue")}}}
+                "settings": {**ui_settings(), "cgGalleryItems": larch_sync.cg_items(ps, BASE),
+                             "customInterfaces": {s: {"enabled": True, "html": ui_html(s)} for s in ("title", "dialogue")}}}
         # 預覽伺服器把 /files/ 對到 JSON 所在的資料夾（docs/），Pages 網址換成它，還沒推上去的素材也看得到
         Path(args.local).write_text(json.dumps(proj, ensure_ascii=False).replace(BASE, "/files"), "utf-8")
         print(len(ps), "篇", sorted(boards))

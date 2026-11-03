@@ -25,17 +25,24 @@ button:focus-visible{box-shadow:0 0 0 3px var(--cyan)}
 button:active{transform:scale(.98)}
 button:disabled{opacity:.45;cursor:default}
 button[hidden]{display:none}
+/* 封面右邊那盞燈：疊一層光暈慢慢呼吸，位置照封面實際裁切算（見下面的 placeLamp） */
+.lamp{position:absolute;width:var(--r,90px);height:var(--r,90px);margin:calc(var(--r,90px) / -2) 0 0 calc(var(--r,90px) / -2);border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(150,255,235,.75) 0%,rgba(236,200,116,.5) 26%,rgba(236,200,116,.18) 50%,transparent 70%);
+  mix-blend-mode:screen;animation:breathe 3.6s ease-in-out infinite}
+.lamp[hidden]{display:none}
+@keyframes breathe{0%,100%{opacity:.15;transform:scale(.85)}50%{opacity:1;transform:scale(1.12)}}
 .fly{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--gold-hi);box-shadow:0 0 10px 3px rgba(236,200,116,.7);opacity:0;animation:fly var(--d) ease-in-out var(--w) infinite}
 @keyframes fly{0%,100%{opacity:0;transform:translate(0,0)}30%,70%{opacity:.9}50%{transform:translate(var(--x),var(--y))}}
 @media (max-width:720px){.shade{background:linear-gradient(0deg,rgba(6,12,8,.88) 0%,rgba(6,12,8,.5) 55%,rgba(6,12,8,.1) 100%)}
   .book{top:auto;bottom:16px;transform:none;left:0;right:0;margin:0 auto;width:min(78vw,calc(58dvh * 663 / 900))}.art{object-position:72% 50%}}
-@media (prefers-reduced-motion:reduce){.fly{display:none}button{transition:none}}
+@media (prefers-reduced-motion:reduce){.fly{display:none}button{transition:none}.lamp{animation:none;opacity:.7}}
 /* 播放器會替標題套專案字型，這裡換成跟月曆、日記頁一樣的霞鶩文楷 */
 html{--larch-project-font:"LXGW WenKai TC","Kaiti TC","BiauKai","DFKai-SB",serif!important}
 </style>
 <main>
   <img class="art" data-larch-slot="cover" alt="">
   <div class="shade"></div>
+  <div class="lamp" id="lamp" hidden aria-hidden="true"></div>
   <div id="flies" aria-hidden="true"></div>
   <section class="book">
     <img src="https://yazelin.github.io/yori-growth-log/larch/ui/book.webp" alt="">
@@ -52,10 +59,27 @@ html{--larch-project-font:"LXGW WenKai TC","Kaiti TC","BiauKai","DFKai-SB",serif
 <script>
 // 螢火蟲：位置與節奏每次打開都不一樣
 var box = document.getElementById('flies');
-for (var i = 0; i < 18; i++) {
+for (var i = 0; i < 40; i++) {
   var f = document.createElement('i'), r = Math.random;
   f.className = 'fly';
-  f.style.cssText = 'left:' + (r() * 100) + '%;top:' + (15 + r() * 75) + '%;--d:' + (5 + r() * 6) + 's;--w:' + (-r() * 8) + 's;--x:' + (r() * 80 - 40) + 'px;--y:' + (r() * 60 - 40) + 'px';
+  var z = 3 + r() * 4;  // 大小不一，遠近才有層次
+  f.style.cssText = 'width:' + z + 'px;height:' + z + 'px;left:' + (r() * 100) + '%;top:' + (10 + r() * 85) + '%;--d:' + (5 + r() * 6) + 's;--w:' + (-r() * 8) + 's;--x:' + (r() * 80 - 40) + 'px;--y:' + (r() * 60 - 40) + 'px';
   box.appendChild(f);
 }
+// 燈在封面圖上的位置（比例），圖換了要重量
+var LAMP = {x: .888, y: .60, r: .13};
+var art = document.querySelector('.art'), lamp = document.getElementById('lamp');
+function placeLamp(){
+  var w = art.naturalWidth, h = art.naturalHeight, W = art.clientWidth, H = art.clientHeight;
+  if (!w || !h) return;
+  var k = Math.max(W / w, H / h), sw = w * k, sh = h * k;  // object-fit:cover 縮放後的大小
+  var pos = getComputedStyle(art).objectPosition.split(' ').map(parseFloat);  // 百分比
+  var ox = (W - sw) * pos[0] / 100, oy = (H - sh) * pos[1] / 100;
+  var x = ox + LAMP.x * sw, y = oy + LAMP.y * sh;
+  lamp.style.left = x + 'px'; lamp.style.top = y + 'px'; lamp.style.setProperty('--r', (LAMP.r * sw) + 'px');
+  lamp.hidden = x < 0 || x > W || y < 0 || y > H;
+}
+art.addEventListener('load', placeLamp); addEventListener('resize', placeLamp);
+if (art.complete) placeLamp();
+new MutationObserver(placeLamp).observe(art, {attributes: true, attributeFilter: ['src']});
 </script>
