@@ -93,5 +93,11 @@ jobs:
           if ! git diff --cached --quiet; then
             git commit -m "larch: $(TZ=Asia/Taipei date +%F) 同步"
             git push
+            # 等 GitHub Pages 部署好剛推的圖再同步，不然卡片指到的新背景會有一兩分鐘是 404
+            f=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- docs/larch | head -1)
+            for i in $(seq 1 40); do
+              [ "$(curl -s -o /dev/null -w '%{http_code}' "https://yazelin.github.io/yori-growth-log/${f#docs/}")" = 200 ] && break
+              sleep 15
+            done
           fi
           python scripts/larch_yori.py || { echo "::warning::Larch 同步失敗，下一班會自動補上"; exit 1; }
