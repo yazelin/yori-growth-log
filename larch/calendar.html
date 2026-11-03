@@ -41,6 +41,17 @@ body{font-family:var(--hand);color:var(--ink);
 .nav button{font-size:2vh;padding:.5vh 1.4vh;background:none;border:.18vh solid var(--ink);border-radius:999px;color:var(--ink)}
 .nav button:disabled{opacity:.25;cursor:default}
 .nav button:not(:disabled):hover,.nav button:focus-visible{background:var(--leather);color:var(--paper);outline:none}
+.nav:not(:has(button:not([hidden]))){display:none}
+/* 翻頁：上個月在書的左邊、下個月在右邊，燙金箭頭加一行字 */
+.flip{position:absolute;z-index:2;display:flex;align-items:center;gap:.6vh;padding:.8vh 1.4vh;font-family:inherit;font-size:1.8vh;
+  letter-spacing:.15em;color:var(--gold-hi);background:rgba(16,32,22,.78);border:.15vh solid rgba(236,200,116,.6);border-radius:999px;cursor:pointer;
+  text-shadow:0 .1vh .3vh rgba(0,0,0,.6);transition:background .15s,box-shadow .15s}
+.flip i{width:0;height:0;border-top:.8vh solid transparent;border-bottom:.8vh solid transparent}
+.flip.prev i{border-right:1.1vh solid currentColor}.flip.next{flex-direction:row-reverse}.flip.next i{border-left:1.1vh solid currentColor}
+.flip:not(:disabled):hover,.flip:focus-visible{outline:none;background:rgba(44,80,57,.9);box-shadow:0 0 1.8vh rgba(236,200,116,.55)}
+.flip:focus-visible{box-shadow:0 0 0 .3vh var(--cyan)}
+.flip:disabled{opacity:.25;cursor:default}
+@media (prefers-reduced-motion:reduce){.flip{transition:none}}
 .pv{margin-top:auto;display:flex;flex-direction:column;align-items:center}
 .photo{position:relative;width:100%;aspect-ratio:1/1;max-height:42vh;background:#fff center/contain no-repeat;
   border:.9vh solid #fffdf5;box-shadow:0 .5vh 1.2vh rgba(60,45,20,.3);transform:rotate(-1.2deg)}
@@ -83,6 +94,7 @@ body{font-family:var(--hand);color:var(--ink);
   .l .in{position:relative;inset:auto;padding:2vh 4vw;display:grid;grid-template-columns:auto 1fr;column-gap:4vw;align-items:center}
   .yr{grid-column:1}.mo{grid-column:1;font-size:5.6vh}.cnt{grid-column:1;font-size:1.7vh}
   .nav{grid-column:1;flex-wrap:wrap;gap:.8vh}.nav button{font-size:1.6vh}
+  .flip{bottom:1.6vh}.flip.prev{left:3vw}.flip.next{right:3vw}
   .pv{grid-column:2;grid-row:1/5;margin:0}
   .photo{width:auto;height:15vh;border-width:.6vh}.photo:before,.photo:after{display:none}
   .pd{margin-top:1vh;font-size:1.5vh}.pt{font-size:2vh;margin:.3vh 0 .8vh;min-height:0}.open{font-size:1.8vh;padding:.6vh 1.6vh}
@@ -93,7 +105,7 @@ body{font-family:var(--hand);color:var(--ink);
 
 /* 橫式：生圖的攤開手帳（spread.webp）當書，兩頁的位置照圖量出來的比例放，裡面的字跟著書的高度縮放 */
 @media (min-aspect-ratio:1/1){
-  .book{width:min(96vw,calc(94vh * 1600 / 975));height:auto;aspect-ratio:1600/975;padding:0;display:block;
+  .book{width:min(calc(100vw - 18vh),calc(94vh * 1600 / 975));height:auto;aspect-ratio:1600/975;padding:0;display:block;
     background:url(__UI__/spread.webp) center/100% 100% no-repeat;border-radius:0;box-shadow:none;
     filter:drop-shadow(0 3vh 4vh rgba(0,0,0,.6));container-type:size}
   .page{position:absolute;background:none;box-shadow:none!important;border-radius:0}
@@ -103,6 +115,11 @@ body{font-family:var(--hand);color:var(--ink);
   .l .in{inset:4cqh 2.5cqh 2cqh 3cqh}.r .in{inset:4cqh 2.5cqh 2cqh 2.5cqh;justify-content:center}
   .yr{font-size:2.4cqh}.mo{font-size:9.4cqh;margin:.6cqh 0 .4cqh}.cnt{font-size:2.3cqh}
   .nav{gap:1.2cqh;margin-top:1.8cqh}.nav button{font-size:2.2cqh;padding:.5cqh 1.5cqh;border-width:.2cqh}
+  /* 書兩側的 # 徽章在 41% 高的地方，按鈕擺在徽章外側、書的外面；書的寬度扣掉兩側留給按鈕的空間 */
+  .flip{top:41%;transform:translateY(-50%);width:5.4cqh;padding:1.6cqh 0;flex-direction:column;font-size:2.3cqh;gap:1.1cqh;border-width:.18cqh}
+  .flip span{writing-mode:vertical-rl}
+  .flip.prev{right:calc(100% + 1.4cqh)}.flip.next{left:calc(100% + 1.4cqh);flex-direction:column}
+  .flip i{border-top-width:1cqh;border-bottom-width:1cqh}.flip.prev i{border-right-width:1.4cqh}.flip.next i{border-left-width:1.4cqh}
   .photo{width:auto;height:34cqh;max-height:none;border-width:1cqh}.photo:before,.photo:after{width:9cqh;height:2.8cqh;top:-1.7cqh}
   .pd{margin-top:2cqh;font-size:2.2cqh}.pt{font-size:3.4cqh;margin:.6cqh 0 1.4cqh;min-height:4.4cqh}
   .open{font-size:2.6cqh;padding:1cqh 2.8cqh;border-radius:.7cqh;box-shadow:0 .45cqh 0 #8a6a24,0 0 2.6cqh rgba(236,200,116,.55)}
@@ -122,10 +139,12 @@ body{font-family:var(--hand);color:var(--ink);
   <path d="M24 40 q8 -10 18 -6 q-6 10 -18 6z M30 36 l10 -3" stroke="#4f7a52" stroke-width="1.2" fill="rgba(79,122,82,.25)"/>
 </g></defs></svg>
 <div class="book">
+  <button class="flip prev" id="prev" aria-label="上個月"><i></i><span>上個月</span></button>
+  <button class="flip next" id="next" aria-label="下個月"><i></i><span>下個月</span></button>
   <section class="page l"><svg class="trace tl" viewBox="0 0 90 90"><use href="#tr"/></svg>
     <div class="in">
       <div class="yr" id="yr"></div><div class="mo" id="mo"></div><div class="cnt" id="cnt"></div>
-      <div class="nav"><button id="prev">上個月</button><button id="next">下個月</button><button id="today" hidden></button></div>
+      <div class="nav"><button id="today" hidden></button></div>
       <div class="pv"><div class="photo empty" id="ph"></div><div class="pd" id="pd"></div><div class="pt" id="pt"></div>
         <div class="multi" id="pm"></div><button class="open" id="op" hidden>翻開這一天</button></div>
     </div></section>
@@ -147,6 +166,10 @@ var cnt = Object.keys(M.days).reduce(function(a,k){return a+M.days[k].length},0)
 $('cnt').textContent = cnt ? '這個月畫了 ' + cnt + ' 篇' : '這個月還沒有日記';
 $('prev').disabled = !M.prev; $('next').disabled = !M.next;
 $('prev').onclick = function(){go('prev')}; $('next').onclick = function(){go('next')};
+// 鍵盤左右鍵也能翻
+document.addEventListener('keydown', function(e){
+  if (e.key === 'ArrowLeft' && M.prev) go('prev'); else if (e.key === 'ArrowRight' && M.next) go('next');
+});
 if (M.latest) { $('today').hidden = false; $('today').textContent = M.latest.slice(0,10) === M.today ? '今天' : '最新一篇'; $('today').onclick = function(){go(M.latest)}; }
 
 var sel = null;
