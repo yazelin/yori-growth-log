@@ -15,12 +15,20 @@ IMG = (360, 118, 1190, 718)          # 圖可以放的範圍
 INK, PENCIL, GOLD, LEATHER, CYAN = (43, 42, 34), (150, 138, 110), (201, 162, 74), (31, 58, 43), (63, 214, 200)
 
 _bg = None
+_sh = None
+
+
+def _sheet():
+    global _sh
+    if _sh is None:
+        _sh = Image.open(ROOT / "larch/sheet.webp").convert("RGBA")
+    return _sh
 
 
 def _forest():
     global _bg
     if _bg is None:
-        f = Image.open(ROOT / "larch/forest.jpg").convert("RGB").resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(8))
+        f = Image.open(ROOT / "docs/larch/ui/forest.jpg").convert("RGB").resize((W, H), Image.BICUBIC).filter(ImageFilter.GaussianBlur(3))
         glow = Image.new("L", (W, H), 0)
         ImageDraw.Draw(glow).ellipse((W * .1, H * .05, W * .9, H * 1.05), fill=60)
         glow = glow.filter(ImageFilter.GaussianBlur(160))
@@ -39,24 +47,22 @@ def render(p, out, src, panel=None, boxes=None):
     """src：四格原圖路徑。panel=None 放整張；1–4 放大那一格（boxes 是 find_panels 的結果）。"""
     bg = _forest()
     d = ImageDraw.Draw(bg)
-    # 紙：陰影＋奶油底＋點陣
+    # 紙：生圖的手帳內頁（larch/sheet.webp，左邊皮革書背），陰影照紙的輪廓
+    sheet = _sheet()
     sh = Image.new("L", (W, H), 0)
-    ImageDraw.Draw(sh).rounded_rectangle(PAPER, 14, fill=150)
+    sh.paste(sheet.getchannel("A").point(lambda v: v * 150 // 255), (PAPER[0] + 6, PAPER[1] + 14))
     bg.paste((10, 14, 10), (0, 0), sh.filter(ImageFilter.GaussianBlur(22)))
-    d.rounded_rectangle(PAPER, 14, fill=(243, 234, 211))
-    for y in range(PAPER[1] + 24, PAPER[3] - 10, 24):
-        for x in range(PAPER[0] + 24, PAPER[2] - 10, 24):
-            d.point((x, y), fill=(222, 210, 180))
+    bg.paste(sheet, PAPER[:2], sheet)
     # 左欄：Day、日期、標題
-    x0 = PAPER[0] + 44
+    x0 = PAPER[0] + 80  # 讓開左邊的皮革書背
     d.text((x0, 130), f"Day {p['day']:04d}", font=ImageFont.truetype(str(FONT_R), 34), fill=PENCIL)
     m, dd = int(p["date"][5:7]), int(p["date"][8:])
     d.text((x0, 176), f"{m} 月 {dd} 日", font=ImageFont.truetype(str(FONT_R), 34), fill=PENCIL)
     y = 250
-    tf = ImageFont.truetype(str(FONT_B), 46)
+    tf = ImageFont.truetype(str(FONT_B), 42)
     for ln in _wrap(p["title"], 6)[:5]:
         d.text((x0, y), ln, font=tf, fill=LEATHER)
-        y += 62
+        y += 58
     # 小地圖：2×2 標出現在是第幾格
     if boxes:
         mx, my, s = x0, 620, 34

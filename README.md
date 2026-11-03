@@ -66,7 +66,9 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
   模型看圖替每句挑格子與表情（快取在 `larch/faces/`），再把每個月的白板推上 Larch。
   手動重跑用 workflow 的「只同步到 Larch」。
 - 月曆、白板結構沿用格莉奇日記的 `scripts/larch_sync.py`；立繪在 `docs/larch/sprites/`。
-- 本機看成品：`python3 scripts/larch_yori.py --local docs/_preview.json`，再用 larch-preview 開那個檔。
+- 標題畫面與對話框是 `larch/ui/title.html`、`larch/ui/dialogue.html`，跟線上不同時同步程式會推上去。
+  書封、紙條、攤開的手帳、森林這幾張質感圖在 `docs/larch/ui/`，日記頁的內頁是 `larch/sheet.webp`（都是生圖後去背）。
+- 本機看成品：`python3 scripts/larch_yori.py --local docs/_preview.json`，再用 larch-preview 開那個檔（素材走預覽伺服器的 `/files/`，還沒推上去也看得到）。
 - 需要 Actions secret `LARCH_AGENT_KEY`；沒設的話這一步會跳過，日記照常發。
 
 ## AI-assisted / co-created disclosure
