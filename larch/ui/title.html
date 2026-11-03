@@ -14,7 +14,12 @@ main{position:relative;height:100dvh;color:var(--paper)}
 .inner{position:absolute;left:20%;right:18%;top:27%;bottom:9%;display:flex;flex-direction:column}
 h1{margin:0 0 6cqw;white-space:nowrap;font-size:7.6cqw;line-height:1.25;color:#f0cf7c;letter-spacing:.06em;font-weight:700;
   text-shadow:0 1px 0 rgba(255,240,200,.35),0 -1px 0 rgba(0,0,0,.6),0 3px 6px rgba(0,0,0,.45)}
-p{margin:0 0 auto;color:#efe6cc;font-size:3.3cqw;line-height:1.8;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+/* 簡介是完整版，比書封的空間長：這一塊自己捲動，底部淡出提示下面還有字，按鈕固定在下方 */
+p{flex:1;min-height:0;overflow-y:auto;margin:0 0 4cqw;padding-right:1.5cqw;white-space:pre-line;color:#efe6cc;font-size:2.9cqw;line-height:1.75;
+  text-shadow:0 1px 2px rgba(0,0,0,.5);scrollbar-width:thin;scrollbar-color:rgba(236,200,116,.5) transparent;
+  -webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
+p.end{-webkit-mask-image:none;mask-image:none}
+nav{flex:none}
 nav{display:flex;flex-direction:column;gap:2.4cqw;width:100%}
 button{font:inherit;font-size:3.5cqw;letter-spacing:.18em;padding:2.2cqw 3cqw;border-radius:1.6cqw;cursor:pointer;
   color:var(--paper);background:rgba(10,24,16,.35);border:1px solid rgba(236,200,116,.55);transition:background .15s,border-color .15s,color .15s}
@@ -63,6 +68,11 @@ addEventListener('load', function(){
     new Image().src = 'https://yazelin.github.io/yori-growth-log/larch/' + f;
   });
 });
+// 簡介捲到底就拿掉底部的淡出
+var desc = document.querySelector('[data-larch-slot="description"]');
+function descEnd(){ desc.classList.toggle('end', desc.scrollTop + desc.clientHeight >= desc.scrollHeight - 2); }
+desc.addEventListener('scroll', descEnd); addEventListener('resize', descEnd);
+new MutationObserver(descEnd).observe(desc, {childList: true, characterData: true, subtree: true}); setTimeout(descEnd, 300);
 // 螢火蟲：位置與節奏每次打開都不一樣
 var box = document.getElementById('flies');
 for (var i = 0; i < 40; i++) {
