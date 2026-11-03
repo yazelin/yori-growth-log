@@ -139,8 +139,11 @@ def ui_html(surface):
 def sync_ui(api, pid):
     """跟線上不同才寫：介面走 PUT /interface（帶 expectedHtml 當樂觀鎖），設定走 PATCH /settings 只送變的欄位。"""
     settings = api.get(f"/projects/{pid}/settings")["settings"]
+    # GET /settings 不帶 customInterfaces（2026-11-03 起），介面要從整個專案讀
+    proj = api.get(f"/projects/{pid}")
+    ci = ((proj.get("project") or proj).get("settings") or {}).get("customInterfaces") or {}
     for surface in ("title", "dialogue"):
-        have = ((settings.get("customInterfaces") or {}).get(surface) or {})
+        have = ci.get(surface) or {}
         if have.get("html") != ui_html(surface) or not have.get("enabled"):
             api.request("PUT", f"/projects/{pid}/interface", {"surface": surface, "html": ui_html(surface), "enabled": True,
                                                                "expectedHtml": have.get("html") or "", "summary": f"更新{surface}介面"})
