@@ -41,7 +41,8 @@ class Larch:
             raise LarchError(0, f"拒絕呼叫發佈端點：{method} {path}")
         if method == "PUT" and re.fullmatch(r"/projects/[^/]+/?", path) and not _whole_project:
             raise LarchError(0, f"拒絕整包覆寫專案：{path}")
-        h = {"Authorization": f"Bearer {self.key}", "Accept": "application/json"}
+        # Larch 前面的 Cloudflare 會擋 urllib 預設的 User-Agent（2026-11-04 起回 403 error 1010）
+        h = {"Authorization": f"Bearer {self.key}", "Accept": "application/json", "User-Agent": "larch-sync/1.0"}
         data = None
         if body is not None:
             h["Content-Type"] = "application/json"
