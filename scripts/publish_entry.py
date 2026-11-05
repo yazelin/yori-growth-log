@@ -133,7 +133,25 @@ def md2html(md):
     return "\n".join(out)
 
 # ---------- llmshare 寫稿（OpenAI 協議） ----------
-def gemini_text(prompt):  # 名字留著少動呼叫端；後端已換 llmshare
+def gemini_text(prompt):  # 名字留著少動呼叫端；平常走 llmshare，出錯改走 .11 的 gemini-web
+    try:
+        return llmshare_text(prompt)
+    except Exception as e:
+        if not os.environ.get("GEMINI_API_KEY"):
+            raise
+        print(f"llmshare 失敗（{e}），改用 gemini-web", file=sys.stderr)
+        return gemini_web_text(prompt)
+
+def gemini_web_text(prompt):
+    body = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": 0.9}}
+    req = urllib.request.Request(
+        f"{GEMINI_WEB_BASE}/v1beta/models/gemini-2.5-flash:generateContent",
+        json.dumps(body).encode(),
+        {"Content-Type": "application/json", "x-goog-api-key": os.environ["GEMINI_API_KEY"]})
+    d = json.load(urllib.request.urlopen(req, timeout=300))
+    return "".join(p.get("text", "") for p in d["candidates"][0]["content"]["parts"])
+
+def llmshare_text(prompt):
     key = os.environ["LLMSHARE_API_KEY"]
     body = {"model": TEXT_MODEL, "temperature": 0.9,
             "messages": [{"role": "user", "content": prompt}]}
