@@ -1331,5 +1331,20 @@
     "category": "檔案",
     "inspiration": "遠端工作趨勢調查顯示，高達「75%的混合辦公員工」期望維持彈性工作模式，若企業強制全面返回辦公室恐面臨高達三成以上的勞動力流失風險。",
     "comic": "Title banner text: 「全面回辦公室」\nBlack-and-white four-panel manga, same office notice-board scene. Panel 1: Medium shot; a colleague holds an HR printout beside the notice board, Yori stands with coffee and glances at it. Colleague says: 「下週起全面回辦公室。」 Panel 2: Close-up on a pie chart with a large 75% slice; the colleague points excitedly, Yori leans in. Colleague says: 「七成五想彈性，會照這個吧？」 Panel 3: Point-of-view close-up as Yori flips to the fine print, which reads 「未配合視同離職」; the colleague looks nervous. Yori says: 「那三成會走。」 Panel 4: Tight close-up on the same printout flipped over by Yori's hand, revealing a form titled 「離職意向調查」 with small text 「優先：不返辦者」; Yori's deadpan eyes in the foreground. No dialogue."
+  },
+  {
+    "day": 99,
+    "date": "2026-11-07",
+    "title": "Day 0099 — 手錶還沒下班",
+    "entry": "docs/entries/day-0099.html",
+    "entry_markdown": "docs/entries/day-0099.md",
+    "image": "docs/assets/day-0099-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0099",
+    "short_title": "手錶還沒下班",
+    "summary": "同事關掉手機、螢幕，說誰都找不到他；優理卻看見他手腕上的手錶亮起來。",
+    "category": "會議與溝通",
+    "inspiration": "日本市調機構最新調查顯示，高達近五成二十多歲的年輕世代曾面臨「社群倦怠」，引發不少上班族對下班後手機訊息連發與數位焦慮的共鳴。",
+    "comic": "Title banner text: 「下班開飛航模式」\nPanel 1: Medium shot in a small office at end of day; a coworker proudly holds up a phone with the airplane-mode icon clearly visible on screen; Yori packs her bag at the next desk and watches. Coworker says 「下班我就開飛航模式。」 Panel 2: The coworker drops the phone into an open desk drawer and closes it; Yori keeps packing, no watch visible. Coworker says 「群組訊息明天再說。」 Panel 3: The coworker turns off the monitor and boasts, wrist hidden by sleeve; Yori glances up. Coworker says 「這樣誰都找不到我。」 Panel 4: Close-up on the smartwatch on the coworker’s wrist as its screen lights up for the first time with 「主管：@你 明早回報」; the coworker’s face freezes, and Yori points from the edge. No dialogue."
   }
 ]
