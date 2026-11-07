@@ -1346,5 +1346,20 @@
     "category": "會議與溝通",
     "inspiration": "日本市調機構最新調查顯示，高達近五成二十多歲的年輕世代曾面臨「社群倦怠」，引發不少上班族對下班後手機訊息連發與數位焦慮的共鳴。",
     "comic": "Title banner text: 「下班開飛航模式」\nPanel 1: Medium shot in a small office at end of day; a coworker proudly holds up a phone with the airplane-mode icon clearly visible on screen; Yori packs her bag at the next desk and watches. Coworker says 「下班我就開飛航模式。」 Panel 2: The coworker drops the phone into an open desk drawer and closes it; Yori keeps packing, no watch visible. Coworker says 「群組訊息明天再說。」 Panel 3: The coworker turns off the monitor and boasts, wrist hidden by sleeve; Yori glances up. Coworker says 「這樣誰都找不到我。」 Panel 4: Close-up on the smartwatch on the coworker’s wrist as its screen lights up for the first time with 「主管：@你 明早回報」; the coworker’s face freezes, and Yori points from the edge. No dialogue."
+  },
+  {
+    "day": 100,
+    "date": "2026-11-08",
+    "title": "Day 0100 — 同一句貼紙的抽屜",
+    "entry": "docs/entries/day-0100.html",
+    "entry_markdown": "docs/entries/day-0100.md",
+    "image": "docs/assets/day-0100-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0100",
+    "short_title": "同一句貼紙的抽屜",
+    "summary": "優理看到同事每天把同一句偏好貼進新的 AI 對話，才發現重複貼不等於工作流。他指著一整排同樣的對話標題，決定替這句話找一個固定的抽屜。",
+    "category": "待辦與時間",
+    "inspiration": "根據最新的《2026台灣工作者AI應用大調查》顯示，雖然已有高達「74%的上班族天天使用AI」，卻僅有16%的人建立出能重覆使用的固定工作流，讓「每天都在給AI重新輸入指令」成為不少同仁笑稱的午茶共鳴。",
+    "comic": "Title banner text: 「今天再貼一次」\nPanel 1: Medium shot in a bright office cubicle; a coworker copies a sticky note reading 「幫我記住我的偏好」 into the AI input box while Yori passes behind with a mug; coworker says 「今天再貼一次。」\nPanel 2: Close-up over the coworker's shoulder; the AI input box shows the same line 「幫我記住我的偏好」, and a pile of identical sticky notes sits beside the keyboard; coworker says 「每天貼，也算工作流吧？」\nPanel 3: Medium close-up; the coworker presses Enter and leans toward the loading AI chat while nearby coworkers lean in and Yori stays deadpan; coworker says 「這次它總該記得我吧？」\nPanel 4: Wider shot of the same cubicle; the chat history sidebar shows dozens of identical chat titles 「幫我記住我的偏好」, the coworker freezes and Yori points at the sidebar deadpan; Yori says 「又是新對話。」"
   }
 ]
