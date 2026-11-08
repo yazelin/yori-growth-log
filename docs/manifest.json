@@ -1361,5 +1361,20 @@
     "category": "待辦與時間",
     "inspiration": "根據最新的《2026台灣工作者AI應用大調查》顯示，雖然已有高達「74%的上班族天天使用AI」，卻僅有16%的人建立出能重覆使用的固定工作流，讓「每天都在給AI重新輸入指令」成為不少同仁笑稱的午茶共鳴。",
     "comic": "Title banner text: 「今天再貼一次」\nPanel 1: Medium shot in a bright office cubicle; a coworker copies a sticky note reading 「幫我記住我的偏好」 into the AI input box while Yori passes behind with a mug; coworker says 「今天再貼一次。」\nPanel 2: Close-up over the coworker's shoulder; the AI input box shows the same line 「幫我記住我的偏好」, and a pile of identical sticky notes sits beside the keyboard; coworker says 「每天貼，也算工作流吧？」\nPanel 3: Medium close-up; the coworker presses Enter and leans toward the loading AI chat while nearby coworkers lean in and Yori stays deadpan; coworker says 「這次它總該記得我吧？」\nPanel 4: Wider shot of the same cubicle; the chat history sidebar shows dozens of identical chat titles 「幫我記住我的偏好」, the coworker freezes and Yori points at the sidebar deadpan; Yori says 「又是新對話。」"
+  },
+  {
+    "day": 101,
+    "date": "2026-11-09",
+    "title": "Day 0101 — 香菇派贏定了以後",
+    "entry": "docs/entries/day-0101.html",
+    "entry_markdown": "docs/entries/day-0101.md",
+    "image": "docs/assets/day-0101-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0101",
+    "short_title": "香菇派贏定了以後",
+    "summary": "茶水間裡，同事把香菇山和竹筍里倒進貼反標籤的碗，還舉起竹筍說香菇派贏定了。優理等他把話說完，才把兩張貼紙換回正確的位置。",
+    "category": "休息與心情",
+    "inspiration": "日本各大超商與超市熱銷的經典零食「香菇山與竹筍里」再度掀起網路論壇的派別之爭，讓許多熱愛嘗鮮的上班族忍不住「兩種口味一次買齊來分給同事品嘗」。",
+    "comic": "Title banner text: 「香菇竹筍各一包」\nPanel 1: Office pantry table, a colleague proudly holds one bag labeled 香菇山 and one bag labeled 竹筍里; two small bowls with sticky labels 香菇山 on the left and 竹筍里 on the right sit on the table; Yori stands nearby observing. Medium shot. Colleague: 「兩種口味我一次買齊。」 Panel 2: Overhead close-up of the table: the colleague pours a 竹筍里 bag into the left bowl whose sticky label says 香菇山, bamboo-shoot-shaped snacks falling clearly; the right bowl labeled 竹筍里 already contains mountain-shaped snacks; Yori narrows her eyes at the mismatched labels. Colleague: 「竹筍放左邊。」 Panel 3: Close-up on the colleague proudly holding up one clearly bamboo-shoot-shaped snack taken from the left bowl; the left bowl label still says 香菇山; Yori stays quiet and flicks her eyes between the label and the snack, not reaching for the labels. Colleague: 「香菇派贏定了。」 Panel 4: Close-up of the same table: Yori's hand has just swapped the two sticky labels, so the left bowl now says 竹筍里 beside the bamboo-shoot-shaped snack in the colleague's hand; the colleague freezes with wide eyes while Yori stays calm at the edge of the frame. Colleague: 「欸？」"
   }
 ]
