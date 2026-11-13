@@ -421,7 +421,7 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
 def gen_image(prompt, out_path):
     key = os.environ["CODEX_IMAGE_KEY"]
     refs = []
-    for name in ("style-anchor-a.jpg", "style-anchor-b.jpg"):
+    for name in ("style-anchor-a.jpg", "style-anchor-b.jpg", "cast-anchor.jpg"):
         p = os.path.join(ROOT, "scripts", name)
         refs.append(base64.b64encode(open(p, "rb").read()).decode())
     full = ("Use case: a four-panel comic (yonkoma) for a daily diary.\n"
@@ -432,6 +432,10 @@ def gen_image(prompt, out_path):
             "Image 2 shows the comic FORMAT to follow: four numbered panels in a 2x2 grid, a title "
             "banner showing exactly the banner text in the script, speech bubbles with Traditional Chinese text, clean line art with soft warm colors. "
             "Take only its layout and rendering from it; the story, props and scene come from the script below.\n"
+            "Image 3 is the character sheet for the recurring coworkers, with their names under them "
+            "(A-Kai 阿凱, Xiao-Yun 小芸, Sister Zhou 周姐, the Director 主任). When the script names one of them, draw that "
+            "person with the same face, hair and outfit as on the sheet; their expression and pose follow the script. "
+            "Draw only the coworkers the script names; the sheet's plain background and captions stay out of the comic.\n"
             "Comic script:\n" + prompt +
             "\nSquare 2x2 four-panel layout. Each speech bubble holds only the words inside 「」, without the 「」 marks "
             "and without speaker names; the bubble tail points to the speaker. All dialogue in Traditional Chinese, short and legible, "
