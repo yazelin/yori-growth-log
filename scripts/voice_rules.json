@@ -96,5 +96,10 @@
    "max_flags": 2
   },
   "allowed": false
- }
+ },
+ "summary_banned": [
+  "小規則",
+  "學到",
+  "notebook"
+ ]
 }

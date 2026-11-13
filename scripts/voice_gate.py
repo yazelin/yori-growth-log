@@ -225,11 +225,19 @@ def gate(text, history, rules=None, rules_only=False):
     return out
 
 
-def gate_entry(md, history_mds, rules=None, rules_only=False):
+def gate_entry(md, history_mds, rules=None, rules_only=False, summary=None):
     """整篇的閘門：圖文短文和小方法各自過程式檢查與審稿。history_mds：之前幾篇的 markdown，舊到新。"""
     rules = rules or load_rules()
     res = gate(prose_of(md), [prose_of(h) for h in history_mds], rules, rules_only)
     res["method_issues"], res["method_review"] = [], None
+    if summary:      # 摘要會當首頁卡片文字：句型黑名單照查，另外不提小規則
+        for p in rules["patterns"]:
+            for hit in re.finditer(p["regex"], summary):
+                res["rule_issues"].append({"rule": "摘要／" + p["id"], "quote": hit.group(0), "why": p["why"]})
+        for w in rules.get("summary_banned", []):
+            if w in summary:
+                res["rule_issues"].append({"rule": "摘要", "quote": w, "why": "摘要只講今天這個場面"})
+        res["ok"] = res["ok"] and not res["rule_issues"]
     text = method_of(md)
     if text and rules.get("method") and not rules["method"].get("allowed", True):
         res["method_issues"] = [{"rule": "不寫小方法", "quote": text.split("\n")[0],
@@ -362,6 +370,9 @@ def _selftest():
     assert not check_method(clean, [], rules), check_method(clean, [], rules)
     assert method_of("## 圖文短文\n沒有小方法") == ""
     assert not gate_entry(md, [], rules, rules_only=True)["ok"]
+    bad_sum = gate_entry("## 圖文短文\n好。", [], rules, rules_only=True, summary="今天的小規則是先看再按。")
+    assert any(i["rule"] == "摘要" for i in bad_sum["rule_issues"]) and not bad_sum["ok"]
+    assert gate_entry("## 圖文短文\n好。", [], rules, rules_only=True, summary="同事炫耀新掛燈。")["ok"]
     off = {**rules, "method": {**rules["method"], "allowed": False}}
     assert [i["rule"] for i in gate_entry("## 圖文短文\n好。\n\n## 今天的小方法：x\n- a", [], off, rules_only=True)["method_issues"]] == ["不寫小方法"]
     assert gate_entry("## 圖文短文\n好。\n\n## 創作筆記\n- a", [], off, rules_only=True)["ok"]
