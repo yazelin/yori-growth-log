@@ -24,6 +24,41 @@ from scripts.larch_api import Larch  # noqa: E402
 from scripts.larch_panels import find_panels  # noqa: E402
 
 CFG = json.loads((ROOT / "larch/config.json").read_text("utf-8"))
+
+# 優理手機：常駐在畫面角落的聊天視窗（larch/hud/yori-phone.html）。人設在那個檔裡，同事設定從 scripts/cast.json 填進去。
+HUD_ID = "yori-phone"
+CHAT_VARS = [
+    {"id": "yori_reader_name", "name": "yori_reader_name", "type": "string", "label": "讀者名字",
+     "description": "優理手機第一次打開時問的名字", "defaultValue": "", "persistent": True},
+    {"id": "yori_chat", "name": "yori_chat", "type": "string", "label": "優理手機對話",
+     "description": "優理手機的對話紀錄（JSON）", "defaultValue": "[]", "persistent": True},
+]
+
+
+def phone_html():
+    cast = json.loads((ROOT / "scripts/cast.json").read_text("utf-8"))
+    you = lambda t: t.replace("優理", "你")
+    lines = []
+    for m in cast["members"]:
+        line = you(f"- {m['name']}（{m['pronoun']}）：{m['role']}。{m['who']}。說話：{m['speech']}。"
+                   f"習慣：{m['habits']}。和你：{m['with_yori']}。{m['pronoun']}不會{m['never']}。")
+        if m.get("private"):
+            line += "背景：" + m["private"].split("。")[0] + "。" + m.get("private_phone", "")
+        lines.append(line)
+    esc = lambda t: json.dumps(t, ensure_ascii=False)[1:-1].replace("'", "\\'")   # 放進 JS 單引號字串
+    html = (ROOT / "larch/hud/yori-phone.html").read_text("utf-8")
+    assert "__CAST__" in html and "__OFFICE__" in html
+    return html.replace("__CAST__", esc("\n".join(lines))).replace("__OFFICE__", esc(you(cast["office"])))
+
+
+def hud_plugin():
+    names = [v["name"] for v in CHAT_VARS]
+    return {"enabled": True, "playback": {
+        "version": "1.0.0", "permissions": ["player:ui", "variables:read", "variables:write"], "defaults": {},
+        "huds": [{"id": "phone", "title": "優理手機", "anchor": "top-right", "width": 88, "height": 88,
+                  "offsetX": 4, "offsetY": 44, "interactive": True, "readVariables": names, "writeVariables": names,
+                  "html": phone_html()}]}}
+
 BASE = CFG["base_url"]
 BG, FACE_CACHE, THUMBS = ROOT / "docs/larch/bg", ROOT / "larch/faces", ROOT / "docs/larch/thumbs"
 BODY_HEADS = ("圖文短文", "Yori 的日記", "今天的日記")
@@ -201,7 +236,7 @@ def main():
         todo = larch_sync.plan(boards, larch_sync.remote_descriptions(api, pid))
         print(f"要更新 {len(todo)} 張 board：{', '.join(todo) or '（沒有）'}", flush=True)
         return
-    replaced = larch_sync.sync_project_meta(api, pid, CFG.get("description"), {}, [])
+    replaced = larch_sync.sync_project_meta(api, pid, CFG.get("description"), {HUD_ID: hud_plugin()}, CHAT_VARS)
     sync_ui(api, pid)
     larch_sync.sync_cg(api, pid, larch_sync.cg_items(ps, BASE))
     todo = larch_sync.plan(boards, {} if replaced else larch_sync.remote_descriptions(api, pid))
