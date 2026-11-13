@@ -45,7 +45,6 @@ def taipei_today():
 def load_entries():
     return json.load(open(os.path.join(ROOT, "docs", "entries.json")))
 
-RULES_PATH = os.path.join(ROOT, "scripts", "rules.json")
 
 # 手藝經驗（2026-11-02）：寫完當天的稿，審稿一步挑毛病、寫成一句心得存進來；隔天寫四格與日記時讀。
 # 每月整理日把心得折成最多八條原則。長進靠這份檔案累積，日記本身不寫創作過程。
@@ -109,13 +108,6 @@ def fold_craft(craft):
     r = ask_json(prompt, lambda r: 0 < len(r.get("principles", [])) <= 8, "整理手藝經驗")
     return {"principles": r["principles"], "notes": []} if r else craft
 
-def load_rules():
-    return json.load(open(RULES_PATH))
-
-def save_rules(rules):
-    json.dump(rules, open(RULES_PATH, "w"), ensure_ascii=False, indent=1)
-
-# ---------- markdown → html（老日記只用 h2 / p / ul） ----------
 def md2html(md):
     out, ul = [], []
     def flush_ul():
@@ -245,11 +237,9 @@ GAG_RULES = """## 四格笑點怎麼寫
 - 第四格只靠畫面和一個反應就成立嗎？
 - 只看四格、沒讀日記的陌生人會笑嗎？"""
 
-def write_comic(news, allowed, consolidation, recent_titles="", craft=None, recent_gags=()):
+def write_comic(news, allowed, recent_titles="", craft=None, recent_gags=()):
     """先產四格劇本（三個候選、依 GAG_RULES 自評挑一個）。回傳 dict：category, inspiration, banner, image_prompt。"""
-    if consolidation:
-        source = "今天是整理日：題材是優理整理桌上一堆便利貼，把幾張意思一樣的併成一張。分類填「休息與心情」。"
-    elif news:
+    if news:
         source = ("## 今天的新聞（挑一則當靈感，轉成上班族日常的一個小場面，用新聞裡的一個具體細節）\n"
                   + "\n".join(f"- {n}" for n in news))
     else:
@@ -271,7 +261,7 @@ def write_comic(news, allowed, consolidation, recent_titles="", craft=None, rece
 {{"candidates": ["版本一的一句話大綱", "版本二", "版本三"],
   "pick_reason": "為什麼選這個（一句話，說明遮住第四格猜不到結局）",
   "category": "分類",
-  "inspiration": "{'選中的那則新聞原文（原樣複製）' if news and not consolidation else '空字串'}",
+  "inspiration": "{'選中的那則新聞原文（原樣複製）' if news else '空字串'}",
   "banner": "標題橫幅（八字內，像第一格的一句話，結局留給第四格）",
   "image_prompt": "英文分鏡，依序 Panel 1 到 Panel 4：每格寫場景、角色動作與表情、鏡頭（特寫、中景、拉遠），對白用繁體中文寫在「」裡，每格最多一句、二十字內；第四格可以沒有對白。四格同一個場景。"}}"""
     ok = lambda c: c.get("image_prompt", "").count("Panel") >= 4 and c.get("banner", "").strip()
@@ -312,40 +302,32 @@ def review_comic(c):
 
 def auto_write(entries):
     guide = open(os.path.join(ROOT, "YORI_VOICE_GUIDE.md")).read()
-    # 2026-11-13 起不寫「今天的小方法」（教學段），範本裡有這一段的先拿掉
+    # 2026-11-13 起不寫「今天的小方法」和創作筆記的「可轉化」（都是教學用途），範本裡有的先拿掉
     fewshot = "\n\n---\n\n".join(
-        re.sub(r"^## 今天的小方法.*?(?=^## |\Z)", "", open(os.path.join(ROOT, e["entry_markdown"])).read(), flags=re.S | re.M)
+        re.sub(r"^- 可轉化.*\n?", "", re.sub(r"^## 今天的小方法.*?(?=^## |\Z)", "",
+               open(os.path.join(ROOT, e["entry_markdown"])).read(), flags=re.S | re.M), flags=re.M)
         for e in entries if e["day"] in FEWSHOT_DAYS)
     day = entries[-1]["day"] + 1
-    rules = load_rules()
-    ledger = "\n".join(f"- Day {r['day']:04d}：{r['rule']}" for r in rules)
     recent_titles = "\n".join(f"- {e['label']}：{e['short_title']}" for e in entries[-14:])
     used = [e.get("inspiration") for e in entries if e.get("inspiration")]
     news = fetch_news(used)
     cooling = [c for c in (e.get("category") for e in entries[-COOLDOWN:]) if c]
     allowed = [c for c in CATEGORIES if c not in cooling]
-    consolidation = datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Taipei")).day == 1
     craft = load_craft()
-    if consolidation:
+    if datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Taipei")).day == 1:   # 每月 1 號把審稿心得折成原則
         craft = fold_craft(craft)
     recent_gags = [n.get("gag_type") for n in craft["notes"][-3:] if n.get("gag_type")]
-    comic = write_comic(news, CATEGORIES if consolidation else allowed, consolidation,
-                        recent_titles, craft, recent_gags)
+    comic = write_comic(news, allowed, recent_titles, craft, recent_gags)
     comic_block = ("## 今天的四格（已經定稿，日記照它的劇情與對白寫）\n"
                    + (f"靈感新聞：{comic['inspiration']}\n" if comic.get("inspiration") else "")
                    + comic["image_prompt"])
-    task = ("今天是每月的『整理日』。回顧上面的規則帳本，挑兩三條相近或已經升級過的規則折併成更短的一條，"
-            "寫一篇整理日日記：講他攤開 notebook 整理便條的過程、哪幾條併成了什麼、哪一條其實已經長進身體裡不用再寫。"
-            "四格已經畫好，日記的今日作品介紹這則四格。") if consolidation else (
-            f"寫 Day {day:04d} 的日記，主角作品是上面那則已定稿的四格。"
-            "日記講的是今天這件事本身：優理遇到什麼、怎麼想、學到什麼。"
+    task = (f"寫 Day {day:04d} 的日記，主角作品是上面那則已定稿的四格。"
+            "日記講的是今天這個場面：優理看到什麼、怎麼想、做了什麼。"
             "圖文短文寫 250 到 400 字、分三到四段，只講這個場面："
             "寫出四格裡畫不出來的部分，像是優理當下注意到哪個小地方、心裡閃過什麼念頭、差點做了什麼，"
-            "還有旁人的小動作。最後一句停在場面裡的一個動作、一句話或一個反應。"
-            "今天的小規則只填在 JSON 的 new_rule 欄位（給帳本用），從今天這個場面長出來，"
-            "內容和句型都是帳本裡還沒有的。")
+            "還有旁人的小動作。最後一句停在場面裡的一個動作、一句話或一個反應。")
     prompt = f"""你是優理（Yori），森林宇宙的數位學徒，Day 0025 起轉為圖文作家，
-畫清晨寓言、工具童話、辦公室小漫畫，幫疲憊的上班族在衝動前踩煞車。
+現在每天畫一則辦公室四格漫畫，讓上班族看了會笑。
 Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的主角作品是一則四格漫畫。
 
 ## 語氣規範（嚴格遵守）
@@ -358,16 +340,13 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
 
 {comic_block}
 
-## notebook 角落的小規則帳本（參考用，今天的新規則寫一條帳本沒有的）
-{ledger}
-
 ## 最近十四天的標題（今天的標題換個新說法）
 {recent_titles}
 
 ## 今天的任務
 {task}
 正文就三段，照這個順序：## 今日作品 → ## 圖文短文 → ## 創作筆記。
-創作筆記的「類型」寫 Four-panel comic / 四格漫畫。
+創作筆記寫三行：類型（固定寫 Four-panel comic / 四格漫畫）、情緒、畫面核心。
 今日作品照四格的順序介紹，第四格只帶到畫面，留給讀者自己看圖。這篇日記是一則好笑的四格和它的場面，講到場面結束就好。
 用繁體中文和全形標點，純文字。
 {PLAIN_RULES}
@@ -376,8 +355,6 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
 {{"short_title": "標題（不含 Day 編號）",
   "summary": "一到兩句摘要（會當 lede 與卡片文字）",
   "body_md": "從 ## 今日作品 開始的 markdown 正文",
-  "new_rule": "今天新折進 notebook 的那條小規則（一句話，40 字內）{'；整理日則改填折併後的規則' if consolidation else ''}",
-  "merged_days": {"[被折併的舊規則 day 編號陣列，例如 [30, 31]；沒有就給空陣列]" if consolidation else "[]（今天不是整理日，固定給空陣列）"},
   "alt": "圖片 alt 文字（中文，Day {day:04d} 開頭）"}}"""
     def write_once(p):
         for attempt in range(3):
@@ -388,7 +365,6 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
                          image_prompt=comic["image_prompt"])
                 assert all(k in d and str(d[k]).strip() for k in ENTRY_FIELDS)
                 assert "## 今日作品" in d["body_md"]
-                assert d.get("new_rule", "").strip(), "缺 new_rule"
                 return fix_entry(d)
             except Exception as e:
                 print(f"寫稿第 {attempt+1} 次失敗：{e}", file=sys.stderr)
@@ -404,7 +380,7 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
         d = write_once(prompt + extra)
         if not d:
             sys.exit(1)
-        res = voice_gate.gate_entry(d["body_md"], history, voice_rules)
+        res = voice_gate.gate_entry(d["body_md"], history, voice_rules, summary=d["summary"])
         notes = voice_gate.feedback(res)
         log.append({"round": rnd, "ok": res["ok"], "notes": notes,
                     "error": (res.get("review") or {}).get("error") or (res.get("method_review") or {}).get("error")})
@@ -563,13 +539,6 @@ def publish(d, image_path=None):
     for p in ("docs/entries.json", "docs/manifest.json", "manifest.json"):
         open(os.path.join(ROOT, p), "w").write(blob)
     # 小規則帳本：追加今天的規則；整理日把被折併的舊條目移除
-    if d.get("new_rule"):
-        rules = load_rules()
-        merged = set(d.get("merged_days") or [])
-        if merged:
-            rules = [r for r in rules if r["day"] not in merged]
-        rules.append({"day": day, "rule": d["new_rule"].strip()})
-        save_rules(rules)
     if d.get("_craft"):
         json.dump(d["_craft"], open(CRAFT_PATH, "w"), ensure_ascii=False, indent=1)
 
