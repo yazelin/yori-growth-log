@@ -239,6 +239,15 @@ GAG_RULES = """## 四格笑點怎麼寫
 - 第四格只靠畫面和一個反應就成立嗎？
 - 只看四格、沒讀日記的陌生人會笑嗎？"""
 
+def cast_block():
+    """辦公室固定班底（scripts/cast.json）：四格裡的同事從這幾位挑，外貌照 look 寫進分鏡。"""
+    cast = json.load(open(os.path.join(ROOT, "scripts", "cast.json"), encoding="utf-8"))["members"]
+    # private 欄位不給寫手：那是角色的背景，不拿來寫笑點
+    lines = [f"- {m['name']}（{m['pronoun']}，分鏡裡寫 {m['en']}）：{m['role']}。{m['who']}。說話：{m['speech']}。"
+             f"習慣：{m['habits']}。和優理：{m['with_yori']}。不會{m['never']}。外貌：{m['look']}" for m in cast]
+    return ("## 辦公室的同事（每則從這幾位挑一到兩位，照他們的個性演；其他人當背景路人）\n" + "\n".join(lines)
+            + "\n同事第一次出現在分鏡時，在名字後面用括號寫上他的外貌（照上面的英文原樣寫），之後只寫名字。")
+
 def write_comic(news, allowed, recent_titles="", craft=None, recent_gags=()):
     """先產四格劇本（三個候選、依 GAG_RULES 自評挑一個），再過四格閘門。回傳 dict：category, inspiration, banner, image_prompt。"""
     if news:
@@ -249,6 +258,7 @@ def write_comic(news, allowed, recent_titles="", craft=None, recent_gags=()):
     prompt = f"""你是四格漫畫編劇。主角優理（Yori）是個在辦公室上班的小學徒，細心、觀察敏銳、說話直白，常常是辦公室裡第一個看出荒謬的人。
 {source}
 題材分類只能從這幾個選：{'、'.join(allowed)}
+{cast_block()}
 最近十四天的標題（今天找一個新題材）：
 {recent_titles}
 
@@ -411,7 +421,7 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
 def gen_image(prompt, out_path):
     key = os.environ["CODEX_IMAGE_KEY"]
     refs = []
-    for name in ("style-anchor-a.jpg", "style-anchor-b.jpg"):
+    for name in ("style-anchor-a.jpg", "style-anchor-b.jpg", "cast-anchor.jpg"):
         p = os.path.join(ROOT, "scripts", name)
         refs.append(base64.b64encode(open(p, "rb").read()).decode())
     full = ("Use case: a four-panel comic (yonkoma) for a daily diary.\n"
@@ -422,6 +432,10 @@ def gen_image(prompt, out_path):
             "Image 2 shows the comic FORMAT to follow: four numbered panels in a 2x2 grid, a title "
             "banner showing exactly the banner text in the script, speech bubbles with Traditional Chinese text, clean line art with soft warm colors. "
             "Take only its layout and rendering from it; the story, props and scene come from the script below.\n"
+            "Image 3 is the character sheet for the recurring coworkers, with their names under them "
+            "(A-Kai 阿凱, Xiao-Yun 小芸, Sister Zhou 周姐, the Director 主任). When the script names one of them, draw that "
+            "person with the same face, hair and outfit as on the sheet; their expression and pose follow the script. "
+            "Draw only the coworkers the script names; the sheet's plain background and captions stay out of the comic.\n"
             "Comic script:\n" + prompt +
             "\nSquare 2x2 four-panel layout. Each speech bubble holds only the words inside 「」, without the 「」 marks "
             "and without speaker names; the bubble tail points to the speaker. All dialogue in Traditional Chinese, short and legible, "
