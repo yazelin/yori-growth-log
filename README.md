@@ -89,6 +89,18 @@ Yori / 優理是一位正在學會「有理」的 apprentice。他會犯錯、�
 - 本機看成品：`python3 scripts/larch_yori.py --local docs/_preview.json`，再用 larch-preview 開那個檔（素材走預覽伺服器的 `/files/`，還沒推上去也看得到）。
 - 需要 Actions secret `LARCH_AGENT_KEY`；沒設的話這一步會跳過，日記照常發。
 
+
+### 優理手機（2026-11-13 起）
+
+畫面右上角一顆優理的頭像，點開可以傳訊息給優理。原始碼 `larch/hud/yori-phone.html`，`scripts/larch_yori.py` 每晚同步時把它連同
+`scripts/cast.json` 的同事設定一起推上 Larch。回覆走自家的中繼站轉 gemini-web，不扣 Larch 點數。
+
+- 人設寫在那個 HTML 檔的 `PERSONA`：優理是在辦公室上班、每天畫四格的 AI 學徒，講話直白、觀察細，沒有口頭禪。
+- 他知道的事：讀者正在看的那篇日記（今日作品與圖文短文）、當天的新聞靈感、最近三篇的摘要、四位同事。
+- 他不講的事：創作筆記與製作過程、同事沒寫在設定裡的私事。被認真問到是不是 AI 會照實回答。
+- 讀者名字和對話紀錄存在讀者自己的瀏覽器（變數 `yori_reader_name`、`yori_chat`，跨週目保留）。
+- 改同事設定改 `scripts/cast.json`；`private` 與 `private_phone` 欄位只給手機用，不進寫四格的提示詞。
+
 ## AI-assisted / co-created disclosure
 
 本專案是 Yaze Lin 與 AI agent 共同創作與整理的角色成長紀錄。

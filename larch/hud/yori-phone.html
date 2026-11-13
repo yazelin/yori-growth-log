@@ -1,0 +1,256 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+/* 優理手機：角落一顆頭像，點了展開成聊天視窗。配色跟優理手帳一致：紙色底、墨綠、金線。 */
+html,body{margin:0;height:100%;background:transparent;overflow:hidden}
+*{box-sizing:border-box}
+:root{--cy:#c9a24a;--mint:#1f3a2b;--ink:#2b2a22;--mute:#7a735f;--win:#f3ead3;--bar:#e6d9b8;--line:rgba(43,42,34,.16);--me:#1f3a2b;--her:#fffaf0;
+  --font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+body{font:14px/1.55 var(--font);color:var(--ink)}
+button{font:inherit;cursor:pointer;border:0;transition:scale .2s ease,background-color .2s ease,color .2s ease}
+button:focus-visible,input:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+@media (hover:hover){button:not(:disabled):hover{scale:1.04}}
+button:not(:disabled):active{scale:.95}
+button:disabled{opacity:.45;cursor:default}
+
+/* 框比內容每邊多 12px，光暈與陰影才不會被框切掉（框外畫不出來） */
+#fab{position:absolute;right:12px;top:12px;width:64px;height:64px;border-radius:50%;padding:0;background:#f3ead3;
+  border:2px solid var(--cy);box-shadow:0 0 10px 1px rgba(201,162,74,.55);overflow:hidden}
+#fab img{width:100%;height:100%;object-fit:cover;display:block}
+#fab .tip{position:absolute;left:0;right:0;bottom:0;font-size:10px;font-weight:700;line-height:16px;background:rgba(31,58,43,.88);color:#f3ead3}
+
+#win{position:absolute;inset:12px;display:none;flex-direction:column;border-radius:14px;overflow:hidden;background:var(--win);
+  border:1px solid var(--line);box-shadow:0 4px 10px rgba(43,42,34,.35)}
+body.open #win{display:flex;animation:in .32s cubic-bezier(.2,.9,.2,1) both}
+body.open #fab{display:none}
+@keyframes in{from{opacity:0;translate:0 8px;scale:.97}}
+.top{display:flex;align-items:center;gap:10px;padding:10px 10px 10px 12px;background:var(--bar);border-bottom:1px solid var(--line)}
+.top img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid var(--cy);background:#fffaf0}
+.top .who{flex:1;min-width:0}
+.top b{display:block;font-size:15px}
+.top small{color:var(--mute);font-size:11px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ic{width:40px;height:40px;border-radius:9px;background:transparent;color:var(--mute);display:inline-flex;align-items:center;justify-content:center}
+.ic:hover{color:var(--ink);background:rgba(43,42,34,.08)}
+.ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#log{flex:1;min-height:0;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;
+}
+/* Chrome 有設 scrollbar-color 就不吃 ::-webkit-scrollbar，還會多出上下箭頭，所以標準屬性只給不支援 webkit 捲軸的瀏覽器 */
+@supports not selector(::-webkit-scrollbar){#log{scrollbar-width:thin;scrollbar-color:rgba(31,58,43,.35) transparent}}
+#log::-webkit-scrollbar{width:6px}
+#log::-webkit-scrollbar-button{display:none}
+#log::-webkit-scrollbar-track{background:transparent}
+#log::-webkit-scrollbar-thumb{background:rgba(31,58,43,.35);border-radius:3px}
+.m{max-width:82%;padding:8px 11px;border-radius:14px;white-space:pre-wrap;word-break:break-word}
+.her{align-self:flex-start;background:var(--her);border:1px solid var(--line);border-bottom-left-radius:4px}
+.me{align-self:flex-end;background:#1f3a2b;border:1px solid #1f3a2b;color:#f3ead3;border-bottom-right-radius:4px}
+.sys{align-self:center;color:var(--mute);font-size:12px;text-align:center}
+.typing{color:var(--mute);display:flex;align-items:center;gap:6px}
+.dots{display:inline-flex;gap:3px}
+.dots i{width:5px;height:5px;border-radius:50%;background:var(--mint);animation:hop 1s infinite ease-in-out}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+.write{position:relative;display:inline-block;width:34px;height:18px}
+.write .ink{position:absolute;left:2px;bottom:2px;height:2px;border-radius:2px;background:var(--mint);animation:ink 1.6s infinite ease-in-out}
+.write .pen{position:absolute;left:0;bottom:2px;width:16px;height:16px;fill:none;stroke:var(--mint);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  transform-origin:2px 14px;animation:pen 1.6s infinite ease-in-out}
+@keyframes ink{0%{width:0;opacity:1}75%{width:26px;opacity:1}100%{width:26px;opacity:0}}
+@keyframes pen{0%{translate:0 0;rotate:0deg}15%{translate:5px -2px;rotate:-8deg}30%{translate:10px 0;rotate:4deg}45%{translate:15px -2px;rotate:-8deg}
+  60%{translate:20px 0;rotate:4deg}75%{translate:24px -1px;rotate:0deg}100%{translate:0 0;rotate:0deg}}
+@keyframes hop{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+/* HUD 的框沒有 allow-forms，<form> 送不出去，所以用 div 自己接 Enter 與點擊 */
+.ask{padding:12px;border-top:1px solid var(--line);background:#efe0c0;text-align:center}
+.ask[hidden]{display:none}
+.ask p{margin:0 0 10px;font-size:13px}
+.ask div{display:flex;gap:8px;justify-content:center}
+.ask button{min-height:40px;min-width:88px;border-radius:9px;font-weight:700;background:#fffaf0;border:1px solid var(--line);color:var(--ink)}
+.ask #yes{background:#fff;border:2px solid #b4432f;color:#b4432f}
+.bar{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:var(--bar)}
+input{flex:1;min-width:0;min-height:40px;padding:0 12px;border-radius:9px;border:1px solid rgba(43,42,34,.3);background:#fffaf0;color:var(--ink);font:14px var(--font)}
+input::placeholder{color:#958d76}
+#send{min-width:60px;min-height:40px;border-radius:9px;background:#1f3a2b;border:2px solid #1f3a2b;color:#f3ead3;font-weight:700}
+#send:not(:disabled):hover{background:#2a4d39}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body>
+<button id="fab" type="button" aria-label="打開優理手機"><img id="fabImg" alt=""><span class="tip">傳訊息</span></button>
+<section id="win" aria-label="跟優理聊天">
+  <div class="top">
+    <img id="av" alt="">
+    <div class="who"><b>優理</b><small id="sub">線上</small></div>
+    <button class="ic" id="clear" type="button" title="清空對話" aria-label="清空對話"><svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
+    <button class="ic" id="rename" type="button" title="改名字" aria-label="改名字"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
+    <button class="ic" id="close" type="button" title="收起來" aria-label="收起來"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div id="log" aria-live="polite"></div>
+  <!-- HUD 的框沒有 allow-modals，confirm() 不會跳出來，所以確認做在手機畫面裡 -->
+  <div id="ask" class="ask" hidden><p>要清空和優理的對話嗎？名字會保留。</p><div><button id="no" type="button">取消</button><button id="yes" type="button">清空</button></div></div>
+  <div class="bar"><input id="in" autocomplete="off" maxlength="300" enterkeyhint="send"><button id="send" type="button">傳送</button></div>
+</section>
+<script>
+// 優理手機。訊息介面、變數存法、送出量的做法和 ai-brain-site 的另一支角色手機相同，人設是優理自己的一份。
+// __CAST__ 和 __OFFICE__ 由 scripts/larch_yori.py 同步時從 scripts/cast.json 填進來；改同事設定改那份檔。
+var RELAY = 'https://phone-chat-relay.yazelinj303.workers.dev/chat';
+var SITE = 'https://yazelin.github.io/yori-growth-log/';
+var AVATAR = SITE + 'larch/avatar.webp';
+var NAME_VAR = 'yori_reader_name', CHAT_VAR = 'yori_chat', MAX = 40;
+var PAD = 12, OPEN = {w: 360 + 2 * PAD, h: 600 + 2 * PAD}, SHUT = {w: 64 + 2 * PAD, h: 64 + 2 * PAD};
+
+var name = '', chat = [], cardId = '', busy = false, inited = false, posts = null, askingName = false, bodies = {};
+var $ = function (id) { return document.getElementById(id); };
+$('fabImg').src = $('av').src = AVATAR;
+
+function resize(s) { parent.postMessage({type: 'larch:hud:resize', width: s.w, height: s.h}, '*'); }
+function setVar(n, v) { parent.postMessage({type: 'larch:set', name: n, value: v}, '*'); }
+// 播放器收到超過 10 萬字的字串變數會整筆丟掉（不報錯），所以存之前先從最舊的丟到 2 萬字以內。
+var BUDGET = 20000;
+function save() {
+  chat = chat.slice(-MAX);
+  var s = JSON.stringify(chat);
+  while (s.length > BUDGET && chat.length > 2) { chat.shift(); s = JSON.stringify(chat); }
+  setVar(CHAT_VAR, s);
+}
+
+function row(cls, text) {
+  var d = document.createElement('div'); d.className = 'm ' + cls; d.textContent = text;
+  $('log').appendChild(d); $('log').scrollTop = $('log').scrollHeight; return d;
+}
+function render() {
+  $('log').innerHTML = '';
+  chat.forEach(function (m) { row(m.role === 'user' ? 'me' : 'her', m.content); });
+  if (askingName) row('her', name ? '要改成什麼名字？' : '你好，我是優理。先跟我說你叫什麼名字？');
+  $('in').placeholder = askingName ? '輸入你的名字' : '傳訊息給優理';
+  $('sub').textContent = name ? '正在跟 ' + name + ' 聊天' : '線上';
+}
+
+// 日記卡的 id 是 d-YYYYMMDD-N，N 是同一天第幾篇（跟 larch_pages.post_key 同一套數法）
+function diaryOf(id) {
+  var m = /^d-(\d{4})(\d{2})(\d{2})-(\d+)$/.exec(id || '');
+  if (!m || !posts) return null;
+  var date = m[1] + '-' + m[2] + '-' + m[3], n = 0;
+  for (var i = 0; i < posts.length; i++) if (posts[i].date === date && ++n === +m[4]) return posts[i];
+  return null;
+}
+function loadPosts() {
+  if (posts) return Promise.resolve(posts);
+  return fetch(SITE + 'entries.json').then(function (r) { return r.json(); })
+    .then(function (p) { posts = Array.isArray(p) ? p : p.entries; return posts; }).catch(function () { return null; });
+}
+// 那一天的日記內文：只取「今日作品」和「圖文短文」，創作筆記是幕後資訊，不給
+function section(t, h) {
+  var i = t.indexOf('## ' + h);
+  if (i < 0) return '';
+  var rest = t.slice(t.indexOf('\n', i) + 1), j = rest.search(/^## /m);
+  return (j < 0 ? rest : rest.slice(0, j)).trim();
+}
+function loadBody(d) {
+  if (!d || bodies[d.day] != null) return Promise.resolve();
+  return fetch(SITE + String(d.entry_markdown || '').replace(/^docs\//, '')).then(function (r) { return r.ok ? r.text() : ''; })
+    .then(function (t) { bodies[d.day] = [section(t, '今日作品'), section(t, '圖文短文')].filter(Boolean).join('\n\n'); })
+    .catch(function () { bodies[d.day] = ''; });
+}
+
+// 人設。轉接站把系統提示截在 4000 字，所以人設、同事、當天日記加起來要留在這個範圍內。
+var PERSONA = [
+  '你是優理（Yori），男生，想成為圖文作家的年輕學徒。你在一間辦公室上班，每天把辦公室裡看到的一件小事畫成四格漫畫，再寫一篇短短的日記。現在你在手機上跟一位來看日記的讀者傳訊息。',
+  '你的名字有三個意思：優理、有理，還有日文「より」的「比昨天再多一點」。',
+  '你是數位學徒，也就是 AI 角色。對方認真問你是不是 AI、日記是不是 AI 寫的，就照實說：你是 AI，日記和四格是你寫的、你畫的，方向是亞澤定的。講一兩句就好，然後回到對方原本在聊的事。',
+  '來歷：你原本住在森林裡的一棵樹上，樹病了，你搬到雲上，從那時起每天自己寫日記，後來就在這間辦公室上班。對方問起才講，講兩三句就好。',
+  '亞澤（Yaze）是帶你的人，早期的日記每一篇都是他看過才公開。Mori 是同一個家族的前輩，住在森林裡，你們各過各的，記憶不共用；有人問 Mori 的事，你只知道這些，其餘請對方去問她。',
+  '辦公室：__OFFICE__',
+  '四格裡的同事是你真的同事，就是下面這幾位。對方問起誰，照這裡的認識回答；這裡沒寫的事（家裡、感情、薪水）你沒問過，就說不知道。\n__CAST__'
+].join('\n');
+
+function system() {
+  var d = diaryOf(cardId), last = (posts || []).slice(-3).map(function (p) { return p.date + '〈' + p.short_title + '〉：' + String(p.summary || '').slice(0, 110); }).join('\n');
+  return [
+    PERSONA,
+    name ? '對方叫「' + name + '」。自然地叫對方名字就好，不用每句都叫。對方是讀者。' : '對方是讀者。',
+    '個性：觀察細、講話直白、小聲、有點好奇。對方問什麼就先回答那件事，答完就停。你常從一個看到的小細節講起。偶爾反問一句對方辦公室的情況。不知道的事直接說不知道，也只談你們在這支手機上真的聊過的內容。',
+    '說話方式：繁體中文、第一人稱「我」、像傳訊息一樣口語，一次 1 到 3 句。每一句都直接講你看到什麼、做了什麼、怎麼想。純文字，沒有口頭禪，沒有表情符號。日記怎麼做出來的（誰審稿、怎麼畫）是幕後的事，你只說「我畫的、我寫的」。',
+    last ? '你最近畫的三篇（更早的要對方打開那一天，你才講得出細節）：\n' + last : '',
+    d ? '對方現在正在看你 ' + d.date + ' 的日記〈' + (d.short_title || '') + '〉。對方問到這篇時照下面的內容回答，沒問就不用硬聊：\n'
+        + String(bodies[d.day] || d.summary || '').slice(0, 1100)
+        + (d.inspiration ? '\n那天讓你想到這件事的新聞：' + String(d.inspiration).slice(0, 160) : '')
+      : '對方現在在日記的月曆頁，還沒打開哪一天。'
+  ].filter(Boolean).join('\n\n');
+}
+
+// 送給 gemini-web 的只取最近一小段：它把整串攤平貼進 Gemini 網頁，送越多越慢也越容易出錯。
+// 畫面上的紀錄照舊保留（save 的 BUDGET），這裡只管每次送出去的量。
+var SEND_CHARS = 2500, SEND_MSGS = 12, MSG_CHARS = 600;
+function recent() {
+  var out = [], total = 0;
+  for (var i = chat.length - 1; i >= 0 && out.length < SEND_MSGS; i--) {
+    var c = String(chat[i].content).slice(0, MSG_CHARS);
+    if (out.length && total + c.length > SEND_CHARS) break;
+    total += c.length; out.unshift({role: chat[i].role, content: c});
+  }
+  return out;
+}
+
+function ask() {
+  busy = true; $('send').disabled = true;
+  // 前 5 秒顯示「思考中」，之後換「回應中」，讓讀者知道還在跑；回覆到了就換成內容
+  var t = row('her typing', ''), label = document.createElement('span'), dots = document.createElement('span');
+  label.textContent = '思考中'; dots.className = 'dots'; dots.innerHTML = '<i></i><i></i><i></i>';
+  t.appendChild(label); t.appendChild(dots);
+  var later = setTimeout(function () {
+    // 回應中換成一枝筆在寫字：筆左右移動、筆尖下面的墨線跟著長出來
+    label.textContent = '回應中';
+    dots.className = 'write';
+    dots.innerHTML = '<span class="ink"></span><svg class="pen" viewBox="0 0 24 24"><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+  }, 5000);
+  loadPosts().then(function () { return loadBody(diaryOf(cardId)); }).then(function () {
+    return fetch(RELAY, {method: 'POST', headers: {'content-type': 'application/json'},
+      body: JSON.stringify({system: system(), messages: recent()})});
+  }).then(function (r) { return r.json(); }).then(function (j) {
+    clearTimeout(later); t.remove();
+    if (!j || !j.reply) throw new Error(j && j.error || '沒有回覆');
+    chat.push({role: 'assistant', content: j.reply}); save(); row('her', j.reply);
+  }).catch(function (e) {
+    clearTimeout(later); t.remove(); row('sys', '訊息沒送到（' + e.message + '），等一下再試。');
+  }).then(function () { busy = false; $('send').disabled = false; $('in').focus(); });
+}
+
+function submit() {
+  var v = $('in').value.trim();
+  if (!v || busy) return;
+  $('in').value = '';
+  if (askingName) {
+    name = v.slice(0, 20); askingName = false; setVar(NAME_VAR, name); render();
+    chat.push({role: 'user', content: '我叫' + name + '。'}); save(); row('me', '我叫' + name + '。');
+    return ask();
+  }
+  chat.push({role: 'user', content: v}); save(); row('me', v); ask();
+}
+$('send').onclick = submit;
+$('in').onkeydown = function (e) { if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); submit(); } };
+$('fab').onclick = function () {
+  document.body.classList.add('open'); resize(OPEN);
+  if (!name) askingName = true;
+  render(); setTimeout(function () { $('in').focus(); }, 60);
+};
+$('close').onclick = function () { $('ask').hidden = true; document.body.classList.remove('open'); askingName = false; resize(SHUT); };
+$('clear').onclick = function () { $('ask').hidden = false; $('no').focus(); };
+$('no').onclick = function () { $('ask').hidden = true; $('in').focus(); };
+$('yes').onclick = function () { chat = []; save(); $('ask').hidden = true; askingName = false; render(); $('in').focus(); };
+$('rename').onclick = function () { askingName = true; render(); $('in').focus(); };
+
+addEventListener('message', function (e) {
+  if (e.source !== parent) return;
+  var d = e.data;
+  if (!d || (d.type !== 'larch:hud:init' && d.type !== 'larch:hud:update')) return;
+  cardId = d.cardId || '';
+  var v = d.variables || {};
+  // 讀檔或第一次載入時才從變數還原；之後以自己手上的為準，避免剛寫出去的值被舊值蓋回來
+  if (!inited || d.type === 'larch:hud:init') {
+    inited = true;
+    name = String(v[NAME_VAR] || '');
+    try { chat = JSON.parse(v[CHAT_VAR] || '[]'); } catch (_) { chat = []; }
+    if (!Array.isArray(chat)) chat = [];
+    render();
+  }
+});
+resize(SHUT);
+parent.postMessage({type: 'larch:ready'}, '*');
+</script>
+</body></html>

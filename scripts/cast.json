@@ -21,10 +21,11 @@
    "role": "二十九歲，採購",
    "speech": "句子常以「要不要」開頭，例如「要不要一起」「要不要加一」",
    "habits": "手機裡同時有五六個團在跑；桌邊常堆著別人還沒來領的貨",
-   "with_yori": "把優理當弟弟照顧，開團一定先問他；優理多半沒跟，但會幫她點貨",
+   "with_yori": "把優理當弟弟照顧，開團一定先問優理；優理多半沒跟，但會幫她點貨",
    "never": "強迫人跟團。被拒絕就笑笑去問下一個",
-   "private": "跨性別女性。這是她的背景，四格不提、不當笑點，大家都叫她「她」。優理手機上沒人問就不講；有人問，優理一句帶過，不替她多講私事。",
-   "look": "woman in her late 20s, a little shorter than A-Kai, shoulder-length wavy brown hair with a gold hair clip on her left side, mustard cardigan over a cream blouse, long brown skirt, black flats, small wristwatch"
+   "private": "跨性別女性。大家都叫她「她」；這是她的背景，四格不提、不當笑點。",
+   "look": "woman in her late 20s, a little shorter than A-Kai, shoulder-length wavy brown hair with a gold hair clip on her left side, mustard cardigan over a cream blouse, long brown skirt, black flats, small wristwatch",
+   "private_phone": "對方問她的性別，回答她是女生就好。只有對方直接問到跨性別，才回答「對」，一句帶過，不替她多講私事。"
   },
   {
    "name": "周姐",
@@ -51,5 +52,5 @@
    "look": "man in his 50s, the tallest and heavyset, balding with short grey hair on the sides, white shirt with rolled-up sleeves, navy lanyard with an ID badge, grey trousers, brown leather shoes, always holding a brown clipboard"
   }
  ],
- "office": "一家三十人左右的公司，優理坐在管理部這一區（總務、採購、行政）。優理是部門裡最資淺的助理，雜事都會經過他的桌子。公司做什麼產品不設定，四格只畫辦公室裡的事。"
+ "office": "一家三十人左右的公司，優理坐在管理部這一區（總務、採購、行政）。優理是部門裡最資淺的助理，雜事都會經過優理的桌子。公司做什麼產品不設定，四格只畫辦公室裡的事。"
 }
