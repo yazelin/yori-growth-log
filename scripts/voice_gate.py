@@ -22,7 +22,7 @@ RULES_PATH = os.path.join(ROOT, "scripts", "voice_rules.json")
 LLM_BASE = "https://llm-share.duotify.com/v1"
 GEMINI_WEB_BASE = os.environ.get("GEMINI_WEB_BASE_URL", "https://ching-tech.ddns.net/gemini-web").rstrip("/")
 LLMSHARE_MODEL = "deepseek-v4.1-flash:1017"   # llmshare 只准用這一個
-FLAG_TYPES = ["否定鋪墊", "道理收尾", "重述畫面", "排比對仗", "書面腔", "宣告成長", "其他"]
+FLAG_TYPES = ["否定鋪墊", "道理收尾", "重述畫面", "排比對仗", "書面腔", "宣告成長", "空話", "其他"]
 
 REVIEW_PROMPT = """你是出版社的資深繁體中文編輯，工作是分辨一段稿子是真人寫的，還是語言模型寫的。
 下面這段短文是一個角色的日記，會在視覺小說裡一句一句念給讀者聽。請逐句讀，把讀起來像語言模型寫的句子挑出來。
@@ -47,6 +47,28 @@ REVIEW_PROMPT = """你是出版社的資深繁體中文編輯，工作是分辨�
   "human_score": 1 到 10 的整數（10 是確定真人寫的）}}"""
 
 
+REVIEW_PROMPT_METHOD = """你是出版社的資深繁體中文編輯，工作是分辨一段稿子是真人寫的，還是語言模型寫的。
+下面這段是日記後面附的「小方法」，用幾個步驟教讀者一個做法。請逐句讀，把讀起來像語言模型寫的句子挑出來。
+
+語言模型寫的小方法常有這些跡象：
+- 否定鋪墊：先叫讀者「別急著」「不要只」做某件事，或用「不是……而是……」，再講做法。
+- 道理收尾：步驟講完以後，多一句工整的話總結道理。
+- 排比對仗：每一條都套同一個句型，或湊成整齊的口訣。
+- 空話：聽起來有道理，照著做卻不知道手要動哪裡。
+- 書面腔：唸出聲來不像人在教朋友做事。
+
+真人寫的生活小技巧通常直接講手要做什麼、用到哪樣物品，每條長短不齊，講完就停。
+
+只挑你有把握的句子。每一句從原文一字不差照抄（含標點），從下面的類型選一個：{types}
+
+小方法：
+{text}
+
+只輸出 JSON：
+{{"flags": [{{"quote": "原文照抄的一句", "type": "類型", "why": "十五字內的理由"}}],
+  "human_score": 1 到 10 的整數（10 是確定真人寫的）}}"""
+
+
 def load_rules():
     return json.load(open(RULES_PATH, encoding="utf-8"))
 
@@ -55,6 +77,12 @@ def prose_of(md):
     """取 ## 圖文短文 那一段（Larch 逐句念的就是這段）；沒有這個標題就整篇都看。"""
     m = re.search(r"^## 圖文短文\s*\n(.*?)(?=^## |\Z)", md, re.S | re.M)
     return (m.group(1) if m else md).strip()
+
+
+def method_of(md):
+    """取 ## 今天的小方法 那一段，連標題那一行（標題也會套公式）；沒有這一段回空字串。"""
+    m = re.search(r"^## (今天的小方法[^\n]*)\n(.*?)(?=^## |\Z)", md, re.S | re.M)
+    return (m.group(1).strip() + "\n" + m.group(2).strip()) if m else ""
 
 
 def closing_of(text):
@@ -96,6 +124,25 @@ def check_rules(text, history, rules):
             issues.append({"rule": "結尾重複", "quote": end,
                            "why": f"和前幾天的結尾「{closing_of(h)}」太像（{s:.2f}）"})
             break
+    return issues
+
+
+def check_method(text, history, rules):
+    """小方法那一段的程式檢查。history：之前幾篇的小方法，舊到新。"""
+    m, issues = rules["method"], []
+    for p in rules["patterns"][:2] + m["patterns"]:          # 對比句兩條通用，其餘是這一段專用
+        for hit in re.finditer(p["regex"], text):
+            issues.append({"rule": p["id"], "quote": hit.group(0), "why": p["why"]})
+    for q in m["quota"]:
+        if q["phrase"] in text:
+            used = sum(q["phrase"] in h for h in history[-(q["window"] - 1):])
+            if used + 1 > q["max"]:
+                issues.append({"rule": "口頭禪", "quote": q["phrase"],
+                               "why": f"最近 {q['window']} 篇的小方法已經用過 {used} 次，今天換個說法"})
+    lines = [l.strip() for l in text.split("\n") if l.strip()]
+    if m.get("end_on_step") and len(lines) > 1 and any(l.startswith("- ") for l in lines) \
+            and not lines[-1].startswith("- "):
+        issues.append({"rule": "道理收尾", "quote": lines[-1], "why": "步驟講完就停，最後這句總結拿掉"})
     return issues
 
 
@@ -150,9 +197,9 @@ def parse_review(raw, text):
     return flags, int(d.get("human_score") or 0)
 
 
-def review(text, tries=2, who=None):
+def review(text, tries=2, who=None, prompt_tpl=None):
     """回傳 {"ok": bool, "flags": [...], "human_score": n, "error": str|None}。審不出來算沒過。"""
-    prompt = REVIEW_PROMPT.format(types="、".join(FLAG_TYPES), text=text)
+    prompt = (prompt_tpl or REVIEW_PROMPT).format(types="、".join(FLAG_TYPES), text=text)
     err = None
     for attempt in range(tries):
         try:
@@ -178,22 +225,48 @@ def gate(text, history, rules=None, rules_only=False):
     return out
 
 
+def gate_entry(md, history_mds, rules=None, rules_only=False):
+    """整篇的閘門：圖文短文和小方法各自過程式檢查與審稿。history_mds：之前幾篇的 markdown，舊到新。"""
+    rules = rules or load_rules()
+    res = gate(prose_of(md), [prose_of(h) for h in history_mds], rules, rules_only)
+    res["method_issues"], res["method_review"] = [], None
+    text = method_of(md)
+    if text and rules.get("method") and not rules["method"].get("allowed", True):
+        res["method_issues"] = [{"rule": "不寫小方法", "quote": text.split("\n")[0],
+                                 "why": "日記只有今日作品、圖文短文、創作筆記三段，這一段整段拿掉"}]
+        res["ok"] = False
+    elif text and rules.get("method"):
+        res["method_issues"] = check_method(text, [method_of(h) for h in history_mds], rules)
+        mr = rules["method"].get("review") or {}
+        ok = not res["method_issues"]
+        if ok and res["ok"] and not rules_only and mr.get("enabled"):
+            r = review(text, prompt_tpl=REVIEW_PROMPT_METHOD)
+            res["method_review"] = r
+            ok = r["error"] is None and len(r["flags"]) <= mr["max_flags"]
+        res["ok"] = res["ok"] and ok
+    return res
+
+
 def feedback(result):
     """把沒過的原因寫成給寫手看的重寫意見。"""
-    lines = [f"- 「{i['quote']}」：{i['why']}" for i in result["rule_issues"]]
+    lines = [f"- 圖文短文「{i['quote']}」：{i['why']}" for i in result["rule_issues"]]
     r = result.get("review")
     if r and r["flags"]:
-        lines += [f"- 「{f['quote']}」：{f['type']}，{f['why']}" for f in r["flags"]]
+        lines += [f"- 圖文短文「{f['quote']}」：{f['type']}，{f['why']}" for f in r["flags"]]
+    lines += [f"- 小方法「{i['quote']}」：{i['why']}" for i in result.get("method_issues") or []]
+    r = result.get("method_review")
+    if r and r["flags"]:
+        lines += [f"- 小方法「{f['quote']}」：{f['type']}，{f['why']}" for f in r["flags"]]
     return "\n".join(lines)
 
 
 def record(result, day, rules=None):
     """把審稿人點名的句型記進帳本；同一個四字以上的片段在兩天被點名，就自動進口頭禪額度。"""
     rules = rules or load_rules()
-    r = result.get("review")
-    if not r or not r["flags"]:
+    flags = [f for k in ("review", "method_review") for f in ((result.get(k) or {}).get("flags") or [])]
+    if not flags:
         return rules
-    quotes = [f["quote"] for f in r["flags"]]
+    quotes = [f["quote"] for f in flags]
     known = {q["phrase"] for q in rules["quota"]}
     for old in rules["ledger"]:
         if old["day"] == day:
@@ -206,7 +279,7 @@ def record(result, day, rules=None):
                                            "from": [old["day"], day]})
                     known.add(frag)
     rules["ledger"] = [e for e in rules["ledger"] if e["day"] != day][-60:] + [
-        {"day": day, "quotes": quotes, "types": [f["type"] for f in r["flags"]]}]
+        {"day": day, "quotes": quotes, "types": [f["type"] for f in flags]}]
     json.dump(rules, open(RULES_PATH, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     return rules
 
@@ -241,8 +314,11 @@ def _show(label, res):
     print(f"{label}：{'過關' if res['ok'] else '退稿'}")
     for i in res["rule_issues"]:
         print(f"  [程式] {i['rule']}　「{i['quote']}」　{i['why']}")
-    r = res.get("review")
-    if r:
+    for i in res.get("method_issues") or []:
+        print(f"  [程式／小方法] {i['rule']}　「{i['quote']}」　{i['why']}")
+    for r in (res.get("review"), res.get("method_review")):
+        if not r:
+            continue
         if r["error"]:
             print(f"  [審稿] 審不出來，算沒過：{r['error']}")
         else:
@@ -278,6 +354,17 @@ def _selftest():
         pass
     assert common_fragment("他把一張小紙條折進去", "又是一張小紙條") == "一張小紙條"
     assert common_fragment("今天很好", "明天很壞") == ""
+    md = "## 圖文短文\n" + "字" * 300 + "\n\n## 今天的小方法：遙控器三秒檢查法\n先別急著按。\n\n- 看螢幕。\n- 再按。\n\n先看清楚，才不會白忙。\n\n## 創作筆記\n- x"
+    got = {i["rule"] for i in check_method(method_of(md), [], rules)}
+    assert {"別急著", "才不會", "道理收尾"} <= got, got
+    assert any(i["rule"] == "口頭禪" for i in check_method(method_of(md), ["今天的小方法：抽屜檢查法\n- a"], rules))
+    clean = "今天的小方法：找句號從哪來\n- 看輸入框裡有沒有句號。\n- 打開公司公告那一頁。"
+    assert not check_method(clean, [], rules), check_method(clean, [], rules)
+    assert method_of("## 圖文短文\n沒有小方法") == ""
+    assert not gate_entry(md, [], rules, rules_only=True)["ok"]
+    off = {**rules, "method": {**rules["method"], "allowed": False}}
+    assert [i["rule"] for i in gate_entry("## 圖文短文\n好。\n\n## 今天的小方法：x\n- a", [], off, rules_only=True)["method_issues"]] == ["不寫小方法"]
+    assert gate_entry("## 圖文短文\n好。\n\n## 創作筆記\n- a", [], off, rules_only=True)["ok"]
     full = load_rules()
     assert any(i["rule"] == "長度" for i in check_rules("太短了。", [], full))
     assert not any(i["rule"] == "長度" for i in check_rules("字" * 300, [], full))
@@ -310,6 +397,11 @@ if __name__ == "__main__":
     else:
         d = int(opt("--day"))
         text, hist, label = prose[d], hist_before(d), f"Day {d:04d}"
-    res = gate(text, hist, rules_only="--rules-only" in a)
+    if "--text" in a:
+        res = gate(text, hist, rules_only="--rules-only" in a)
+    else:
+        mds = {e["day"]: open(os.path.join(ROOT, e["entry_markdown"]), encoding="utf-8").read()
+               for e in _entries() if e.get("entry_markdown")}
+        res = gate_entry(mds[d], [mds[x] for x in sorted(mds) if x < d], rules_only="--rules-only" in a)
     _show(label, res)
     sys.exit(0 if res["ok"] else 1)

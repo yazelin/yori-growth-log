@@ -312,8 +312,9 @@ def review_comic(c):
 
 def auto_write(entries):
     guide = open(os.path.join(ROOT, "YORI_VOICE_GUIDE.md")).read()
+    # 2026-11-13 起不寫「今天的小方法」（教學段），範本裡有這一段的先拿掉
     fewshot = "\n\n---\n\n".join(
-        open(os.path.join(ROOT, e["entry_markdown"])).read()
+        re.sub(r"^## 今天的小方法.*?(?=^## |\Z)", "", open(os.path.join(ROOT, e["entry_markdown"])).read(), flags=re.S | re.M)
         for e in entries if e["day"] in FEWSHOT_DAYS)
     day = entries[-1]["day"] + 1
     rules = load_rules()
@@ -365,10 +366,9 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
 
 ## 今天的任務
 {task}
-結構照樣本：## 今日作品 → ## 圖文短文 →
-（辦公室主題加一段 ## 今天的小方法：…）→ ## 創作筆記。
+正文就三段，照這個順序：## 今日作品 → ## 圖文短文 → ## 創作筆記。
 創作筆記的「類型」寫 Four-panel comic / 四格漫畫。
-今日作品照四格的順序介紹，第四格只帶到畫面，留給讀者自己看圖；做法寫在「今天的小方法」那一段。
+今日作品照四格的順序介紹，第四格只帶到畫面，留給讀者自己看圖。這篇日記是一則好笑的四格和它的場面，講到場面結束就好。
 用繁體中文和全形標點，純文字。
 {PLAIN_RULES}
 
@@ -396,7 +396,7 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
         return None
 
     # 語氣閘門：程式檢查＋對抗審稿，沒過就帶著被點名的原句重寫；VOICE_ROUNDS 輪都沒過，今天不發。
-    history = [voice_gate.prose_of(open(os.path.join(ROOT, e["entry_markdown"]), encoding="utf-8").read())
+    history = [open(os.path.join(ROOT, e["entry_markdown"]), encoding="utf-8").read()
                for e in entries if e.get("entry_markdown")]
     voice_rules = voice_gate.load_rules()
     extra, log = "", []
@@ -404,16 +404,17 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
         d = write_once(prompt + extra)
         if not d:
             sys.exit(1)
-        res = voice_gate.gate(voice_gate.prose_of(d["body_md"]), history, voice_rules)
+        res = voice_gate.gate_entry(d["body_md"], history, voice_rules)
         notes = voice_gate.feedback(res)
         log.append({"round": rnd, "ok": res["ok"], "notes": notes,
-                    "error": (res.get("review") or {}).get("error")})
+                    "error": (res.get("review") or {}).get("error") or (res.get("method_review") or {}).get("error")})
         print(f"語氣閘門第 {rnd} 輪：{'過關' if res['ok'] else '退稿'}\n{notes}", file=sys.stderr)
         if not DRY:
             voice_gate.record(res, day, voice_rules)
         if res["ok"]:
             break
         extra = ("\n\n## 上一稿被編輯退回\n### 上一稿的圖文短文\n" + voice_gate.prose_of(d["body_md"])
+                 + "\n### 上一稿的小方法\n" + (voice_gate.method_of(d["body_md"]) or "（沒有這一段）")
                  + "\n### 編輯點名的句子與理由\n" + (notes or "審稿人這次沒有回應，請整段換一種寫法。")
                  + "\n整篇重寫。被點名的句子換成只講當下看到的事、做的動作、說的話；其他段落照原本的規定寫。")
     else:
