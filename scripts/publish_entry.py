@@ -22,6 +22,7 @@ GEMINI_API_KEY（gmw_ 開頭，看新聞用 gemini-web 的 Google 搜尋；缺�
 import base64, datetime, io, json, os, re, sys, time, urllib.request, zoneinfo
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import voice_gate
+import gag_gate
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENTRY_FIELDS = ["short_title", "summary", "body_md", "image_prompt", "alt"]
@@ -49,6 +50,7 @@ def load_entries():
 # 手藝經驗（2026-11-02）：寫完當天的稿，審稿一步挑毛病、寫成一句心得存進來；隔天寫四格與日記時讀。
 # 每月整理日把心得折成最多八條原則。長進靠這份檔案累積，日記本身不寫創作過程。
 CRAFT_PATH = os.path.join(ROOT, "scripts", "craft.json")
+GAG_ROUNDS = 4
 GAG_TYPES = ["期待落空", "優理一句點破", "情境本身荒謬", "優理巧妙解決", "拉遠揭露"]
 
 def load_craft():
@@ -225,7 +227,7 @@ GAG_RULES = """## 四格笑點怎麼寫
 3. 第四格讓畫面和表情帶出笑點：一個短促的反應（十字內），或乾脆只有表情。道理留給日記去講。
 4. 對白用一般上班族在辦公室真的會說的話，具體、直白，陌生人一看就懂。
 5. 標題橫幅八個字以內，只寫題目，像第一格的一句話，結局留給第四格。
-6. 分鏡裡每次提到主角都直接寫「Yori」這個名字，外貌交給參考圖。別人對 Yori 說話時，中文對白用「你」。
+6. 分鏡裡每次提到主角都直接寫「Yori」這個名字，外貌交給參考圖。Yori 是男生，英文代名詞用 he、his。別人對 Yori 說話時，中文對白用「你」。
 
 ## 範例（Day 0087，同一個座位，前三格只是在準備換駕照）
 1 同事拿手機：「台灣駕照可以直接換當地駕照。」 2 優理把駕照、護照、大頭照排好。
@@ -238,7 +240,7 @@ GAG_RULES = """## 四格笑點怎麼寫
 - 只看四格、沒讀日記的陌生人會笑嗎？"""
 
 def write_comic(news, allowed, recent_titles="", craft=None, recent_gags=()):
-    """先產四格劇本（三個候選、依 GAG_RULES 自評挑一個）。回傳 dict：category, inspiration, banner, image_prompt。"""
+    """先產四格劇本（三個候選、依 GAG_RULES 自評挑一個），再過四格閘門。回傳 dict：category, inspiration, banner, image_prompt。"""
     if news:
         source = ("## 今天的新聞（挑一則當靈感，轉成上班族日常的一個小場面，用新聞裡的一個具體細節）\n"
                   + "\n".join(f"- {n}" for n in news))
@@ -265,40 +267,40 @@ def write_comic(news, allowed, recent_titles="", craft=None, recent_gags=()):
   "banner": "標題橫幅（八字內，像第一格的一句話，結局留給第四格）",
   "image_prompt": "英文分鏡，依序 Panel 1 到 Panel 4：每格寫場景、角色動作與表情、鏡頭（特寫、中景、拉遠），對白用繁體中文寫在「」裡，每格最多一句、二十字內；第四格可以沒有對白。四格同一個場景。"}}"""
     ok = lambda c: c.get("image_prompt", "").count("Panel") >= 4 and c.get("banner", "").strip()
-    c = ask_json(prompt, ok, "寫四格")
-    if not c:
-        sys.exit(1)
-    print("四格候選：", json.dumps(c.get("candidates"), ensure_ascii=False),
-          "\n選：", c.get("pick_reason", ""), file=sys.stderr)
-    # 當天先審一次：跟標準有差距就照意見重寫一次（只重寫一次，第二稿直接用）
-    issues = review_comic(c)
-    if issues:
-        print("四格第一稿的差距：", json.dumps(issues, ensure_ascii=False), file=sys.stderr)
-        fix = (f"\n\n## 第一稿與編輯意見\n標題：{c['banner']}\n{c['image_prompt']}\n意見：\n"
-               + "\n".join(f"- {x}" for x in issues)
-               + "\n照意見寫出第二稿，需要的話整個結局換掉。")
-        c2 = ask_json(prompt + fix, ok, "重寫四格")
-        if c2:
-            c2["first_issues"] = issues
-            c = c2
+    # 畫圖前過四格閘門（gag_gate）：遮住第四格還猜得到結局、或分數太低就重寫，最多 GAG_ROUNDS 稿。
+    # 都沒過就用被猜中最少、分數最高的那一稿，不擋發佈。
+    best, extra = None, ""
+    for rnd in range(1, GAG_ROUNDS + 1):
+        c = ask_json(prompt + extra, ok, "寫四格" if rnd == 1 else f"重寫四格（第 {rnd} 稿）")
+        if not c:
+            if best:
+                break
+            sys.exit(1)
+        if rnd == 1:
+            print("四格候選：", json.dumps(c.get("candidates"), ensure_ascii=False),
+                  "\n選：", c.get("pick_reason", ""), file=sys.stderr)
+        v = gag_gate.judge(f"Title banner text: 「{c['banner']}」\n{c['image_prompt']}")
+        if v is None:                      # 審稿人出錯：當成沒審，用這一稿
+            c["gag_judge"] = {"rounds": rnd, "passed": None}
+            best = (None, c)
+            break
+        print(f"四格閘門第 {rnd} 稿〈{c['banner']}〉：{'過' if v['ok'] else '退回'}，"
+              f"被猜中 {len(v['hits'])}/{v['runs']}，分數 {v['funny']}", file=sys.stderr)
+        c["gag_judge"] = {"rounds": rnd, "passed": v["ok"], "guessed": len(v["hits"]), "funny": v["funny"]}
+        key = (len(v["hits"]), -v["funny"])
+        if best is None or best[0] is None or key < best[0]:
+            best = (key, c)
+        if v["ok"]:
+            break
+        extra = (f"\n\n## 上一稿被編輯退回\n標題：{c['banner']}\n{c['image_prompt']}\n"
+                 + gag_gate.feedback(v))
+    c = best[1]
+    c["gag_judge"]["rounds"] = rnd
     if c.get("category") not in CATEGORIES:
         c["category"] = allowed[0]
     c["banner"] = fix_punct(c["banner"])
     c["image_prompt"] = f"Title banner text: 「{c['banner']}」\n" + c["image_prompt"]
     return c
-
-def review_comic(c):
-    """畫圖前審四格劇本，回傳差距清單（都符合就空清單；審稿失敗也當空清單，照第一稿畫）。"""
-    prompt = f"""你是嚴格的四格漫畫編輯，拿下面的標準對照這份劇本，找出會讓笑點不成立的差距。
-{GAG_RULES}
-
-## 劇本
-標題：{c['banner']}
-{c['image_prompt']}
-
-只輸出 JSON：{{"issues": ["會讓笑點不成立的差距，寫成具體的修改建議（都符合就空陣列）"]}}"""
-    r = ask_json(prompt, lambda r: isinstance(r.get("issues"), list), "審四格")
-    return [str(x) for x in r["issues"]] if r else []
 
 def auto_write(entries):
     guide = open(os.path.join(ROOT, "YORI_VOICE_GUIDE.md")).read()
@@ -400,7 +402,8 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
     c = critique(d)
     if c:
         craft["notes"].append({"day": day, "gag_type": c.get("gag_type", ""), "score": c.get("score"),
-                               "revised": bool(comic.get("first_issues")), "lesson": c["lesson"].strip()})
+                               "revised": comic.get("gag_judge", {}).get("rounds", 1) > 1,
+                               "gag_judge": comic.get("gag_judge"), "lesson": c["lesson"].strip()})
     d["_craft"] = craft
     return d
 
