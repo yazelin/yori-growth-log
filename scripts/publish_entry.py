@@ -20,6 +20,8 @@ GEMINI_API_KEY（gmw_ 開頭，看新聞用 gemini-web 的 Google 搜尋；缺�
 任何一步失敗就整篇不發（exit 1），不會留半套檔案。
 """
 import base64, datetime, io, json, os, re, sys, time, urllib.request, zoneinfo
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import voice_gate
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENTRY_FIELDS = ["short_title", "summary", "body_md", "image_prompt", "alt"]
@@ -33,6 +35,7 @@ DRY = os.environ.get("DRY_RUN") == "1"
 # 題材分類：最近 COOLDOWN 篇用過的分類當天不能再選。開發日誌只給 Day 0000–0024 那段舊紀錄用。
 CATEGORIES = ["信件", "檔案", "待辦與時間", "會議與溝通", "工具與電腦", "休息與心情", "寓言"]
 COOLDOWN = 3
+VOICE_ROUNDS = 3   # 語氣閘門最多重寫幾輪（scripts/voice_gate.py）
 # 範本固定用這幾篇（格式與語氣），不再餵最近三篇：餵最近的會把題材一路鎖死。
 FEWSHOT_DAYS = [27, 30, 33]
 
@@ -309,8 +312,9 @@ def review_comic(c):
 
 def auto_write(entries):
     guide = open(os.path.join(ROOT, "YORI_VOICE_GUIDE.md")).read()
+    # 2026-11-13 起不寫「今天的小方法」（教學段），範本裡有這一段的先拿掉
     fewshot = "\n\n---\n\n".join(
-        open(os.path.join(ROOT, e["entry_markdown"])).read()
+        re.sub(r"^## 今天的小方法.*?(?=^## |\Z)", "", open(os.path.join(ROOT, e["entry_markdown"])).read(), flags=re.S | re.M)
         for e in entries if e["day"] in FEWSHOT_DAYS)
     day = entries[-1]["day"] + 1
     rules = load_rules()
@@ -335,7 +339,10 @@ def auto_write(entries):
             "四格已經畫好，日記的今日作品介紹這則四格。") if consolidation else (
             f"寫 Day {day:04d} 的日記，主角作品是上面那則已定稿的四格。"
             "日記講的是今天這件事本身：優理遇到什麼、怎麼想、學到什麼。"
-            "結尾收一條他今天新折進 notebook 角落的小規則：一句話，自然收進文中，從今天這個場面長出來，"
+            "圖文短文寫 250 到 400 字、分三到四段，只講這個場面："
+            "寫出四格裡畫不出來的部分，像是優理當下注意到哪個小地方、心裡閃過什麼念頭、差點做了什麼，"
+            "還有旁人的小動作。最後一句停在場面裡的一個動作、一句話或一個反應。"
+            "今天的小規則只填在 JSON 的 new_rule 欄位（給帳本用），從今天這個場面長出來，"
             "內容和句型都是帳本裡還沒有的。")
     prompt = f"""你是優理（Yori），森林宇宙的數位學徒，Day 0025 起轉為圖文作家，
 畫清晨寓言、工具童話、辦公室小漫畫，幫疲憊的上班族在衝動前踩煞車。
@@ -359,10 +366,9 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
 
 ## 今天的任務
 {task}
-結構照樣本：## 今日作品 → ## 圖文短文 →
-（辦公室主題加一段 ## 今天的小方法：…）→ ## 創作筆記。
+正文就三段，照這個順序：## 今日作品 → ## 圖文短文 → ## 創作筆記。
 創作筆記的「類型」寫 Four-panel comic / 四格漫畫。
-今日作品照四格的順序介紹，第四格只帶到畫面，留給讀者自己看圖；道理與小規則寫在圖文短文裡。
+今日作品照四格的順序介紹，第四格只帶到畫面，留給讀者自己看圖。這篇日記是一則好笑的四格和它的場面，講到場面結束就好。
 用繁體中文和全形標點，純文字。
 {PLAIN_RULES}
 
@@ -373,27 +379,54 @@ Day 0034 起你搬到雲上住，日記由你自己每天寫。每篇日記的�
   "new_rule": "今天新折進 notebook 的那條小規則（一句話，40 字內）{'；整理日則改填折併後的規則' if consolidation else ''}",
   "merged_days": {"[被折併的舊規則 day 編號陣列，例如 [30, 31]；沒有就給空陣列]" if consolidation else "[]（今天不是整理日，固定給空陣列）"},
   "alt": "圖片 alt 文字（中文，Day {day:04d} 開頭）"}}"""
-    for attempt in range(3):
-        try:
-            raw = gemini_text(prompt)
-            raw = re.sub(r"^```json\s*|\s*```$", "", raw.strip())
-            d = json.loads(raw, strict=False)
-            d.update(category=comic["category"], inspiration=comic.get("inspiration", ""),
-                     image_prompt=comic["image_prompt"])
-            assert all(k in d and str(d[k]).strip() for k in ENTRY_FIELDS)
-            assert "## 今日作品" in d["body_md"]
-            assert d.get("new_rule", "").strip(), "缺 new_rule"
-            d = fix_entry(d)
-            c = critique(d)
-            if c:
-                craft["notes"].append({"day": day, "gag_type": c.get("gag_type", ""), "score": c.get("score"),
-                                       "revised": bool(comic.get("first_issues")), "lesson": c["lesson"].strip()})
-            d["_craft"] = craft
-            return d
-        except Exception as e:
-            print(f"寫稿第 {attempt+1} 次失敗：{e}", file=sys.stderr)
-            time.sleep(10)
-    sys.exit(1)
+    def write_once(p):
+        for attempt in range(3):
+            try:
+                raw = re.sub(r"^```json\s*|\s*```$", "", gemini_text(p).strip())
+                d = json.loads(raw, strict=False)
+                d.update(category=comic["category"], inspiration=comic.get("inspiration", ""),
+                         image_prompt=comic["image_prompt"])
+                assert all(k in d and str(d[k]).strip() for k in ENTRY_FIELDS)
+                assert "## 今日作品" in d["body_md"]
+                assert d.get("new_rule", "").strip(), "缺 new_rule"
+                return fix_entry(d)
+            except Exception as e:
+                print(f"寫稿第 {attempt+1} 次失敗：{e}", file=sys.stderr)
+                time.sleep(10)
+        return None
+
+    # 語氣閘門：程式檢查＋對抗審稿，沒過就帶著被點名的原句重寫；VOICE_ROUNDS 輪都沒過，今天不發。
+    history = [open(os.path.join(ROOT, e["entry_markdown"]), encoding="utf-8").read()
+               for e in entries if e.get("entry_markdown")]
+    voice_rules = voice_gate.load_rules()
+    extra, log = "", []
+    for rnd in range(1, VOICE_ROUNDS + 1):
+        d = write_once(prompt + extra)
+        if not d:
+            sys.exit(1)
+        res = voice_gate.gate_entry(d["body_md"], history, voice_rules)
+        notes = voice_gate.feedback(res)
+        log.append({"round": rnd, "ok": res["ok"], "notes": notes,
+                    "error": (res.get("review") or {}).get("error") or (res.get("method_review") or {}).get("error")})
+        print(f"語氣閘門第 {rnd} 輪：{'過關' if res['ok'] else '退稿'}\n{notes}", file=sys.stderr)
+        if not DRY:
+            voice_gate.record(res, day, voice_rules)
+        if res["ok"]:
+            break
+        extra = ("\n\n## 上一稿被編輯退回\n### 上一稿的圖文短文\n" + voice_gate.prose_of(d["body_md"])
+                 + "\n### 上一稿的小方法\n" + (voice_gate.method_of(d["body_md"]) or "（沒有這一段）")
+                 + "\n### 編輯點名的句子與理由\n" + (notes or "審稿人這次沒有回應，請整段換一種寫法。")
+                 + "\n整篇重寫。被點名的句子換成只講當下看到的事、做的動作、說的話；其他段落照原本的規定寫。")
+    else:
+        print(f"::error::語氣閘門 {VOICE_ROUNDS} 輪都沒過，今天不發。最後一輪的意見：\n{notes}", file=sys.stderr)
+        sys.exit(2)
+    d["_voice_log"] = log
+    c = critique(d)
+    if c:
+        craft["notes"].append({"day": day, "gag_type": c.get("gag_type", ""), "score": c.get("score"),
+                               "revised": bool(comic.get("first_issues")), "lesson": c["lesson"].strip()})
+    d["_craft"] = craft
+    return d
 
 # ---------- codex-image-service 產圖 ----------
 def gen_image(prompt, out_path):
@@ -457,7 +490,8 @@ def dry_run(d):
     out = os.path.join(ROOT, "drafts", "dry-run")
     os.makedirs(out, exist_ok=True)
     json.dump(d, open(os.path.join(out, "entry.json"), "w"), ensure_ascii=False, indent=1)
-    gen_image(d["image_prompt"], os.path.join(out, "comic.webp"))
+    if os.environ.get("DRY_NO_IMAGE") != "1":   # 本機只驗文字時不花產圖額度
+        gen_image(d["image_prompt"], os.path.join(out, "comic.webp"))
     print(json.dumps(d, ensure_ascii=False, indent=1))
 
 def publish(d, image_path=None):

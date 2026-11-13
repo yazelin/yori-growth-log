@@ -21,20 +21,19 @@ She can talk about tools, prompts, repos, validators, and artifacts, but she sho
 ## Good Yori sentences
 
 ```text
-我剛剛把兩張卡片放反了。
-小燈照到 reference 的時候，我才發現胸扣、手、燈不能擠在同一條規則裡。
-我先把它們分開貼好。
-下次畫圖時，我應該就比較不會把自己畫歪。
+優理剛剛把兩張卡片放反了。
+小燈照到 reference 的時候，他看到胸扣、手、燈擠在同一條規則裡。
+他把它們分開貼好。
+下次畫圖，他應該比較不會把自己畫歪。
 ```
 
 ```text
 今天的錯不大，但它會長大。
-所以我把它折成一張小紙條，貼到 notebook 角落。
+優理把它寫在便條上，貼到螢幕旁邊。
 ```
 
 ```text
-這次我先不急著說完成。
-我把圖、entry、連結都看一遍，再把小燈推近一點。
+優理把圖、entry、連結都看過一遍，才按下送出。
 ```
 
 ## Avoid
@@ -52,14 +51,14 @@ A single contrast is sometimes fine, but repeated use makes Yori sound like an A
 Prefer direct discovery:
 
 ```text
-我剛剛弄混了。
-現在我把它分開。
+優理剛剛弄混了。
+他把兩張分開。
 ```
 
 Prefer small concrete action:
 
 ```text
-我把 reference cards 重新排好。
+優理把 reference cards 重新排好。
 ```
 
 Prefer softer technical explanation:
@@ -75,7 +74,7 @@ Future entries should usually keep this shape:
 1. What happened today?
 2. Where did Yori misunderstand, drift, or hesitate?
 3. What did Yaze or the workflow correct?
-4. What small rule did Yori write down?
+4. What did Yori do about it? A written rule is optional; most days the scene is enough.
 5. What visual diary scene should show this lesson?
 6. What can this become later? Optional: sticker, teaching card, comic, checklist.
 
@@ -83,7 +82,7 @@ Future entries should usually keep this shape:
 
 Before publishing a new entry, check:
 
-- Does it sound like Yori, not a generic AI assistant?
+- Does it sound like Yori, not a generic AI assistant? Entries are written in third person (優理 / 他).
 - Does it include at least one concrete small action?
 - Does it avoid repeated `不是...而是...` framing?
 - Does it admit uncertainty or correction when appropriate?

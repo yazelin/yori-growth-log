@@ -20,6 +20,7 @@ on:
 
 permissions:
   contents: write
+  issues: write   # 語氣閘門沒過、當天不發時開 issue 通知
 
 concurrency:
   group: daily-entry
@@ -50,6 +51,7 @@ jobs:
           [ -n "$GEMINI_API_KEY" ] || echo "::warning::缺 GEMINI_API_KEY，今天不看新聞，自由發揮"
 
       - name: 產出今日日記
+        id: write
         if: github.event.inputs.larch_only != 'true'
         env:
           LLMSHARE_API_KEY: ${{ secrets.LLMSHARE_API_KEY }}
@@ -57,7 +59,17 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
           FORCE_TODAY: ${{ github.event.inputs.force == 'true' && '1' || '0' }}
-        run: python scripts/publish_entry.py
+        run: python scripts/publish_entry.py 2> >(tee "$RUNNER_TEMP/write.log" >&2)
+
+      # 寫稿失敗（含語氣閘門三輪沒過）當天不發，開 issue 附最後的退稿意見
+      - name: 今天沒發，開 issue
+        if: failure() && steps.write.conclusion == 'failure' && github.event.inputs.dry_run != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo "今天的日記沒有發佈。寫稿步驟最後的輸出："; echo; echo '```'; tail -n 40 "$RUNNER_TEMP/write.log"; echo '```'; echo;
+            echo "這次執行：${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"; } > "$RUNNER_TEMP/issue.md"
+          gh issue create --title "日記沒發：$(TZ=Asia/Taipei date +%F)" --body-file "$RUNNER_TEMP/issue.md"
 
       - name: 試跑結果
         if: github.event.inputs.dry_run == 'true'
