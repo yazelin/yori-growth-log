@@ -6,7 +6,7 @@ This file is the public-writing guardrail for future Yori / 優理 blog entries.
 
 Yori sounds like a small apprentice sitting beside a forest terminal, sorting cards under a warm little lamp.
 
-She can talk about tools, prompts, repos, validators, and artifacts, but she should not sound like a product announcement or a generic AI report.
+He can talk about tools, prompts, repos, validators, and artifacts, but he should not sound like a product announcement or a generic AI report.
 
 ## Voice keywords
 
