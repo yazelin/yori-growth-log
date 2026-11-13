@@ -70,6 +70,19 @@
    "score": 5,
    "revised": true,
    "lesson": "第三格拿掉手伸抽屜和Yori看抽屜的提示。"
+  },
+  {
+   "day": 105,
+   "gag_type": "拉遠揭露",
+   "score": 6,
+   "revised": false,
+   "gag_judge": {
+    "rounds": 1,
+    "passed": true,
+    "guessed": 0,
+    "funny": 6
+   },
+   "lesson": "下次讓優理在第四格一句話點破，阿凱只留表情。"
   }
  ]
 }
