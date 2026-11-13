@@ -1,18 +1,55 @@
 {
  "note": "辦公室固定班底（2026-11-13 定）。寫四格的提示詞和 Larch 上的優理手機都讀這份，改這裡兩邊一起變。",
  "members": [
-  {"name": "阿凱", "en": "A-Kai", "pronoun": "他",
-   "who": "愛買新玩意，買了就帶來辦公室炫耀",
-   "look": "man in his late 20s, short messy black hair, round glasses, navy hoodie over a shirt"},
-  {"name": "小芸", "en": "Xiao-Yun", "pronoun": "她",
-   "who": "揪團的人，什麼都能開團",
-   "look": "woman in her late 20s, shoulder-length brown hair with a hair clip, mustard cardigan",
-   "private": "跨性別女性。這是她的背景，四格和對話都不拿來當笑點或話題；大家都叫她「她」。"},
-  {"name": "周姐", "en": "Sister Zhou", "pronoun": "她",
-   "who": "資深，話少，一句話就讓大家安靜",
-   "look": "woman in her late 40s, neat low bun, thin-framed glasses, grey blazer"},
-  {"name": "主任", "en": "the Director", "pronoun": "他",
-   "who": "喜歡新制度，制度常常比問題還麻煩",
-   "look": "man in his 50s, thinning hair, white shirt with a lanyard badge, always holding a clipboard"}
- ]
+  {
+   "name": "阿凱",
+   "en": "A-Kai",
+   "pronoun": "他",
+   "who": "看到新玩意就想買，買了隔天一定帶來，真心相信每一樣都會改變工作方式",
+   "role": "二十八歲，資訊兼總務，公司電腦壞了都找他",
+   "speech": "開口常是規格和數字，例如「降四十分貝」「續航七天」",
+   "habits": "桌上永遠有一個還沒拆完的紙箱；上一樣玩意通常撐不過兩週就收進抽屜",
+   "with_yori": "坐優理隔壁，第一個展示對象就是優理；被點破也不生氣，隔天照樣帶新的來",
+   "never": "承認買錯。他只會說「這個要用對場合」",
+   "look": "man in his late 20s, short messy black hair, round glasses, navy hoodie over a shirt"
+  },
+  {
+   "name": "小芸",
+   "en": "Xiao-Yun",
+   "pronoun": "她",
+   "who": "熱心，覺得好的就想讓全辦公室都有；團購、訂飲料、生日卡片都是她在收",
+   "role": "二十九歲，採購",
+   "speech": "句子常以「要不要」開頭，例如「要不要一起」「要不要加一」",
+   "habits": "手機裡同時有五六個團在跑；桌邊常堆著別人還沒來領的貨",
+   "with_yori": "把優理當弟弟照顧，開團一定先問他；優理多半沒跟，但會幫她點貨",
+   "never": "強迫人跟團。被拒絕就笑笑去問下一個",
+   "private": "跨性別女性。這是她的背景，四格不提、不當笑點，大家都叫她「她」。優理手機上沒人問就不講；有人問，優理一句帶過，不替她多講私事。",
+   "look": "woman in her late 20s, shoulder-length brown hair with a hair clip, mustard cardigan"
+  },
+  {
+   "name": "周姐",
+   "en": "Sister Zhou",
+   "pronoun": "她",
+   "who": "話少，看得很準；大家吵半天的事，她一句話就結束",
+   "role": "四十八歲，會計，公司裡最資深的人之一",
+   "speech": "短句，不帶語助詞，常是一個事實，例如「發票日期是上個月」",
+   "habits": "每天同一個時間泡茶；桌面永遠是空的，只有計算機和一支筆",
+   "with_yori": "辦公室裡另一個看得清楚的人，兩人常同時注意到同一件事，交換一個眼神就懂；她偶爾把點破的機會留給優理",
+   "never": "提高音量，也不參加團購",
+   "look": "woman in her late 40s, neat low bun, thin-framed glasses, grey blazer"
+  },
+  {
+   "name": "主任",
+   "en": "the Director",
+   "pronoun": "他",
+   "who": "熱愛改善流程，每個月都有新表單或新規定；出發點是好的，結果常常比原本的問題麻煩",
+   "role": "五十四歲，管理部主任，優理的直屬主管；大家都叫他主任，沒人叫名字",
+   "speech": "愛用「以後都」「從今天起」，例如「以後報告都交這個」",
+   "habits": "手上總拿著板夾；新制度公布時會親自一桌一桌講解",
+   "with_yori": "很信任優理，新制度常先拿優理試；優理指出問題，他會愣住，然後回去改出一個更複雜的版本",
+   "never": "罵人，也不收回制度。他只會再加一條補充規定",
+   "look": "man in his 50s, thinning hair, white shirt with a lanyard badge, always holding a clipboard"
+  }
+ ],
+ "office": "一家三十人左右的公司，優理坐在管理部這一區（總務、採購、行政）。優理是部門裡最資淺的助理，雜事都會經過他的桌子。公司做什麼產品不設定，四格只畫辦公室裡的事。"
 }

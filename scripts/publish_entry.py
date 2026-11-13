@@ -242,7 +242,9 @@ GAG_RULES = """## 四格笑點怎麼寫
 def cast_block():
     """辦公室固定班底（scripts/cast.json）：四格裡的同事從這幾位挑，外貌照 look 寫進分鏡。"""
     cast = json.load(open(os.path.join(ROOT, "scripts", "cast.json"), encoding="utf-8"))["members"]
-    lines = [f"- {m['name']}（{m['pronoun']}，分鏡裡寫 {m['en']}）：{m['who']}。外貌：{m['look']}" for m in cast]
+    # private 欄位不給寫手：那是角色的背景，不拿來寫笑點
+    lines = [f"- {m['name']}（{m['pronoun']}，分鏡裡寫 {m['en']}）：{m['role']}。{m['who']}。說話：{m['speech']}。"
+             f"習慣：{m['habits']}。和優理：{m['with_yori']}。不會{m['never']}。外貌：{m['look']}" for m in cast]
     return ("## 辦公室的同事（每則從這幾位挑一到兩位，照他們的個性演；其他人當背景路人）\n" + "\n".join(lines)
             + "\n同事第一次出現在分鏡時，在名字後面用括號寫上他的外貌（照上面的英文原樣寫），之後只寫名字。")
 
