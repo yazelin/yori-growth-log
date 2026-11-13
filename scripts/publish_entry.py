@@ -239,6 +239,13 @@ GAG_RULES = """## 四格笑點怎麼寫
 - 第四格只靠畫面和一個反應就成立嗎？
 - 只看四格、沒讀日記的陌生人會笑嗎？"""
 
+def cast_block():
+    """辦公室固定班底（scripts/cast.json）：四格裡的同事從這幾位挑，外貌照 look 寫進分鏡。"""
+    cast = json.load(open(os.path.join(ROOT, "scripts", "cast.json"), encoding="utf-8"))["members"]
+    lines = [f"- {m['name']}（{m['pronoun']}，分鏡裡寫 {m['en']}）：{m['who']}。外貌：{m['look']}" for m in cast]
+    return ("## 辦公室的同事（每則從這幾位挑一到兩位，照他們的個性演；其他人當背景路人）\n" + "\n".join(lines)
+            + "\n同事第一次出現在分鏡時，在名字後面用括號寫上他的外貌（照上面的英文原樣寫），之後只寫名字。")
+
 def write_comic(news, allowed, recent_titles="", craft=None, recent_gags=()):
     """先產四格劇本（三個候選、依 GAG_RULES 自評挑一個），再過四格閘門。回傳 dict：category, inspiration, banner, image_prompt。"""
     if news:
@@ -249,6 +256,7 @@ def write_comic(news, allowed, recent_titles="", craft=None, recent_gags=()):
     prompt = f"""你是四格漫畫編劇。主角優理（Yori）是個在辦公室上班的小學徒，細心、觀察敏銳、說話直白，常常是辦公室裡第一個看出荒謬的人。
 {source}
 題材分類只能從這幾個選：{'、'.join(allowed)}
+{cast_block()}
 最近十四天的標題（今天找一個新題材）：
 {recent_titles}
 

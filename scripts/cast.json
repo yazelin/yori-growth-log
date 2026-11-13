@@ -1,0 +1,18 @@
+{
+ "note": "辦公室固定班底（2026-11-13 定）。寫四格的提示詞和 Larch 上的優理手機都讀這份，改這裡兩邊一起變。",
+ "members": [
+  {"name": "阿凱", "en": "A-Kai", "pronoun": "他",
+   "who": "愛買新玩意，買了就帶來辦公室炫耀",
+   "look": "man in his late 20s, short messy black hair, round glasses, navy hoodie over a shirt"},
+  {"name": "小芸", "en": "Xiao-Yun", "pronoun": "她",
+   "who": "揪團的人，什麼都能開團",
+   "look": "woman in her late 20s, shoulder-length brown hair with a hair clip, mustard cardigan",
+   "private": "跨性別女性。這是她的背景，四格和對話都不拿來當笑點或話題；大家都叫她「她」。"},
+  {"name": "周姐", "en": "Sister Zhou", "pronoun": "她",
+   "who": "資深，話少，一句話就讓大家安靜",
+   "look": "woman in her late 40s, neat low bun, thin-framed glasses, grey blazer"},
+  {"name": "主任", "en": "the Director", "pronoun": "他",
+   "who": "喜歡新制度，制度常常比問題還麻煩",
+   "look": "man in his 50s, thinning hair, white shirt with a lanyard badge, always holding a clipboard"}
+ ]
+}
