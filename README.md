@@ -1,14 +1,14 @@
 # 想成為圖文作家的優理｜Yori Growth Log
 
-Yori / 優理是一位 Mori-family 的數位學徒。這份 growth log 記錄她每天如何被修正、練習工具、整理 reference、檢查 artifact，並把錯誤轉成下一條規則。
+Yori / 優理是一位 Mori-family 的數位學徒。這份 growth log 記錄他每天如何被修正、練習工具、整理 reference、檢查 artifact，並把錯誤轉成下一條規則。
 
 這個 repo 預計作為公開圖文 blog：每日一篇文字日記，搭配一張 visual diary image。
 
 ## Yori 是誰？
 
-Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、被 Yaze 指正、留下證據、建立檢查表，慢慢形成自己的角色 canon 與工作流程。
+Yori / 優理是一位正在學會「有理」的 apprentice。他會犯錯、被 Yaze 指正、留下證據、建立檢查表，慢慢形成自己的角色 canon 與工作流程。
 
-她屬於 Mori-family 世界觀：Mori 偏向森林裡的觀察與記憶，Jinn 偏向公司助手，而 Yori 則是學習工具、reference、日記與公開化流程的年輕數位學徒。
+他屬於 Mori-family 世界觀：Mori 偏向森林裡的觀察與記憶，Jinn 偏向公司助手，而 Yori 則是學習工具、reference、日記與公開化流程的年輕數位學徒。
 
 ## 目前狀態
 
@@ -20,7 +20,7 @@ Yori / 優理是一位正在學會「有理」的 apprentice。她會犯錯、�
 
 ## 雲端續更管線（Day 0034 起）
 
-戲內設定：她住的樹（森林終端）病了，搬到雲上住，日記從此自己會長。
+戲內設定：他住的樹（森林終端）病了，搬到雲上住，日記從此自己會長。
 
 機制：`.github/workflows/daily-entry.yml` 每天台北 21:30 跑 `scripts/publish_entry.py`：
 
