@@ -1451,5 +1451,20 @@
     "category": "待辦與時間",
     "inspiration": "美國康乃爾大學最新職場行為研究發現，下午三點在辦公室泡一杯熱茶並短暫離開座位「放空5分鐘」，能有效提升後續兩小時高達22%的專注力，讓不少習慣下午喝手搖飲提神的同仁笑稱「找到了名正言順摸魚的科學依據」。",
     "comic": "Title banner text: 「三點的熱茶」\nSame office desk scene across four panels. Panel 1: Medium shot at Yori's desk at 3:00 p.m.; A-Kai (baby-faced man in his mid 20s, average height, slim, short messy black hair, round black glasses, navy zip hoodie over a cream shirt, khaki pants, navy sneakers) places a small smart countdown coaster beside Yori's keyboard and excitedly shows his phone; Yori holds a tea bag and looks at him; wall clock shows 3:00; dialogue: 「研究說放空五分鐘多22%。」 Panel 2: Close-up of the smart coaster under Yori's steaming mug, display shows 5:00; A-Kai presses start with one finger, Yori watches with mild suspicion; dialogue: 「它會倒數五分鐘。」 Panel 3: Medium shot; the clock shows 3:04, the coaster shows 0:01, thick steam rises from the untouched tea, A-Kai and Yori both lean in and stare at the countdown; no dialogue. Panel 4: Medium close-up; the clock shows 3:05, the coaster beeps 0:00, steam still rises; Yori lifts the cup and blows on it with a deadpan face, A-Kai freezes with a blank expression; dialogue: 「只夠等茶涼。」"
+  },
+  {
+    "day": 107,
+    "date": "2026-11-16",
+    "title": "Day 0107 — 箱子坐得比人久",
+    "entry": "docs/entries/day-0107.html",
+    "entry_markdown": "docs/entries/day-0107.md",
+    "image": "docs/assets/day-0107-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0107",
+    "short_title": "箱子坐得比人久",
+    "summary": "阿凱得意展示會震動的智慧椅墊，小芸抱來一疊團購箱借放；椅墊在箱子底下震個不停，最後優理指著箱子提醒它該起來了。",
+    "category": "工具與電腦",
+    "inspiration": "一款主打能自動偵測久坐並發出輕微震動提醒的「智慧辦公椅墊」近期在募資平台爆紅，吸引許多每天黏在電腦前超過8小時的工程師與行政人員揪團合購。",
+    "comic": "Title banner text: 「久坐會震動」\nPanel 1: Medium shot at an office desk. Yori watches as A-Kai (baby-faced man in his mid 20s, average height, slim, short messy black hair, round black glasses, navy zip hoodie over a cream shirt, khaki pants, navy sneakers) proudly points to a gray smart seat cushion on his chair. Dialogue: A-Kai: 「久坐會震動，續航七天。」 Panel 2: Same office desk. Xiao-Yun (woman in her late 20s, a little shorter than A-Kai, shoulder-length wavy brown hair with a gold hair clip on her left side, mustard cardigan over a cream blouse, long brown skirt, black flats, small wristwatch) enters holding a tall stack of cardboard group-buy boxes and smiles. A-Kai’s chair is empty behind her. Dialogue: Xiao-Yun: 「借放一下，要不要加一？」 Panel 3: Close-up on the cushion on A-Kai’s chair, partly covered by the bottom edge of a cardboard box out of frame; the cushion buzzes with small motion lines. A-Kai leans in, surprised; Yori glances over. Dialogue: A-Kai: 「它真的會震！」 Panel 4: Pull back to a wide shot of the same desk. The full stack of group-buy boxes sits on A-Kai’s chair, squeezing the buzzing cushion underneath. Yori deadpan points at the boxes; A-Kai and Xiao-Yun freeze with blank expressions. Dialogue: Yori: 「它提醒箱子該起來了。」"
   }
 ]

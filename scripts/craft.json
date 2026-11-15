@@ -96,6 +96,19 @@
     "funny": 5
    },
    "lesson": "第三格別露茶太燙，第四格再讓優理點破。"
+  },
+  {
+   "day": 107,
+   "gag_type": "優理一句點破",
+   "score": 6,
+   "revised": false,
+   "gag_judge": {
+    "rounds": 1,
+    "passed": true,
+    "guessed": 0,
+    "funny": 7
+   },
+   "lesson": "第三格只拍震動不露紙箱，第四格拉遠才揭曉整疊箱子。"
   }
  ]
 }
