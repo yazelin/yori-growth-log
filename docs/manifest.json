@@ -1466,5 +1466,20 @@
     "category": "工具與電腦",
     "inspiration": "一款主打能自動偵測久坐並發出輕微震動提醒的「智慧辦公椅墊」近期在募資平台爆紅，吸引許多每天黏在電腦前超過8小時的工程師與行政人員揪團合購。",
     "comic": "Title banner text: 「久坐會震動」\nPanel 1: Medium shot at an office desk. Yori watches as A-Kai (baby-faced man in his mid 20s, average height, slim, short messy black hair, round black glasses, navy zip hoodie over a cream shirt, khaki pants, navy sneakers) proudly points to a gray smart seat cushion on his chair. Dialogue: A-Kai: 「久坐會震動，續航七天。」 Panel 2: Same office desk. Xiao-Yun (woman in her late 20s, a little shorter than A-Kai, shoulder-length wavy brown hair with a gold hair clip on her left side, mustard cardigan over a cream blouse, long brown skirt, black flats, small wristwatch) enters holding a tall stack of cardboard group-buy boxes and smiles. A-Kai’s chair is empty behind her. Dialogue: Xiao-Yun: 「借放一下，要不要加一？」 Panel 3: Close-up on the cushion on A-Kai’s chair, partly covered by the bottom edge of a cardboard box out of frame; the cushion buzzes with small motion lines. A-Kai leans in, surprised; Yori glances over. Dialogue: A-Kai: 「它真的會震！」 Panel 4: Pull back to a wide shot of the same desk. The full stack of group-buy boxes sits on A-Kai’s chair, squeezing the buzzing cushion underneath. Yori deadpan points at the boxes; A-Kai and Xiao-Yun freeze with blank expressions. Dialogue: Yori: 「它提醒箱子該起來了。」"
+  },
+  {
+    "day": 108,
+    "date": "2026-11-17",
+    "title": "Day 0108 — 先搜那句話",
+    "entry": "docs/entries/day-0108.html",
+    "entry_markdown": "docs/entries/day-0108.md",
+    "image": "docs/assets/day-0108-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0108",
+    "short_title": "先搜那句話",
+    "summary": "小昀找不到秋季團購檔案，阿凱說搜尋變快了；優理在搜尋欄改打一句聊天裡的話，檔案才從訊息裡冒出來。",
+    "category": "檔案",
+    "inspiration": "通訊軟體LINE近期在桌面版更新中優化了「聊天室分類與關鍵字搜尋速度」，讓每天需要同時處理數十個工作群組的上班族直呼「找歷史檔案終於不用再滑到手痠」。",
+    "comic": "Title banner text: 「檔案跑哪去了」\nEnglish storyboard, Panel 1 to Panel 4: Panel 1: Medium shot at Xiao-Yun’s desk in a busy office. Xiao-Yun (woman in her late 20s, a little shorter than A-Kai, shoulder-length wavy brown hair with a gold hair clip on her left side, mustard cardigan over a cream blouse, long brown skirt, black flats, small wristwatch) sits in front of a desktop LINE chat list and searches. Yori stands beside her, watching quietly. Dialogue: Xiao-Yun:「秋季團購檔案跑哪去了？」 Panel 2: Close-up of the screen search bar showing 秋季團購.xlsx with no results. A-Kai (baby-faced man in his mid 20s, average height, slim, short messy black hair, round black glasses, navy zip hoodie over a cream shirt, khaki pants, navy sneakers) leans in and points at the screen. Dialogue: A-Kai:「更新後搜尋快很多。」 Panel 3: Medium shot at the same desk. Xiao-Yun types a longer exact filename and presses Enter; the screen still shows no results. Yori watches her quietly. Dialogue: Xiao-Yun:「完整檔名也找不到。」 Panel 4: Close-up over Yori’s shoulder as his hand types 「不要了」 into the search bar. The screen shows one result: a chat message 「這個我不要了」 with attachment 「秋季團購.xlsx」. Xiao-Yun’s eyes widen, A-Kai’s mouth drops open, and Yori looks deadpan. No dialogue."
   }
 ]

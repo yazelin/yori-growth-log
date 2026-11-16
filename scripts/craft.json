@@ -109,6 +109,19 @@
     "funny": 7
    },
    "lesson": "第三格只拍震動不露紙箱，第四格拉遠才揭曉整疊箱子。"
+  },
+  {
+   "day": 108,
+   "gag_type": "優理巧妙解決",
+   "score": 7,
+   "revised": true,
+   "gag_judge": {
+    "rounds": 3,
+    "passed": true,
+    "guessed": 0,
+    "funny": 6
+   },
+   "lesson": "第三格先讓優理看到聊天訊息，再讓他搜「不要了」。"
   }
  ]
 }
