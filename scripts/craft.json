@@ -122,6 +122,19 @@
     "funny": 6
    },
    "lesson": "第三格先讓優理看到聊天訊息，再讓他搜「不要了」。"
+  },
+  {
+   "day": 109,
+   "gag_type": "拉遠揭露",
+   "score": 7,
+   "revised": false,
+   "gag_judge": {
+    "rounds": 1,
+    "passed": true,
+    "guessed": 0,
+    "funny": 6
+   },
+   "lesson": "第二格台詞改成「手機放托盤十分鐘」，讓動作和台詞對上。"
   }
  ]
 }
