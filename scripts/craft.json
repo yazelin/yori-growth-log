@@ -135,6 +135,19 @@
     "funny": 6
    },
    "lesson": "第二格台詞改成「手機放托盤十分鐘」，讓動作和台詞對上。"
+  },
+  {
+   "day": 110,
+   "gag_type": "期待落空",
+   "score": 6,
+   "revised": true,
+   "gag_judge": {
+    "rounds": 2,
+    "passed": true,
+    "guessed": 0,
+    "funny": 7
+   },
+   "lesson": "第四格只留標籤和一句十字內反應，刪掉溫度說明。"
   }
  ]
 }
