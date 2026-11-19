@@ -148,6 +148,19 @@
     "funny": 7
    },
    "lesson": "第四格只留標籤和一句十字內反應，刪掉溫度說明。"
+  },
+  {
+   "day": 111,
+   "gag_type": "優理一句點破",
+   "score": 7,
+   "revised": true,
+   "gag_judge": {
+    "rounds": 2,
+    "passed": true,
+    "guessed": 0,
+    "funny": 7
+   },
+   "lesson": "第三格先讓主管看起來真的在整理，第四格再露夾板。"
   }
  ]
 }
