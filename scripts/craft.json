@@ -161,6 +161,19 @@
     "funny": 7
    },
    "lesson": "第三格先讓主管看起來真的在整理，第四格再露夾板。"
+  },
+  {
+   "day": 112,
+   "gag_type": "情境本身荒謬",
+   "score": 6,
+   "revised": false,
+   "gag_judge": {
+    "rounds": 1,
+    "passed": true,
+    "guessed": 0,
+    "funny": 7
+   },
+   "lesson": "把第二格對白改成同事真的會說的短句，不要解釋設定。"
   }
  ]
 }
