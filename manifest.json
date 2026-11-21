@@ -1541,5 +1541,20 @@
     "category": "工具與電腦",
     "inspiration": "熱門筆記軟體Notion近期傳出部分網頁版用戶遭遇「快捷鍵無法正常呼叫選單」的短暫異常，雖然官方在2小時內火速修復，仍讓不少重度依賴工具的企劃人員差點崩潰。",
     "comic": "Title banner text: 「兩小時才修好」\nPanel 1: Medium shot in a small office at desks. A-Kai (baby-faced man in his mid 20s, average height, slim, short messy black hair, round black glasses, navy zip hoodie over a cream shirt, khaki pants, navy sneakers) points at his monitor, annoyed. Yori sits beside him and watches. Monitor shows a Notion page. A-Kai says: 「Notion快捷鍵掛了，官方說兩小時修好。」\nPanel 2: Medium close-up. A-Kai gestures at his keyboard, stressed but confident; Yori listens. A-Kai says: 「我流程全按快捷鍵，沒選單等於停擺。」\nPanel 3: Close-up on A-Kai's hands plugging a small programmable keypad into the computer and pressing a big button. The screen stays unchanged. Yori watches. A-Kai says: 「這是我買的一鍵選單鍵盤。」\nPanel 4: Close-up from the side. Yori calmly reaches over and clicks the three-dot menu icon on the monitor with A-Kai's mouse; a menu pops open. A-Kai freezes, eyes wide. No dialogue."
+  },
+  {
+    "day": 113,
+    "date": "2026-11-22",
+    "title": "Day 0113 — 剛好一人一本",
+    "entry": "docs/entries/day-0113.html",
+    "entry_markdown": "docs/entries/day-0113.md",
+    "image": "docs/assets/day-0113-yori-growth-log.webp",
+    "status": "cloud-auto",
+    "label": "Day 0113",
+    "short_title": "剛好一人一本",
+    "summary": "阿凱用打孔機把廢影印紙壓成無針便條本，主管看了很滿意；會議前，優理把這些便條本一本一本放到座位上。",
+    "category": "會議與溝通",
+    "inspiration": "日本文具大廠推出一款能將廢棄影印紙一秒壓製成「無針環保便條本」的桌上型打孔機，免用訂書針的設計既省耗材又療癒，迅速登上台灣代購與團購社團熱銷榜。",
+    "comic": "Title banner text: 「不用釘書針」\nFour panels in the same open-plan office corner near the printer and Yori's desk. Panel 1: Medium shot at Yori's desk. A-Kai (baby-faced man in his mid 20s, average height, slim, short messy black hair, round black glasses, navy zip hoodie over a cream shirt, khaki pants, navy sneakers) sets a small desktop paper puncher on the desk and holds a stack of misprinted waste copy paper; no readable text. Yori, a young male office apprentice, watches. Dialogue A-Kai: 「你看，一秒一本。」 Panel 2: Medium shot. The Director (man in his 50s, the tallest and heavyset, balding with short grey hair on the sides, white shirt with rolled-up sleeves, navy lanyard with an ID badge, grey trousers, brown leather shoes, always holding a brown clipboard) steps in, holding his clipboard, looks at a neat staple-free memo pad on the desk, impressed; A-Kai smiles. Dialogue Director: 「以後廢紙都壓成便條本。」 Panel 3: Close-up of the puncher pressing a thick stack, only the paper edges visible; no readable text. A-Kai feeds the stack and smiles; nearby is a neat row of freshly made memo pads; the Director nods with his clipboard. Dialogue A-Kai: 「這批厚度剛好，很療癒。」 Panel 4: Medium-wide shot of the same office corner at the long meeting table. Yori sets the newly made memo pads at each seat; the top page of the stack clearly reads 「會議資料」; the printer output tray in the background is empty. The Director freezes, holding his clipboard. Yori keeps a deadpan face. Dialogue Yori: 「一人一本，剛好。」"
   }
 ]
