@@ -187,6 +187,19 @@
     "funny": 7
    },
    "lesson": "第三格先畫阿凱從印表機拿走會議資料，主管還點頭。"
+  },
+  {
+   "day": 114,
+   "gag_type": "優理一句點破",
+   "score": 7,
+   "revised": true,
+   "gag_judge": {
+    "rounds": 2,
+    "passed": true,
+    "guessed": 0,
+    "funny": 7
+   },
+   "lesson": "第二格讓大家開始問還有誰養貓，第三格主管再接話。"
   }
  ]
 }
