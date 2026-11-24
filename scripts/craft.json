@@ -213,6 +213,19 @@
     "funny": 6
    },
    "lesson": "第三格先讓主管回座打字，第四格只放大送出的驚嘆號。"
+  },
+  {
+   "day": 116,
+   "gag_type": "拉遠揭露",
+   "score": 8,
+   "revised": true,
+   "gag_judge": {
+    "rounds": 4,
+    "passed": false,
+    "guessed": 1,
+    "funny": 7
+   },
+   "lesson": "把「被一團橘色坐滿」改成「橘貓坐在打卡機上」。"
   }
  ]
 }
