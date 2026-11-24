@@ -200,6 +200,19 @@
     "funny": 7
    },
    "lesson": "第二格讓大家開始問還有誰養貓，第三格主管再接話。"
+  },
+  {
+   "day": 115,
+   "gag_type": "優理一句點破",
+   "score": 6,
+   "revised": true,
+   "gag_judge": {
+    "rounds": 3,
+    "passed": true,
+    "guessed": 0,
+    "funny": 6
+   },
+   "lesson": "第三格先讓主管回座打字，第四格只放大送出的驚嘆號。"
   }
  ]
 }
