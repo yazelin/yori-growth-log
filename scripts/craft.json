@@ -226,6 +226,19 @@
     "funny": 7
    },
    "lesson": "把「被一團橘色坐滿」改成「橘貓坐在打卡機上」。"
+  },
+  {
+   "day": 117,
+   "gag_type": "期待落空",
+   "score": 6,
+   "revised": true,
+   "gag_judge": {
+    "rounds": 2,
+    "passed": true,
+    "guessed": 0,
+    "funny": 5
+   },
+   "lesson": "第四格只用手機五星調查畫面加表情，不加解釋對白。"
   }
  ]
 }
