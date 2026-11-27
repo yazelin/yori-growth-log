@@ -239,6 +239,19 @@
     "funny": 5
    },
    "lesson": "第四格只用手機五星調查畫面加表情，不加解釋對白。"
+  },
+  {
+   "day": 118,
+   "gag_type": "拉遠揭露",
+   "score": 6,
+   "revised": true,
+   "gag_judge": {
+    "rounds": 2,
+    "passed": true,
+    "guessed": 0,
+    "funny": 7
+   },
+   "lesson": "第四格用Yori的視線串起感應器、人群和空電梯，讓笑點免解說。"
   }
  ]
 }
